@@ -111,7 +111,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Send email on failure211",
+						"referenceName": "Send email on failure",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -143,7 +143,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Send email on failure211",
+						"referenceName": "Send email on failure",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -175,7 +175,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Send email on success111",
+						"referenceName": "Send email on success",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
