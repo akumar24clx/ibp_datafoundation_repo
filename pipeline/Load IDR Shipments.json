@@ -286,7 +286,10 @@
 						"EmailTo": "kalyani.pernapati@clorox.com",
 						"Subject": "Azure DF error",
 						"DataFactoryName": "DF",
-						"PipelineName": "Send email on Failure",
+						"PipelineName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
 						"Activity": "Load SQLDW Staging",
 						"ErrorMessage": "@activity('Load SQLDW Staging').Error.Message"
 					}
