@@ -1,0 +1,693 @@
+{
+	"name": "DW_ext_shipments111211",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "billing_doc_nbr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billing_line_item_nbr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billing_created_date_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billing_date_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_num",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sap_upc_num",
+				"type": "nvarchar"
+			},
+			{
+				"name": "shippingpoint_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "soldto_customer_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "payer_customer_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billto_customer_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "shipto_customer_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "broker_customer_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "so_doc_nbr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "po_doc_nbr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "profit_center_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "distrib_channel_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "oms",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ship_from_plant_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "planned_pgi_date_yyyymm",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dos_planned_pgi_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "doc_class_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "clx_po_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ctrl_area_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fiscal_yr_variant_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cost_center_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billing_type_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billing_category_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sd_doc_category_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "item_type_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "item_category_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "unsaleable_ind",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_item_nbr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "company_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "division_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sales_group_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "so_doc_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billed_qty_baseuom",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billed_qty_sc",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billed_qty_slsuom",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billed_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "exchange_rate",
+				"type": "nvarchar"
+			},
+			{
+				"name": "tax_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "discount_base_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "scale_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "denominator",
+				"type": "nvarchar"
+			},
+			{
+				"name": "numerator",
+				"type": "nvarchar"
+			},
+			{
+				"name": "delivered_vol_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cost_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "net_ship_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "exchange_rate_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "gross_ship_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cost_amt_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "open_billing_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "exchange_rate_acct",
+				"type": "nvarchar"
+			},
+			{
+				"name": "net_ship_amt_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "rebate_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "gross_weight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "required_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "net_weight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "netprc_exoffinvdisc_amt_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "offinvdisc_amt_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "netval_discsurchrg_amt_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "unsaleable_amt_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "customer_expected_price_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "broker_comm_amt_stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "netprc_exoffinvdisc_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "offinvdisc_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "netval_discsurchrg_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "unsaleable_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "customer_expected_price",
+				"type": "nvarchar"
+			},
+			{
+				"name": "broker_comm_amt",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sku_bill_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dos_qty_sc",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dos_ng_liquid_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "number_of_billeditem",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sales_office",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_reason",
+				"type": "nvarchar"
+			},
+			{
+				"name": "rejection_reason",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sales_deal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "shipping_condition_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "update_mode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "inv_date_nbr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "stcurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "doccurr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "uom_weight",
+				"type": "nvarchar"
+			},
+			{
+				"name": "uom_sales",
+				"type": "nvarchar"
+			},
+			{
+				"name": "uom_base",
+				"type": "nvarchar"
+			},
+			{
+				"name": "uom_volume",
+				"type": "nvarchar"
+			},
+			{
+				"name": "uom",
+				"type": "nvarchar"
+			},
+			{
+				"name": "changed_date_nbr",
+				"type": "nvarchar"
+			},
+			{
+				"name": "batch_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "serv_rendered_date_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "proc_status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "rebate_arrangement",
+				"type": "nvarchar"
+			},
+			{
+				"name": "uom_lay",
+				"type": "nvarchar"
+			},
+			{
+				"name": "uom_pal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "uom_sc",
+				"type": "nvarchar"
+			},
+			{
+				"name": "shipping_type_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "acct_assignment_grp_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "customer_group_code_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "customer_group_code_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "customer_group_code_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "customer_group_code_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "storage_location_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_group_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_num_entered",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_group_code_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_group_code_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_group_code_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_group_code_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_group_code_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dest_country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pricing_date_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sales_region_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "bom_high_level_item",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ref_doc_num",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ref_item_num",
+				"type": "nvarchar"
+			},
+			{
+				"name": "delivery_type_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "qty_eaches",
+				"type": "nvarchar"
+			},
+			{
+				"name": "doc_count",
+				"type": "nvarchar"
+			},
+			{
+				"name": "posting_stat_bill_doc_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billing_status_order",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billing_status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "so_customer_group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "condition_group_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "condition_group_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "condition_group_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "condition_group_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "so_price_group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "translation_date_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "src_country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dest_city_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "soldto_customer_code_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "posting_period_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "item",
+				"type": "nvarchar"
+			},
+			{
+				"name": "so_region_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "transfer_acct_status_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "so_sales_org_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "so_distrib_channel_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "material_plant_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sales_division_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "dos_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billed_qty_purchase_uom",
+				"type": "nvarchar"
+			},
+			{
+				"name": "number_of_doc",
+				"type": "nvarchar"
+			},
+			{
+				"name": "number_of_doc_items",
+				"type": "nvarchar"
+			},
+			{
+				"name": "gross_weight_kg",
+				"type": "nvarchar"
+			},
+			{
+				"name": "net_weight_kg",
+				"type": "nvarchar"
+			},
+			{
+				"name": "volume_cubic_dec",
+				"type": "nvarchar"
+			},
+			{
+				"name": "version_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "value_type_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "credit_debit_flg",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sales_district_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sales_emp_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "posting_period",
+				"type": "nvarchar"
+			},
+			{
+				"name": "military_product_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "edi_customer_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "soldto_country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "billto_country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "payer_country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "carrier_country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "representative_country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "conversion_date_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "stats_date_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "stats_update_date_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "forwarding_agent",
+				"type": "nvarchar"
+			},
+			{
+				"name": "bw_tran_key",
+				"type": "nvarchar"
+			},
+			{
+				"name": "load_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "invoiced_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "invoiced_net_amt",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ext",
+			"table": "ext_litter_shipments"
+		}
+	}
+}
