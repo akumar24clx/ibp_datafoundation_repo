@@ -86,13 +86,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DW_ext_shipments111211",
+						"referenceName": "SQLDW_Ext_Shipments",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "base_litter_shipments_new211",
+						"referenceName": "SQLDW_Base_Litter_Shipments",
 						"type": "DatasetReference"
 					}
 				]
@@ -211,7 +211,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "base_litter_shipments11",
+						"referenceName": "SQLDW_Base_Litter_Shipments_Query",
 						"type": "DatasetReference"
 					}
 				}
