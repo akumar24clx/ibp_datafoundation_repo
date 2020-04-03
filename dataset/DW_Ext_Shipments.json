@@ -1,5 +1,5 @@
 {
-	"name": "DW_ext_shipments111211",
+	"name": "DW_Ext_Shipments",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
