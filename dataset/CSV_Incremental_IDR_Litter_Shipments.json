@@ -1,5 +1,5 @@
 {
-	"name": "incremental_idr_litter_shipments",
+	"name": "CSV_Incremental_IDR_Litter_Shipments",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
