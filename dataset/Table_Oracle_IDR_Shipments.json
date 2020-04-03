@@ -1,5 +1,5 @@
 {
-	"name": "Oracle_IDR_Shipments_Table",
+	"name": "Table_Oracle_IDR_Shipments",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "KP_Oracle_IDR",
