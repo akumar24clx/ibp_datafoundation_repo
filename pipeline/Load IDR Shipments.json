@@ -55,7 +55,7 @@
 				]
 			},
 			{
-				"name": "Load SQLDW",
+				"name": "Load SQLDW Target",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -134,7 +134,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Load SQLDW",
+						"activity": "Load SQLDW Target",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -166,7 +166,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Load SQLDW",
+						"activity": "Load SQLDW Target",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -215,6 +215,47 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "Load SQLDW Staging",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "CSV_Incremental_IDR_Litter_Shipments",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Staging_Litter_Shipments",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"parameters": {
