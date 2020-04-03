@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText4111112",
+	"name": "incremental_idr_litter_shipments",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
