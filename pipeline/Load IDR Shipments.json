@@ -59,7 +59,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "IDR To Storage",
+						"activity": "Load SQLDW Staging",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -130,7 +130,7 @@
 				}
 			},
 			{
-				"name": "Failure Alert - 2",
+				"name": "Failure Alert - 3",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -219,7 +219,14 @@
 			{
 				"name": "Load SQLDW Staging",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "IDR To Storage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -256,6 +263,26 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Failure Alert - 2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load SQLDW Staging",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Send email on failure",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"parameters": {
