@@ -162,7 +162,7 @@
 				}
 			},
 			{
-				"name": "Success Notification",
+				"name": "Pipeline Success Notification",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
