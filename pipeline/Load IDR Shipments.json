@@ -74,11 +74,21 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"queryTimeout": "02:00:00"
+					},
 					"sink": {
 						"type": "SqlDWSink"
 					},
 					"enableStaging": false
 				},
+				"inputs": [
+					{
+						"referenceName": "Table_SQLDW_Staging_Litter_Shipments",
+						"type": "DatasetReference"
+					}
+				],
 				"outputs": [
 					{
 						"referenceName": "Table_SQLDW_Base_Litter_Shipments",
