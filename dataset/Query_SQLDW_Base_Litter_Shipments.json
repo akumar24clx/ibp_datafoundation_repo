@@ -1,5 +1,5 @@
 {
-	"name": "SQLDW_Base_Litter_Shipments_Query",
+	"name": "Query_SQLDW_Base_Litter_Shipments",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
