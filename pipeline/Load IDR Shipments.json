@@ -43,13 +43,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Oracle_IDR_Shipments_Table",
+						"referenceName": "Table_Oracle_IDR_Shipments",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "incremental_idr_litter_shipments",
+						"referenceName": "CSV_Incremental_IDR_Litter_Shipments",
 						"type": "DatasetReference"
 					}
 				]
@@ -86,13 +86,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQLDW_Ext_Shipments",
+						"referenceName": "Ext_Table_SQLDW_Shipments",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "SQLDW_Base_Litter_Shipments",
+						"referenceName": "Table_SQLDW_Base_Litter_Shipments",
 						"type": "DatasetReference"
 					}
 				]
@@ -211,7 +211,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "SQLDW_Base_Litter_Shipments_Query",
+						"referenceName": "Query_SQLDW_Base_Litter_Shipments",
 						"type": "DatasetReference"
 					}
 				}
