@@ -1,5 +1,5 @@
 {
-	"name": "Ext_Table_SQLDW_Shipments",
+	"name": "Stg_Table_SQLDW_Shipments",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
@@ -686,8 +686,8 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "ext",
-			"table": "ext_litter_shipments"
+			"schema": "dbo",
+			"table": "stg_litter_shipments"
 		}
 	}
 }
