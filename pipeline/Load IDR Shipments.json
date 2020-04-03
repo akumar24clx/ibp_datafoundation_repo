@@ -98,7 +98,7 @@
 				]
 			},
 			{
-				"name": "Failure Alert 1",
+				"name": "Failure Alert - 1",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -130,7 +130,7 @@
 				}
 			},
 			{
-				"name": "Failure Alert 2",
+				"name": "Failure Alert - 2",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
