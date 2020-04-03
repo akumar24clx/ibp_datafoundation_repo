@@ -153,9 +153,9 @@
 							"value": "@pipeline().Pipeline",
 							"type": "Expression"
 						},
-						"Activity": "Copy_IDR_Litter_Shipments_Storage",
+						"Activity": "Load SQLDW Target",
 						"ErrorMessage": {
-							"value": "@activity('Load SQLDW').Error.Message",
+							"value": "@activity('Load SQLDW Target').Error.Message",
 							"type": "Expression"
 						}
 					}
@@ -281,7 +281,15 @@
 						"referenceName": "Send email on failure",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"EmailTo": "kalyani.pernapati@clorox.com",
+						"Subject": "Azure DF error",
+						"DataFactoryName": "DF",
+						"PipelineName": "Send email on Failure",
+						"Activity": "Load SQLDW Staging",
+						"ErrorMessage": "@activity('Load SQLDW Staging').Error.Message"
+					}
 				}
 			}
 		],
