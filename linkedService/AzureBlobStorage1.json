@@ -6,10 +6,10 @@
 		"type": "AzureBlobStorage",
 		"typeProperties": {
 			"connectionString": "DefaultEndpointsProtocol=https;AccountName=clxdevdatalake;EndpointSuffix=core.windows.net;",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5ZjA3Mjk2YS1mODgxLTQ0YWQtYjUwZi0wY2Y5ZjY2N2Q5YzEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3MjYzNGMxNC0yNzI5LTQ1YTYtYTg0NS1kNjkwYTJmNWM0MjQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
-			"referenceName": "clxdev-onprem-ir-linked",
+			"referenceName": "clxdev-az-ir-linked",
 			"type": "IntegrationRuntimeReference"
 		}
 	}
