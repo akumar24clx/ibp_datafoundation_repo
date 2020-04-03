@@ -1,5 +1,5 @@
 {
-	"name": "Send email on failure211",
+	"name": "Send email on failure",
 	"properties": {
 		"description": "Reusable pipeline to send email notification on activity failure",
 		"activities": [
