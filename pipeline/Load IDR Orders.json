@@ -184,10 +184,10 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"EmailTo": "kalyani.pernapati@clorox.com",
-						"Subject": "ADF pipeline Load IDR Litter Shipments finished successfully",
+						"Subject": "ADF pipeline Load IDR Orders finished successfully",
 						"DataFactoryName": "ADF",
-						"PipelineName": "Load IDR Litter Shipments",
-						"Activity": "Load IDR Litter Shipments",
+						"PipelineName": "Load IDR Orders",
+						"Activity": "Load SQLDW Target",
 						"ErrorMessage": "No errors"
 					}
 				}
