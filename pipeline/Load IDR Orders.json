@@ -1960,7 +1960,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Table_SQLDW_Staging_Litter_Shipments",
+						"referenceName": "Table_SQLDW_Staging_Litter_Orders",
 						"type": "DatasetReference"
 					}
 				]
