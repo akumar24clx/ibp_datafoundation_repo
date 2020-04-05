@@ -214,7 +214,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "Query_SQLDW_Base_Litter_Orders",
+						"referenceName": "Table_SQLDW_Base_Litter_Orders",
 						"type": "DatasetReference"
 					}
 				}
