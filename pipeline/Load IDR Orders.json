@@ -46,13 +46,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Table_Oracle_IDR_Shipments",
+						"referenceName": "Table_Oracle_IDR_Orders",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "CSV_Incremental_IDR_Litter_Shipments",
+						"referenceName": "CSV_Incremental_IDR_Litter_Orders",
 						"type": "DatasetReference"
 					}
 				]
@@ -214,7 +214,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "Query_SQLDW_Base_Litter_Shipments",
+						"referenceName": "Query_SQLDW_Base_Litter_Orders",
 						"type": "DatasetReference"
 					}
 				}
@@ -252,7 +252,7 @@
 					},
 					"sink": {
 						"type": "SqlDWSink",
-						"preCopyScript": "truncate table dbo.stg_litter_shipments",
+						"preCopyScript": "truncate table dbo.stg_litter_orders",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -1954,7 +1954,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CSV_Incremental_IDR_Litter_Shipments_AZ",
+						"referenceName": "CSV_Incremental_IDR_Litter_Orders_AZ",
 						"type": "DatasetReference"
 					}
 				],
