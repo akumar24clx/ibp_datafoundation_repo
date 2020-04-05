@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "clxdev-adf-matrix"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage_OnPrem_connectionString": {
+			"value": ""
+		},
+		"AzureSQLDW_connectionString": {
+			"value": ""
+		},
+		"KP_Oracle_IDR_connectionString": {
+			"value": ""
+		},
+		"Oracle_IDR_Dev_connectionString": {
+			"value": ""
+		},
+		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
+			"value": "20200404"
+		},
+		"clxdev-az-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/681c9400-3073-469f-b0ec-57006f831469/resourcegroups/CLX_MATRIX_POC_RG/providers/Microsoft.DataFactory/factories/clxdev-adf-sandbox/integrationruntimes/clxdev-az-ir"
+		},
+		"clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/681c9400-3073-469f-b0ec-57006f831469/resourcegroups/CLX_MATRIX_POC_RG/providers/Microsoft.DataFactory/factories/clxdev-adf-sandbox/integrationruntimes/clxdev-onprem-ir"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
