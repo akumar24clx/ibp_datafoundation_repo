@@ -8,6 +8,9 @@
 				"pipelineReference": {
 					"referenceName": "Load IDR Shipments",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"IDR_Load_Date": "20200404"
 				}
 			}
 		],
