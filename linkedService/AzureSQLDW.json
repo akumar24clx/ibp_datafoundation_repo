@@ -1,0 +1,16 @@
+{
+	"name": "AzureSQLDW",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=clxdev-sqldw-server.database.windows.net;initial catalog=clxdev-matrix-dw101;user id=kpernapa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI2ODJlMmMyOC1iOTE0LTQ5MjAtYTNkZC00MmQzYmJhMDRjYzEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "clxdev-az-ir-linked",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
