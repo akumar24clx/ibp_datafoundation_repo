@@ -2019,7 +2019,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlDWSource",
-						"sqlReaderQuery": "truncate table dbo.stg_litter_shipments",
+						"sqlReaderQuery": "delete from dbo.stg_litter_shipments where 1=1",
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
