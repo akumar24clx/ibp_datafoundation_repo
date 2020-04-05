@@ -208,7 +208,7 @@
 					"source": {
 						"type": "SqlDWSource",
 						"sqlReaderQuery": {
-							"value": "select CONVERT(VARCHAR(10), max(idr_load_date), 112)  as max_idr_load_date from base_litter_shipments",
+							"value": "select CONVERT(VARCHAR(10), max(idr_load_date), 112)  as max_idr_load_date from base_litter_orders",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00"
