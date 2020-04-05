@@ -39,6 +39,10 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/681c9400-3073-469f-b0ec-57006f831469/resourcegroups/CLX_MATRIX_POC_RG/providers/Microsoft.DataFactory/factories/clxdev-adf-sandbox/integrationruntimes/clxdev-onprem-ir"
 		},
+		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
+			"type": "string",
+			"defaultValue": "20200404"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -107,6 +111,9 @@
 					},
 					"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
 						"value": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date')]"
+					},
+					"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
+						"value": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
 					}
 				}
 			},

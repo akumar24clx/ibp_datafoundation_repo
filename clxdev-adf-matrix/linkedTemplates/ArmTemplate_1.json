@@ -10,6 +10,10 @@
 		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
 			"type": "string",
 			"defaultValue": "20200404"
+		},
+		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
+			"type": "string",
+			"defaultValue": "20200404"
 		}
 	},
 	"variables": {
@@ -2078,6 +2082,47 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Load IDR Shipments')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_IDR_Orders_Weekly_Schedule')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load IDR Orders",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"IDR_Load_Date": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2020-04-08T19:00:00.000Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								7
+							],
+							"weekDays": [
+								"Wednesday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

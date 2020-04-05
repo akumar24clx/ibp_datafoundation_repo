@@ -29,6 +29,9 @@
 		"clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
 			"value": "/subscriptions/681c9400-3073-469f-b0ec-57006f831469/resourcegroups/CLX_MATRIX_POC_RG/providers/Microsoft.DataFactory/factories/clxdev-adf-sandbox/integrationruntimes/clxdev-onprem-ir"
 		},
+		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
+			"value": "20200404"
+		},
 		"containerUri": {
 			"value": ""
 		},
