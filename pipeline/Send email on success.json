@@ -34,15 +34,15 @@
 			},
 			"Subject": {
 				"type": "string",
-				"defaultValue": "ADF pipeline finished successfully"
+				"defaultValue": "ADF pipeline Load IDR Orders finished successfully"
 			},
 			"DataFactoryName": {
 				"type": "string",
-				"defaultValue": "ADF"
+				"defaultValue": "ADF Matrix"
 			},
 			"PipelineName": {
 				"type": "string",
-				"defaultValue": "Send email on success"
+				"defaultValue": "Load IDR Orders"
 			},
 			"Activity": {
 				"type": "string",
