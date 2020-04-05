@@ -1,5 +1,5 @@
 {
-	"name": "CSV_Incremental_IDR_Litter_Shipments",
+	"name": "CSV_Incremental_IDR_Litter_Orders",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage_OnPrem",
@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "incremental_idr_litter_shipments.csv",
-				"folderPath": "shipments",
+				"fileName": "incremental_idr_litter_orders.csv",
+				"folderPath": "orders",
 				"container": "matrix-raw"
 			},
 			"columnDelimiter": ",",
