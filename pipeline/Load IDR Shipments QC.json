@@ -24,6 +24,15 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
+						"additionalColumns": [
+							{
+								"name": "IDR_Record_Count",
+								"value": {
+									"value": "select count(*) from\n(select *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date} \nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand billto_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%WAL-MART%')\nunion\nselect *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd')  > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand payer_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%DOLLAR GENERAL CORP%')\nunion\nselect *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand payer_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%KROGER%'))\n",
+									"type": "Expression"
+								}
+							}
+						],
 						"oracleReaderQuery": {
 							"value": "select * from\n(select *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date} \nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand billto_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%WAL-MART%')\nunion\nselect *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd')  > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand payer_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%DOLLAR GENERAL CORP%')\nunion\nselect *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand payer_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%KROGER%'))\n",
 							"type": "Expression"
@@ -2003,18 +2012,6 @@
 		"parameters": {
 			"IDR_Load_Date": {
 				"type": "string"
-			},
-			"IDR_Record_Count": {
-				"type": "int"
-			},
-			"CSV_Record_Count": {
-				"type": "int"
-			},
-			"Staging_Record_Count": {
-				"type": "int"
-			},
-			"Target_Record_Count": {
-				"type": "int"
 			}
 		},
 		"annotations": []
