@@ -2003,6 +2003,18 @@
 		"parameters": {
 			"IDR_Load_Date": {
 				"type": "string"
+			},
+			"IDR_Record_Count": {
+				"type": "int"
+			},
+			"CSV_Record_Count": {
+				"type": "int"
+			},
+			"Staging_Record_Count": {
+				"type": "int"
+			},
+			"Target_Record_Count": {
+				"type": "int"
 			}
 		},
 		"annotations": []
