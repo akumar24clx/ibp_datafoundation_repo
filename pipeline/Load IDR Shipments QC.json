@@ -1998,6 +1998,25 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "Quality Check - Staging",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "IDR To Storage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Load SQLDW Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": []
 			}
 		],
 		"parameters": {
