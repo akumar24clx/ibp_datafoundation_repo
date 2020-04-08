@@ -2016,7 +2016,13 @@
 						]
 					}
 				],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('IDR To Storage').output.rowsCopied,activity('Load SQLDW Staging').output.rowsCopied)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
