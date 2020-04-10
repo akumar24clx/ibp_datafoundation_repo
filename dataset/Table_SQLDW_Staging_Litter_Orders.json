@@ -700,5 +700,6 @@
 			"schema": "dbo",
 			"table": "stg_litter_orders"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

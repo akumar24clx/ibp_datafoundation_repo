@@ -8,5 +8,6 @@
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": []
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
