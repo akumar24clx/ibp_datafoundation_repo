@@ -2,7 +2,7 @@
 	"name": "Table_Oracle_IDR_Orders",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "KP_Oracle_IDR",
+			"referenceName": "Oracle_IDR_Dev",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
