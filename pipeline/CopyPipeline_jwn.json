@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_jwn",
+				"name": "Copy_SAP_MDX_Storage",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
