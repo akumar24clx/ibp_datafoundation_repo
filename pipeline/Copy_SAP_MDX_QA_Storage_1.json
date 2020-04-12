@@ -1,0 +1,56 @@
+{
+	"name": "Copy_SAP_MDX_QA_Storage_1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_SAP_MDX_Storage",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Destination",
+						"value": "matrix-raw/trade_promotions/incremental_trade_promotions.csv"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SapBwSource",
+						"query": "SELECT\n\t{ [Measures].[3UCCYRTVUJ3021VGIRIMPN4ZU],\n\t[Measures].[3UCCYS1KDHOPKOEWOLKYZP3PM] } ON COLUMNS,\n\tNON EMPTY\n\t{ [0CUSTOMER].[LEVEL01].MEMBERS,\n                [0CUSTOMER__0CUST_GROUP].[LEVEL01].MEMBERS,\n                [0CUSTOMER__0CUST_GRP5].[LEVEL01].MEMBERS,\n                [0DIVISION].[LEVEL01].MEMBERS,\n                [ZAFUNDID].[LEVEL01].MEMBERS,\n                [ZAFUNDID__ZFUNDTYPE].[LEVEL01].MEMBERS,\n                [ZALLOCID].[LEVEL01].MEMBERS,\n                [ZAPROMOID].[LEVEL01].MEMBERS,\n                [ZAPROMOID__ZPRENDDT].[LEVEL01].MEMBERS,\n                [ZAPROMOID__ZPRSTRTDT].[LEVEL01].MEMBERS,\n\t\t\t\t[ZFPAYMENT].[LEVEL01].MEMBERS\n               } ON ROWS\nFROM ZCPM_M64/ZCPM_M64_Q040\nCELL PROPERTIES VALUE SAP VARIABLES [ZI_FUNPE] INCLUDING [ZFEFFYR].[2019] : [ZFEFFYR].[2019] [ZM_CUSTG] \nINCLUDING [0CUSTOMER__0CUST_GROUP].[01]\n[Z_CUSTR] INCLUDING [0CUSTOMER].[0001910803]\n[0DIVISIO] INCLUDING [0DIVISION].[13]"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_jwn",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_jwn",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
