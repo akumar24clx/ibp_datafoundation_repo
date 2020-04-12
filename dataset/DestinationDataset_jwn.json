@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "incremental_trade_promotions.csv",
+				"fileName": "new_incremental_trade_promotions.csv",
 				"folderPath": "trade_promotions",
 				"container": "matrix-raw"
 			},
