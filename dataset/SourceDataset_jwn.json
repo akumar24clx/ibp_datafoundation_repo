@@ -1,0 +1,12 @@
+{
+	"name": "SourceDataset_jwn",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SAPBW_MDX_QA",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SapBwCube",
+		"schema": []
+	}
+}
