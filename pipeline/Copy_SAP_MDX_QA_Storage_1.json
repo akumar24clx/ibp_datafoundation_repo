@@ -65,7 +65,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "CustInvc#",
+									"name": "Customer",
 									"type": "String"
 								}
 							},
@@ -75,7 +75,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "Customer",
+									"name": "CustomerGroup",
 									"type": "String"
 								}
 							},
@@ -135,7 +135,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "Payment#",
+									"name": "FundType",
 									"type": "String"
 								}
 							},
@@ -145,7 +145,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "PaymentAmt",
+									"name": "PaymentDate",
 									"type": "String"
 								}
 							},
@@ -155,7 +155,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "PaymentComments",
+									"name": "PaymentType",
 									"type": "String"
 								}
 							},
@@ -165,7 +165,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "PaymentDate",
+									"name": "PromoID",
 									"type": "String"
 								}
 							},
@@ -175,7 +175,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "PaymentType",
+									"name": "PromotionEndDate",
 									"type": "String"
 								}
 							},
@@ -185,7 +185,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "Prepay",
+									"name": "PromotionStartDate",
 									"type": "String"
 								}
 							},
@@ -195,7 +195,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "PromoActivity",
+									"name": "TradeSector",
 									"type": "String"
 								}
 							},
@@ -205,7 +205,7 @@
 									"type": "Decimal"
 								},
 								"sink": {
-									"name": "PromoDesc",
+									"name": "PaymentAmt",
 									"type": "String"
 								}
 							},
@@ -215,49 +215,7 @@
 									"type": "Decimal"
 								},
 								"sink": {
-									"name": "PromoID",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "PromotionEndDate",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "PromotionStartDate",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "ReasonCode",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "SpecialHandlingCD",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "TradeSector",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "TradeSectorDesc",
-									"type": "String"
-								}
-							},
-							{
-								"sink": {
-									"name": "Azure_LoadDate",
+									"name": "Prepay",
 									"type": "String"
 								}
 							}
