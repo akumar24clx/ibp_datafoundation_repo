@@ -21,57 +21,103 @@
 		},
 		"schema": [
 			{
+				"name": "AcctFundID",
 				"type": "String"
 			},
 			{
+				"name": "AllocID",
 				"type": "String"
 			},
 			{
+				"name": "CustInvc#",
 				"type": "String"
 			},
 			{
+				"name": "Customer",
 				"type": "String"
 			},
 			{
+				"name": "CustomerPayee",
 				"type": "String"
 			},
 			{
+				"name": "Division",
 				"type": "String"
 			},
 			{
+				"name": "FundName",
 				"type": "String"
 			},
 			{
+				"name": "FundPeriod",
 				"type": "String"
 			},
 			{
+				"name": "FundPymtID",
 				"type": "String"
 			},
 			{
+				"name": "Payment#",
 				"type": "String"
 			},
 			{
+				"name": "PaymentAmt",
 				"type": "String"
 			},
 			{
+				"name": "PaymentComments",
 				"type": "String"
 			},
 			{
+				"name": "PaymentDate",
 				"type": "String"
 			},
 			{
+				"name": "PaymentType",
 				"type": "String"
 			},
 			{
+				"name": "Prepay",
 				"type": "String"
 			},
 			{
+				"name": "PromoActivity",
 				"type": "String"
 			},
 			{
+				"name": "PromoDesc",
 				"type": "String"
 			},
 			{
+				"name": "PromoID",
+				"type": "String"
+			},
+			{
+				"name": "PromotionEndDate",
+				"type": "String"
+			},
+			{
+				"name": "PromotionStartDate",
+				"type": "String"
+			},
+			{
+				"name": "ReasonCode",
+				"type": "String"
+			},
+			{
+				"name": "SpecialHandlingCD",
+				"type": "String"
+			},
+			{
+				"name": "TradeSector",
+				"type": "String"
+			},
+			{
+				"name": "TradeSectorDesc",
+				"type": "String"
+			},
+			{
+				"name": "Azure_LoadDate",
 				"type": "String"
 			}
 		]
