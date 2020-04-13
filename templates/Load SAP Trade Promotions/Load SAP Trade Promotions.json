@@ -1,0 +1,409 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"SAPBW_MDX_QA": {
+			"type": "string"
+		},
+		"AzureBlobStorage_OnPrem": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Load SAP Trade Promotions')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy SAP MDX To Storage",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Copy_SAP_MDX_QA_Storage_1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Copy_SAP_MDX_QA_Storage_1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_SAP_MDX_QA_Storage_1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_SAP_MDX_Storage",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Destination",
+								"value": "matrix-raw/trade_promotions/incremental_trade_promotions.csv"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "SapBwSource",
+								"query": "SELECT  {[Measures].[3UCCYRTVUJ3021VGIRIMPN4ZU],        [Measures].[3UCCYS1KDHOPKOEWOLKYZP3PM]    }ON 0,     \nNON EMPTY CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(CROSSJOIN(\nDISTINCT([ZAFUNDID].[LEVEL01].ALLMEMBERS) as AcctFundID,\nDISTINCT([ZALLOCID].[LEVEL01].ALLMEMBERS)),\nDISTINCT([0CUSTOMER].[LEVEL01].ALLMEMBERS)),\nDISTINCT([0CUSTOMER__0CUST_GROUP].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZFPAYMENT__ZCUSTPAYE].[LEVEL01].ALLMEMBERS)),\nDISTINCT([0DIVISION].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZNFUNDID].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZFEFFYR].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZFPAYMENT].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZAFUNDID__ZFUNDTYPE].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZFPAYMENT__ZPAYDATE].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZFPAYMENT__ZPAYTYPE].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZAPROMOID].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZAPROMOID__ZPRENDDT].[LEVEL01].ALLMEMBERS)),\nDISTINCT([ZAPROMOID__ZPRSTRTDT].[LEVEL01].ALLMEMBERS)),\nDISTINCT([0CUSTOMER__0CUST_GRP5].[LEVEL01].ALLMEMBERS)) PROPERTIES MEMBER_CAPTION ON 1\nFROM [ZCPM_M64/ZCPM_M64_Q040] \nCELL PROPERTIES VALUE SAP VARIABLES [ZI_FUNPE] INCLUDING [ZFEFFYR].[2019] : [ZFEFFYR].[2019] [Z_CUSTR] \nINCLUDING [0CUSTOMER].[0001910803] [ZM_CUSTG] INCLUDING [0CUSTOMER__0CUST_GROUP].[01] [0DIVISIO] INCLUDING [0DIVISION].[13]"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "[[ZAFUNDID].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AcctFundID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZALLOCID].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AllocID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[0CUSTOMER].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Customer",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[0CUSTOMER__0CUST_GROUP].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CustomerGroup",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZFPAYMENT__ZCUSTPAYE].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CustomerPayee",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[0DIVISION].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Division",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZNFUNDID].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FundName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZFEFFYR].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FundPeriod",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZFPAYMENT].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FundPymtID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZAFUNDID__ZFUNDTYPE].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FundType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZFPAYMENT__ZPAYDATE].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PaymentDate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZFPAYMENT__ZPAYTYPE].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PaymentType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZAPROMOID].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PromoID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZAPROMOID__ZPRENDDT].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PromotionEndDate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[ZAPROMOID__ZPRSTRTDT].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PromotionStartDate",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[0CUSTOMER__0CUST_GRP5].[LEVEL01].[MEMBER_CAPTION]",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TradeSector",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[Measures].[3UCCYRTVUJ3021VGIRIMPN4ZU]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "PaymentAmt",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "[[Measures].[3UCCYS1KDHOPKOEWOLKYZP3PM]",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Prepay",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_jwn",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CSV_Incremental_Trade_Promotions",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_jwn')]",
+				"[concat(variables('factoryId'), '/datasets/CSV_Incremental_Trade_Promotions')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_jwn')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('SAPBW_MDX_QA')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SapBwCube",
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CSV_Incremental_Trade_Promotions')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureBlobStorage_OnPrem')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "incremental_trade_promotions.csv",
+						"folderPath": "trade_promotions",
+						"container": "matrix-raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "AcctFundID",
+						"type": "String"
+					},
+					{
+						"name": "AllocID",
+						"type": "String"
+					},
+					{
+						"name": "Customer",
+						"type": "String"
+					},
+					{
+						"name": "CustomerGroup",
+						"type": "String"
+					},
+					{
+						"name": "CustomerPayee",
+						"type": "String"
+					},
+					{
+						"name": "Division",
+						"type": "String"
+					},
+					{
+						"name": "FundName",
+						"type": "String"
+					},
+					{
+						"name": "FundPeriod",
+						"type": "String"
+					},
+					{
+						"name": "FundPymtID",
+						"type": "String"
+					},
+					{
+						"name": "FundType",
+						"type": "String"
+					},
+					{
+						"name": "PaymentDate",
+						"type": "String"
+					},
+					{
+						"name": "PaymentType",
+						"type": "String"
+					},
+					{
+						"name": "PromoID",
+						"type": "String"
+					},
+					{
+						"name": "PromotionEndDate",
+						"type": "String"
+					},
+					{
+						"name": "PromotionStartDate",
+						"type": "String"
+					},
+					{
+						"name": "TradeSector",
+						"type": "String"
+					},
+					{
+						"name": "PaymentAmt",
+						"type": "String"
+					},
+					{
+						"name": "Prepay",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}
