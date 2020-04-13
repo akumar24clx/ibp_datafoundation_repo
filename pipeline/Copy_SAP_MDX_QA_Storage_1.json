@@ -35,7 +35,234 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "[ZAFUNDID].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AcctFundID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZALLOCID].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AllocID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[0CUSTOMER].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CustInvc#",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[0CUSTOMER__0CUST_GROUP].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Customer",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZFPAYMENT__ZCUSTPAYE].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CustomerPayee",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[0DIVISION].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Division",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZNFUNDID].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FundName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZFEFFYR].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FundPeriod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZFPAYMENT].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FundPymtID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZAFUNDID__ZFUNDTYPE].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Payment#",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZFPAYMENT__ZPAYDATE].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PaymentAmt",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZFPAYMENT__ZPAYTYPE].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PaymentComments",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZAPROMOID].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PaymentDate",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZAPROMOID__ZPRENDDT].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PaymentType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[ZAPROMOID__ZPRSTRTDT].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Prepay",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[0CUSTOMER__0CUST_GRP5].[LEVEL01].[MEMBER_CAPTION]",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PromoActivity",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[Measures].[3UCCYRTVUJ3021VGIRIMPN4ZU]",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "PromoDesc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "[Measures].[3UCCYS1KDHOPKOEWOLKYZP3PM]",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "PromoID",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "PromotionEndDate",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "PromotionStartDate",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "ReasonCode",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "SpecialHandlingCD",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "TradeSector",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "TradeSectorDesc",
+									"type": "String"
+								}
+							},
+							{
+								"sink": {
+									"name": "Azure_LoadDate",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
