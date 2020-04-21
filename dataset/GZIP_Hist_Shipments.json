@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "charcoal_all_cust_shipments_hist.gz",
+				"fileName": "litter_all_cust_shipments_hist.gz",
 				"folderPath": "test/test_shipments",
 				"container": "matrix-raw"
 			},
