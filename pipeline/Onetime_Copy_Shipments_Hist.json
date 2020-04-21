@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_4e7",
+				"name": "Copy_Storage_To_SQLDW",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -13,27 +13,16 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "Source",
-						"value": "matrix-raw/test/test_shipments/"
-					},
-					{
-						"name": "Destination",
-						"value": "dbo.stg_shipments_all"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*"
+							"recursive": true
 						},
 						"formatSettings": {
-							"type": "DelimitedTextReadSettings",
-							"skipLineCount": "0"
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -1738,13 +1727,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_4e7",
+						"referenceName": "GZIP_Hist_Shipments",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_4e7",
+						"referenceName": "Table_SQLDW_Staging_Shipments",
 						"type": "DatasetReference"
 					}
 				]
