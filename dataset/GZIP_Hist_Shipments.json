@@ -1,0 +1,702 @@
+{
+	"name": "GZIP_Hist_Shipments",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "charcoal_all_cust_shipments_hist.gz",
+				"folderPath": "test/test_shipments",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "BILLING_DOC_NBR",
+				"type": "String"
+			},
+			{
+				"name": "BILLING_LINE_ITEM_NBR",
+				"type": "String"
+			},
+			{
+				"name": "BILLING_CREATED_DATE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BILLING_DATE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_NUM",
+				"type": "String"
+			},
+			{
+				"name": "SAP_UPC_NUM",
+				"type": "String"
+			},
+			{
+				"name": "SHIPPINGPOINT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SOLDTO_CUSTOMER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PAYER_CUSTOMER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BILLTO_CUSTOMER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SHIPTO_CUSTOMER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BROKER_CUSTOMER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SO_DOC_NBR",
+				"type": "String"
+			},
+			{
+				"name": "PO_DOC_NBR",
+				"type": "String"
+			},
+			{
+				"name": "PROFIT_CENTER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "DISTRIB_CHANNEL_CODE",
+				"type": "String"
+			},
+			{
+				"name": "OMS",
+				"type": "String"
+			},
+			{
+				"name": "SHIP_FROM_PLANT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PLANNED_PGI_DATE_YYYYMM",
+				"type": "String"
+			},
+			{
+				"name": "DOS_PLANNED_PGI_DATE",
+				"type": "String"
+			},
+			{
+				"name": "DOC_CLASS_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CLX_PO_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "CTRL_AREA_CODE",
+				"type": "String"
+			},
+			{
+				"name": "FISCAL_YR_VARIANT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "COST_CENTER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BILLING_TYPE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BILLING_CATEGORY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SD_DOC_CATEGORY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "ITEM_TYPE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "ITEM_CATEGORY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "UNSALEABLE_IND",
+				"type": "String"
+			},
+			{
+				"name": "ORDER_ITEM_NBR",
+				"type": "String"
+			},
+			{
+				"name": "COMPANY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "DIVISION_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SALES_GROUP_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SO_DOC_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "BILLED_QTY_BASEUOM",
+				"type": "String"
+			},
+			{
+				"name": "BILLED_QTY_SC",
+				"type": "String"
+			},
+			{
+				"name": "BILLED_QTY_SLSUOM",
+				"type": "String"
+			},
+			{
+				"name": "BILLED_QTY",
+				"type": "String"
+			},
+			{
+				"name": "EXCHANGE_RATE",
+				"type": "String"
+			},
+			{
+				"name": "TAX_AMT",
+				"type": "String"
+			},
+			{
+				"name": "DISCOUNT_BASE_AMT",
+				"type": "String"
+			},
+			{
+				"name": "SCALE_QTY",
+				"type": "String"
+			},
+			{
+				"name": "DENOMINATOR",
+				"type": "String"
+			},
+			{
+				"name": "NUMERATOR",
+				"type": "String"
+			},
+			{
+				"name": "DELIVERED_VOL_QTY",
+				"type": "String"
+			},
+			{
+				"name": "COST_AMT",
+				"type": "String"
+			},
+			{
+				"name": "NET_SHIP_AMT",
+				"type": "String"
+			},
+			{
+				"name": "EXCHANGE_RATE_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "GROSS_SHIP_AMT",
+				"type": "String"
+			},
+			{
+				"name": "COST_AMT_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "OPEN_BILLING_QTY",
+				"type": "String"
+			},
+			{
+				"name": "EXCHANGE_RATE_ACCT",
+				"type": "String"
+			},
+			{
+				"name": "NET_SHIP_AMT_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "REBATE_AMT",
+				"type": "String"
+			},
+			{
+				"name": "GROSS_WEIGHT",
+				"type": "String"
+			},
+			{
+				"name": "REQUIRED_QTY",
+				"type": "String"
+			},
+			{
+				"name": "NET_WEIGHT",
+				"type": "String"
+			},
+			{
+				"name": "NETPRC_EXOFFINVDISC_AMT_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "OFFINVDISC_AMT_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "NETVAL_DISCSURCHRG_AMT_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "UNSALEABLE_AMT_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_EXPECTED_PRICE_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "BROKER_COMM_AMT_STCURR",
+				"type": "String"
+			},
+			{
+				"name": "NETPRC_EXOFFINVDISC_AMT",
+				"type": "String"
+			},
+			{
+				"name": "OFFINVDISC_AMT",
+				"type": "String"
+			},
+			{
+				"name": "NETVAL_DISCSURCHRG_AMT",
+				"type": "String"
+			},
+			{
+				"name": "UNSALEABLE_AMT",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_EXPECTED_PRICE",
+				"type": "String"
+			},
+			{
+				"name": "BROKER_COMM_AMT",
+				"type": "String"
+			},
+			{
+				"name": "SKU_BILL_QTY",
+				"type": "String"
+			},
+			{
+				"name": "DOS_QTY_SC",
+				"type": "String"
+			},
+			{
+				"name": "DOS_NG_LIQUID_QTY",
+				"type": "String"
+			},
+			{
+				"name": "NUMBER_OF_BILLEDITEM",
+				"type": "String"
+			},
+			{
+				"name": "SALES_OFFICE",
+				"type": "String"
+			},
+			{
+				"name": "ORDER_REASON",
+				"type": "String"
+			},
+			{
+				"name": "REJECTION_REASON",
+				"type": "String"
+			},
+			{
+				"name": "SALES_DEAL",
+				"type": "String"
+			},
+			{
+				"name": "SHIPPING_CONDITION_CODE",
+				"type": "String"
+			},
+			{
+				"name": "UPDATE_MODE",
+				"type": "String"
+			},
+			{
+				"name": "INV_DATE_NBR",
+				"type": "String"
+			},
+			{
+				"name": "STCURR",
+				"type": "String"
+			},
+			{
+				"name": "DOCCURR",
+				"type": "String"
+			},
+			{
+				"name": "UOM_WEIGHT",
+				"type": "String"
+			},
+			{
+				"name": "UOM_SALES",
+				"type": "String"
+			},
+			{
+				"name": "UOM_BASE",
+				"type": "String"
+			},
+			{
+				"name": "UOM_VOLUME",
+				"type": "String"
+			},
+			{
+				"name": "UOM",
+				"type": "String"
+			},
+			{
+				"name": "CHANGED_DATE_NBR",
+				"type": "String"
+			},
+			{
+				"name": "BATCH_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SERV_RENDERED_DATE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PROC_STATUS",
+				"type": "String"
+			},
+			{
+				"name": "REBATE_ARRANGEMENT",
+				"type": "String"
+			},
+			{
+				"name": "UOM_LAY",
+				"type": "String"
+			},
+			{
+				"name": "UOM_PAL",
+				"type": "String"
+			},
+			{
+				"name": "UOM_SC",
+				"type": "String"
+			},
+			{
+				"name": "SHIPPING_TYPE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "ACCT_ASSIGNMENT_GRP_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_GROUP_CODE_1",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_GROUP_CODE_2",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_GROUP_CODE_3",
+				"type": "String"
+			},
+			{
+				"name": "CUSTOMER_GROUP_CODE_4",
+				"type": "String"
+			},
+			{
+				"name": "STORAGE_LOCATION_CODE",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_GROUP_CODE",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_NUM_ENTERED",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_GROUP_CODE_1",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_GROUP_CODE_2",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_GROUP_CODE_3",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_GROUP_CODE_4",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_GROUP_CODE_5",
+				"type": "String"
+			},
+			{
+				"name": "DEST_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PRICING_DATE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SALES_REGION_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BOM_HIGH_LEVEL_ITEM",
+				"type": "String"
+			},
+			{
+				"name": "REF_DOC_NUM",
+				"type": "String"
+			},
+			{
+				"name": "REF_ITEM_NUM",
+				"type": "String"
+			},
+			{
+				"name": "DELIVERY_TYPE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "QTY_EACHES",
+				"type": "String"
+			},
+			{
+				"name": "DOC_COUNT",
+				"type": "String"
+			},
+			{
+				"name": "POSTING_STAT_BILL_DOC_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BILLING_STATUS_ORDER",
+				"type": "String"
+			},
+			{
+				"name": "BILLING_STATUS",
+				"type": "String"
+			},
+			{
+				"name": "SO_CUSTOMER_GROUP",
+				"type": "String"
+			},
+			{
+				"name": "CONDITION_GROUP_2",
+				"type": "String"
+			},
+			{
+				"name": "CONDITION_GROUP_3",
+				"type": "String"
+			},
+			{
+				"name": "CONDITION_GROUP_4",
+				"type": "String"
+			},
+			{
+				"name": "CONDITION_GROUP_5",
+				"type": "String"
+			},
+			{
+				"name": "SO_PRICE_GROUP",
+				"type": "String"
+			},
+			{
+				"name": "TRANSLATION_DATE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SRC_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "DEST_CITY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SOLDTO_CUSTOMER_CODE_1",
+				"type": "String"
+			},
+			{
+				"name": "POSTING_PERIOD_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "ITEM",
+				"type": "String"
+			},
+			{
+				"name": "SO_REGION_CODE",
+				"type": "String"
+			},
+			{
+				"name": "TRANSFER_ACCT_STATUS_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SO_SALES_ORG_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SO_DISTRIB_CHANNEL_CODE",
+				"type": "String"
+			},
+			{
+				"name": "MATERIAL_PLANT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SALES_DIVISION_CODE",
+				"type": "String"
+			},
+			{
+				"name": "DOS_QTY",
+				"type": "String"
+			},
+			{
+				"name": "BILLED_QTY_PURCHASE_UOM",
+				"type": "String"
+			},
+			{
+				"name": "NUMBER_OF_DOC",
+				"type": "String"
+			},
+			{
+				"name": "NUMBER_OF_DOC_ITEMS",
+				"type": "String"
+			},
+			{
+				"name": "GROSS_WEIGHT_KG",
+				"type": "String"
+			},
+			{
+				"name": "NET_WEIGHT_KG",
+				"type": "String"
+			},
+			{
+				"name": "VOLUME_CUBIC_DEC",
+				"type": "String"
+			},
+			{
+				"name": "VERSION_CODE",
+				"type": "String"
+			},
+			{
+				"name": "VALUE_TYPE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CREDIT_DEBIT_FLG",
+				"type": "String"
+			},
+			{
+				"name": "SALES_DISTRICT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SALES_EMP_CODE",
+				"type": "String"
+			},
+			{
+				"name": "POSTING_PERIOD",
+				"type": "String"
+			},
+			{
+				"name": "MILITARY_PRODUCT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "EDI_CUSTOMER_CODE",
+				"type": "String"
+			},
+			{
+				"name": "SOLDTO_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "BILLTO_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "PAYER_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CARRIER_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "REPRESENTATIVE_COUNTRY_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CONVERSION_DATE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "STATS_DATE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "STATS_UPDATE_DATE_CODE",
+				"type": "String"
+			},
+			{
+				"name": "FORWARDING_AGENT",
+				"type": "String"
+			},
+			{
+				"name": "BW_TRAN_KEY",
+				"type": "String"
+			},
+			{
+				"name": "LOAD_DATE",
+				"type": "String"
+			},
+			{
+				"name": "INVOICED_QTY",
+				"type": "String"
+			},
+			{
+				"name": "INVOICED_NET_AMT",
+				"type": "String"
+			}
+		]
+	}
+}
