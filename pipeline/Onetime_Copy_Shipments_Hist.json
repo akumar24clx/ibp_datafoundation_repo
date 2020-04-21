@@ -1,0 +1,1755 @@
+{
+	"name": "Onetime_Copy_Shipments_Hist",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_4e7",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "matrix-raw/test/test_shipments/"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.stg_shipments_all"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": "0"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "BILLING_DOC_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billing_doc_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLING_LINE_ITEM_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billing_line_item_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLING_CREATED_DATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billing_created_date_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLING_DATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billing_date_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_NUM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_num",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_UPC_NUM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_upc_num",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPPINGPOINT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "shippingpoint_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SOLDTO_CUSTOMER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "soldto_customer_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYER_CUSTOMER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "payer_customer_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLTO_CUSTOMER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billto_customer_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPTO_CUSTOMER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "shipto_customer_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BROKER_CUSTOMER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "broker_customer_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SO_DOC_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "so_doc_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PO_DOC_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "po_doc_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "profit_center_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DISTRIB_CHANNEL_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "distrib_channel_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "OMS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "oms",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIP_FROM_PLANT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ship_from_plant_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PLANNED_PGI_DATE_YYYYMM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "planned_pgi_date_yyyymm",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DOS_PLANNED_PGI_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "dos_planned_pgi_date",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DOC_CLASS_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "doc_class_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLX_PO_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "clx_po_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CTRL_AREA_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ctrl_area_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_YR_VARIANT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "fiscal_yr_variant_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COST_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "cost_center_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLING_TYPE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billing_type_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLING_CATEGORY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billing_category_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SD_DOC_CATEGORY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sd_doc_category_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEM_TYPE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "item_type_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEM_CATEGORY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "item_category_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNSALEABLE_IND",
+									"type": "String"
+								},
+								"sink": {
+									"name": "unsaleable_ind",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ORDER_ITEM_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "order_item_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COMPANY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "company_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DIVISION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "division_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_GROUP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_group_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SO_DOC_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "so_doc_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLED_QTY_BASEUOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billed_qty_baseuom",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLED_QTY_SC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billed_qty_sc",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLED_QTY_SLSUOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billed_qty_slsuom",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLED_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billed_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "EXCHANGE_RATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "exchange_rate",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "TAX_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tax_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "DISCOUNT_BASE_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "discount_base_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "SCALE_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "scale_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "DENOMINATOR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "denominator",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NUMERATOR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "numerator",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "DELIVERED_VOL_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "delivered_vol_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "COST_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "cost_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NET_SHIP_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "net_ship_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "EXCHANGE_RATE_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "exchange_rate_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "GROSS_SHIP_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gross_ship_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "COST_AMT_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "cost_amt_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "OPEN_BILLING_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "open_billing_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "EXCHANGE_RATE_ACCT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "exchange_rate_acct",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NET_SHIP_AMT_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "net_ship_amt_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "REBATE_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rebate_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "GROSS_WEIGHT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gross_weight",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "REQUIRED_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "required_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NET_WEIGHT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "net_weight",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NETPRC_EXOFFINVDISC_AMT_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "netprc_exoffinvdisc_amt_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "OFFINVDISC_AMT_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "offinvdisc_amt_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NETVAL_DISCSURCHRG_AMT_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "netval_discsurchrg_amt_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "UNSALEABLE_AMT_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "unsaleable_amt_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_EXPECTED_PRICE_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_expected_price_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "BROKER_COMM_AMT_STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "broker_comm_amt_stcurr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NETPRC_EXOFFINVDISC_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "netprc_exoffinvdisc_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "OFFINVDISC_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "offinvdisc_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NETVAL_DISCSURCHRG_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "netval_discsurchrg_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "UNSALEABLE_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "unsaleable_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_EXPECTED_PRICE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_expected_price",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "BROKER_COMM_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "broker_comm_amt",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "SKU_BILL_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sku_bill_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "DOS_QTY_SC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "dos_qty_sc",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "DOS_NG_LIQUID_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "dos_ng_liquid_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NUMBER_OF_BILLEDITEM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "number_of_billeditem",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_OFFICE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_office",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ORDER_REASON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "order_reason",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REJECTION_REASON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rejection_reason",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_DEAL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_deal",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPPING_CONDITION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "shipping_condition_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UPDATE_MODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "update_mode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "INV_DATE_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "inv_date_nbr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "STCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "stcurr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DOCCURR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "doccurr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM_WEIGHT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "uom_weight",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM_SALES",
+									"type": "String"
+								},
+								"sink": {
+									"name": "uom_sales",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM_BASE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "uom_base",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM_VOLUME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "uom_volume",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "uom",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CHANGED_DATE_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "changed_date_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BATCH_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "batch_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SERV_RENDERED_DATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "serv_rendered_date_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PROC_STATUS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "proc_status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REBATE_ARRANGEMENT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "rebate_arrangement",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM_LAY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "uom_lay",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM_PAL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "uom_pal",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UOM_SC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "uom_sc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SHIPPING_TYPE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "shipping_type_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCT_ASSIGNMENT_GRP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "acct_assignment_grp_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_GROUP_CODE_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_group_code_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_GROUP_CODE_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_group_code_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_GROUP_CODE_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_group_code_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_GROUP_CODE_4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_group_code_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORAGE_LOCATION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "storage_location_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_GROUP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_group_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_NUM_ENTERED",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_num_entered",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_GROUP_CODE_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_group_code_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_GROUP_CODE_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_group_code_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_GROUP_CODE_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_group_code_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_GROUP_CODE_4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_group_code_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_GROUP_CODE_5",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_group_code_5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEST_COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "dest_country_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PRICING_DATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pricing_date_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_REGION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_region_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BOM_HIGH_LEVEL_ITEM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bom_high_level_item",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REF_DOC_NUM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ref_doc_num",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REF_ITEM_NUM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ref_item_num",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DELIVERY_TYPE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "delivery_type_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QTY_EACHES",
+									"type": "String"
+								},
+								"sink": {
+									"name": "qty_eaches",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "DOC_COUNT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "doc_count",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "POSTING_STAT_BILL_DOC_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "posting_stat_bill_doc_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLING_STATUS_ORDER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billing_status_order",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLING_STATUS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billing_status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SO_CUSTOMER_GROUP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "so_customer_group",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONDITION_GROUP_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "condition_group_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONDITION_GROUP_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "condition_group_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONDITION_GROUP_4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "condition_group_4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONDITION_GROUP_5",
+									"type": "String"
+								},
+								"sink": {
+									"name": "condition_group_5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SO_PRICE_GROUP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "so_price_group",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANSLATION_DATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "translation_date_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SRC_COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "src_country_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEST_CITY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "dest_city_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SOLDTO_CUSTOMER_CODE_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "soldto_customer_code_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "POSTING_PERIOD_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "posting_period_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "item",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SO_REGION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "so_region_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TRANSFER_ACCT_STATUS_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "transfer_acct_status_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SO_SALES_ORG_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "so_sales_org_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DISTRIB_CHANNEL_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "so_distrib_channel_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_PLANT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_plant_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DIVISION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_division_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DOS_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "dos_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLED_QTY_PURCHASE_UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billed_qty_purchase_uom",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NUMBER_OF_DOC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "number_of_doc",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NUMBER_OF_DOC_ITEMS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "number_of_doc_items",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "GROSS_WEIGHT_KG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gross_weight_kg",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NET_WEIGHT_KG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "net_weight_kg",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "VOLUME_CUBIC_DEC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "volume_cubic_dec",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "VERSION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "version_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "VALUE_TYPE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "value_type_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREDIT_DEBIT_FLG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "credit_debit_flg",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_DISTRICT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_district_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_EMP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_emp_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "POSTING_PERIOD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "posting_period",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MILITARY_PRODUCT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "military_product_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EDI_CUSTOMER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "edi_customer_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SOLDTO_COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "soldto_country_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BILLTO_COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "billto_country_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PAYER_COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "payer_country_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CARRIER_COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "carrier_country_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REPRESENTATIVE_COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "representative_country_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONVERSION_DATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "conversion_date_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STATS_DATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "stats_date_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STATS_UPDATE_DATE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "stats_update_date_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FORWARDING_AGENT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "forwarding_agent",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BW_TRAN_KEY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "bw_tran_key",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LOAD_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "idr_load_date",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"name": "INVOICED_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "invoiced_qty",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "INVOICED_NET_AMT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "invoiced_net_amt",
+									"type": "Double"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_4e7",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_4e7",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
