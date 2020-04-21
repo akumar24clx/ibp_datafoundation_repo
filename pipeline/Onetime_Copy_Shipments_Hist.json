@@ -1434,7 +1434,7 @@
 							},
 							{
 								"source": {
-									"name": "DIVISION_CODE",
+									"name": "SALES_DIVISION_CODE",
 									"type": "String"
 								},
 								"sink": {
