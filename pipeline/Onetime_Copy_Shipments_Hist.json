@@ -410,7 +410,7 @@
 								},
 								"sink": {
 									"name": "billed_qty_baseuom",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -420,7 +420,7 @@
 								},
 								"sink": {
 									"name": "billed_qty_sc",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -430,7 +430,7 @@
 								},
 								"sink": {
 									"name": "billed_qty_slsuom",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -440,7 +440,7 @@
 								},
 								"sink": {
 									"name": "billed_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -450,7 +450,7 @@
 								},
 								"sink": {
 									"name": "exchange_rate",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -460,7 +460,7 @@
 								},
 								"sink": {
 									"name": "tax_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -470,7 +470,7 @@
 								},
 								"sink": {
 									"name": "discount_base_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -480,7 +480,7 @@
 								},
 								"sink": {
 									"name": "scale_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -490,7 +490,7 @@
 								},
 								"sink": {
 									"name": "denominator",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -500,7 +500,7 @@
 								},
 								"sink": {
 									"name": "numerator",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -510,7 +510,7 @@
 								},
 								"sink": {
 									"name": "delivered_vol_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -520,7 +520,7 @@
 								},
 								"sink": {
 									"name": "cost_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -530,7 +530,7 @@
 								},
 								"sink": {
 									"name": "net_ship_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -540,7 +540,7 @@
 								},
 								"sink": {
 									"name": "exchange_rate_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -550,7 +550,7 @@
 								},
 								"sink": {
 									"name": "gross_ship_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -560,7 +560,7 @@
 								},
 								"sink": {
 									"name": "cost_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -570,7 +570,7 @@
 								},
 								"sink": {
 									"name": "open_billing_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -580,7 +580,7 @@
 								},
 								"sink": {
 									"name": "exchange_rate_acct",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -590,7 +590,7 @@
 								},
 								"sink": {
 									"name": "net_ship_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -600,7 +600,7 @@
 								},
 								"sink": {
 									"name": "rebate_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -610,7 +610,7 @@
 								},
 								"sink": {
 									"name": "gross_weight",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -620,7 +620,7 @@
 								},
 								"sink": {
 									"name": "required_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -630,7 +630,7 @@
 								},
 								"sink": {
 									"name": "net_weight",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -640,7 +640,7 @@
 								},
 								"sink": {
 									"name": "netprc_exoffinvdisc_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -650,7 +650,7 @@
 								},
 								"sink": {
 									"name": "offinvdisc_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -660,7 +660,7 @@
 								},
 								"sink": {
 									"name": "netval_discsurchrg_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -670,7 +670,7 @@
 								},
 								"sink": {
 									"name": "unsaleable_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -680,7 +680,7 @@
 								},
 								"sink": {
 									"name": "customer_expected_price_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -690,7 +690,7 @@
 								},
 								"sink": {
 									"name": "broker_comm_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -700,7 +700,7 @@
 								},
 								"sink": {
 									"name": "netprc_exoffinvdisc_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -710,7 +710,7 @@
 								},
 								"sink": {
 									"name": "offinvdisc_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -720,7 +720,7 @@
 								},
 								"sink": {
 									"name": "netval_discsurchrg_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -730,7 +730,7 @@
 								},
 								"sink": {
 									"name": "unsaleable_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -740,7 +740,7 @@
 								},
 								"sink": {
 									"name": "customer_expected_price",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -750,7 +750,7 @@
 								},
 								"sink": {
 									"name": "broker_comm_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -760,7 +760,7 @@
 								},
 								"sink": {
 									"name": "sku_bill_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -770,7 +770,7 @@
 								},
 								"sink": {
 									"name": "dos_qty_sc",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -780,7 +780,7 @@
 								},
 								"sink": {
 									"name": "dos_ng_liquid_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -790,7 +790,7 @@
 								},
 								"sink": {
 									"name": "number_of_billeditem",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -860,7 +860,7 @@
 								},
 								"sink": {
 									"name": "inv_date_nbr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1230,7 +1230,7 @@
 								},
 								"sink": {
 									"name": "qty_eaches",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1240,7 +1240,7 @@
 								},
 								"sink": {
 									"name": "doc_count",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1460,7 +1460,7 @@
 								},
 								"sink": {
 									"name": "dos_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1470,7 +1470,7 @@
 								},
 								"sink": {
 									"name": "billed_qty_purchase_uom",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1480,7 +1480,7 @@
 								},
 								"sink": {
 									"name": "number_of_doc",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1490,7 +1490,7 @@
 								},
 								"sink": {
 									"name": "number_of_doc_items",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1500,7 +1500,7 @@
 								},
 								"sink": {
 									"name": "gross_weight_kg",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1510,7 +1510,7 @@
 								},
 								"sink": {
 									"name": "net_weight_kg",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1520,7 +1520,7 @@
 								},
 								"sink": {
 									"name": "volume_cubic_dec",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1710,7 +1710,7 @@
 								},
 								"sink": {
 									"name": "idr_load_date",
-									"type": "Date"
+									"type": "DateTime"
 								}
 							},
 							{
@@ -1720,7 +1720,7 @@
 								},
 								"sink": {
 									"name": "invoiced_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1730,7 +1730,7 @@
 								},
 								"sink": {
 									"name": "invoiced_net_amt",
-									"type": "Double"
+									"type": "Single"
 								}
 							}
 						]
