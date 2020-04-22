@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "material.csv",
+				"fileName": "material.dsv",
 				"folderPath": "dimensions",
 				"container": "matrix-raw"
 			},
