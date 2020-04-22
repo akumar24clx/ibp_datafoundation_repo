@@ -1,0 +1,238 @@
+{
+	"name": "SourceDataset_vfx",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "material.csv",
+				"folderPath": "dimensions",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "MATERIAL_NUM"
+			},
+			{
+				"name": "SAP_UPC_NUM"
+			},
+			{
+				"name": "SAP_MATERIAL_TYPE"
+			},
+			{
+				"name": "SAP_DIVISION_CODE"
+			},
+			{
+				"name": "DIVISION_NAME"
+			},
+			{
+				"name": "SAP_PROD_HIER_CODE"
+			},
+			{
+				"name": "SAP_UPC_DESC"
+			},
+			{
+				"name": "GBC_CODE"
+			},
+			{
+				"name": "GBC_NAME"
+			},
+			{
+				"name": "BRAND_CODE"
+			},
+			{
+				"name": "BRAND_NAME"
+			},
+			{
+				"name": "PURPOSE_CODE"
+			},
+			{
+				"name": "PURPOSE_NAME"
+			},
+			{
+				"name": "TYPE_CODE"
+			},
+			{
+				"name": "TYPE_NAME"
+			},
+			{
+				"name": "PACK_SIZE_CODE"
+			},
+			{
+				"name": "PACK_SIZE_NAME"
+			},
+			{
+				"name": "CONV_FACTOR_TON"
+			},
+			{
+				"name": "CONV_FACTOR_PAL"
+			},
+			{
+				"name": "CONV_FACTOR_SCS"
+			},
+			{
+				"name": "MATERIAL_GROUP"
+			},
+			{
+				"name": "BASE_UOM"
+			},
+			{
+				"name": "EAN_UPC"
+			},
+			{
+				"name": "APO_BRAND_CODE"
+			},
+			{
+				"name": "APO_SUB_BRAND_CODE"
+			},
+			{
+				"name": "APO_PMU_CODE"
+			},
+			{
+				"name": "APO_PLANNER_ID"
+			},
+			{
+				"name": "APO_BRAND_NAME"
+			},
+			{
+				"name": "APO_SUB_BRAND_NAME"
+			},
+			{
+				"name": "APO_PMU_NAME"
+			},
+			{
+				"name": "PROFIT_CENTER_CODE"
+			},
+			{
+				"name": "PROFIT_CENTER_NAME"
+			},
+			{
+				"name": "APO_PLANNER_NAME"
+			},
+			{
+				"name": "GENERAL_ITEM_CAT_GRP"
+			},
+			{
+				"name": "CREATED_DATE"
+			},
+			{
+				"name": "MODIFIED_DATE"
+			},
+			{
+				"name": "PACKAGING_TYPE_NAME"
+			},
+			{
+				"name": "SIZE_NAME"
+			},
+			{
+				"name": "SIZE_UOM"
+			},
+			{
+				"name": "MATERIAL_NUM_PADDED"
+			},
+			{
+				"name": "SIZE_VAL"
+			},
+			{
+				"name": "GROSS_WEIGHT"
+			},
+			{
+				"name": "NET_WEIGHT"
+			},
+			{
+				"name": "WEIGHT_UOM"
+			},
+			{
+				"name": "VOLUME"
+			},
+			{
+				"name": "VOLUME_UOM"
+			},
+			{
+				"name": "WIDTH"
+			},
+			{
+				"name": "HEIGHT"
+			},
+			{
+				"name": "ITEM_LENGTH"
+			},
+			{
+				"name": "PMU_NAME"
+			},
+			{
+				"name": "MATERIAL_NUM_UNPADDED"
+			},
+			{
+				"name": "SAP_MATERIAL_STATUS"
+			},
+			{
+				"name": "CONS_UPC_NUM"
+			},
+			{
+				"name": "CONS_UPC10_NUM"
+			},
+			{
+				"name": "SAP_MATERIAL_GRP"
+			},
+			{
+				"name": "MATERIAL_BASIC_DATA_TEXT"
+			},
+			{
+				"name": "CASE_CONTAINER_TYPE"
+			},
+			{
+				"name": "PIECE_CONTAINER_TYPE"
+			},
+			{
+				"name": "SAP_BASE_UOM"
+			},
+			{
+				"name": "MATERIAL_VALID_FROM_DATE"
+			},
+			{
+				"name": "MATERIAL_SHIP_START_DATE"
+			},
+			{
+				"name": "MATERIAL_SAP_MODIFIED_DATE"
+			},
+			{
+				"name": "MATERIAL_LIST_PRICE_DATE"
+			},
+			{
+				"name": "MATERIAL_SAP_CREATED_DATE"
+			},
+			{
+				"name": "CASE_STAT_FACTOR"
+			},
+			{
+				"name": "PIECES_PER_CASE"
+			},
+			{
+				"name": "UNIT_STAT_FACTOR"
+			},
+			{
+				"name": "CASE_STAT_FACTOR_NR"
+			},
+			{
+				"name": "CASE_STAT_FACTOR_DR"
+			},
+			{
+				"name": "PIECES_PER_CASE_NR"
+			},
+			{
+				"name": "PIECES_PER_CASE_DR"
+			}
+		]
+	}
+}
