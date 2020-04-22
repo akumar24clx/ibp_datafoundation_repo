@@ -1,0 +1,774 @@
+{
+	"name": "onetime_copy_material",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_vfx",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "matrix-raw/dimensions/material.csv"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.stg_material_dim"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "MATERIAL_NUM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_num",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_UPC_NUM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_upc_num",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_MATERIAL_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_material_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_DIVISION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_division_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DIVISION_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "division_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_PROD_HIER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_prod_hier_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_UPC_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_upc_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GBC_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gbc_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GBC_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gbc_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BRAND_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "brand_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BRAND_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "brand_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PURPOSE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "purpose_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PURPOSE_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "purpose_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TYPE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "type_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TYPE_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "type_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PACK_SIZE_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pack_size_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PACK_SIZE_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pack_size_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONV_FACTOR_TON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "conv_factor_ton",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "CONV_FACTOR_PAL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "conv_factor_pal",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "CONV_FACTOR_SCS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "conv_factor_scs",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_GROUP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_group",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BASE_UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "base_uom",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EAN_UPC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ean_upc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APO_BRAND_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "apo_brand_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APO_SUB_BRAND_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "apo_sub_brand_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APO_PMU_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "apo_pmu_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APO_PLANNER_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "apo_planner_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APO_BRAND_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "apo_brand_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APO_SUB_BRAND_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "apo_sub_brand_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APO_PMU_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "apo_pmu_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "profit_center_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PROFIT_CENTER_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "profit_center_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APO_PLANNER_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "apo_planner_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GENERAL_ITEM_CAT_GRP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "general_item_cat_grp",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"name": "MODIFIED_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "modified_date",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"name": "PACKAGING_TYPE_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "packaging_type_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SIZE_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "size_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SIZE_UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "size_uom",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_NUM_PADDED",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_num_padded",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SIZE_VAL",
+									"type": "String"
+								},
+								"sink": {
+									"name": "size_val",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GROSS_WEIGHT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gross_weight",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "NET_WEIGHT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "net_weight",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "WEIGHT_UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "weight_uom",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "VOLUME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "volume",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "VOLUME_UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "volume_uom",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "WIDTH",
+									"type": "String"
+								},
+								"sink": {
+									"name": "width",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "HEIGHT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "height",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "ITEM_LENGTH",
+									"type": "String"
+								},
+								"sink": {
+									"name": "item_length",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "PMU_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pmu_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_NUM_UNPADDED",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_num_unpadded",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_MATERIAL_STATUS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_material_status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONS_UPC_NUM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "cons_upc_num",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONS_UPC10_NUM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "cons_upc10_num",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_MATERIAL_GRP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_material_grp",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_BASIC_DATA_TEXT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_basic_data_text",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CASE_CONTAINER_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "case_container_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PIECE_CONTAINER_TYPE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "piece_container_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SAP_BASE_UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sap_base_uom",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_VALID_FROM_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_valid_from_date",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_SHIP_START_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_ship_start_date",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_SAP_MODIFIED_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_sap_modified_date",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_LIST_PRICE_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_list_price_date",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"name": "MATERIAL_SAP_CREATED_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "material_sap_created_date",
+									"type": "Date"
+								}
+							},
+							{
+								"source": {
+									"name": "CASE_STAT_FACTOR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "case_stat_factor",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "PIECES_PER_CASE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pieces_per_case",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "UNIT_STAT_FACTOR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "unit_stat_factor",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "CASE_STAT_FACTOR_NR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "case_stat_factor_nr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "CASE_STAT_FACTOR_DR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "case_stat_factor_dr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "PIECES_PER_CASE_NR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pieces_per_case_nr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "PIECES_PER_CASE_DR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pieces_per_case_dr",
+									"type": "Double"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_vfx",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_vfx",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
