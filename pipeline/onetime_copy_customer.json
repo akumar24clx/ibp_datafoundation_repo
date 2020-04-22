@@ -1,0 +1,474 @@
+{
+	"name": "onetime_copy_customer",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_2g7",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "matrix-raw/dimensions/customer.dsv"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.stg_customer_dim"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "CUSTOMER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_name_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_name_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_name_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PO_BOX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "po_box",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STREET",
+									"type": "String"
+								},
+								"sink": {
+									"name": "street",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REGION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "region_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REGION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "region",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CITY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "city",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ZIPCODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "zipcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "country_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COUNTRY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "country",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCT_GRP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "acct_grp_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_FLG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "consumer_flg",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_ORG_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_org_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_GROUP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_group_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_GROUP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_group",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TRADE_SECTOR_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "trade_sector_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TRADE_SECTOR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "trade_sector",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_GROUP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_group_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_ORG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_org",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_CODE_LVL_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_code_lvl_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_CODE_LVL_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_code_lvl_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_CODE_LVL_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_code_lvl_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME1_LVL_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_name1_lvl_1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME1_LVL_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_name1_lvl_2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME1_LVL_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "customer_name1_lvl_3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "OMS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "oms",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PLANNING_ACCT_GRP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "planning_acct_grp_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "HIERARCHY_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "hierarchy_nbr",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "PRICE_GROUP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "price_group_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "override_distrib_channel_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "OVERRIDE_SHIPTO_FLG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "override_shipto_flg",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_DEPT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_dept_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_REGION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_region_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_SECTOR_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_sector_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_DEPT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_dept",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_REGION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_region",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_SECTOR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_sector",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_DELETE_FLG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_delete_flg",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "Date"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_2g7",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_2g7",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

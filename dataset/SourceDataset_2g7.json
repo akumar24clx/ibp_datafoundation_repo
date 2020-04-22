@@ -1,0 +1,151 @@
+{
+	"name": "SourceDataset_2g7",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "customer.dsv",
+				"folderPath": "dimensions",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CUSTOMER_CODE"
+			},
+			{
+				"name": "CUSTOMER_NAME_1"
+			},
+			{
+				"name": "CUSTOMER_NAME_2"
+			},
+			{
+				"name": "CUSTOMER_NAME_3"
+			},
+			{
+				"name": "PO_BOX"
+			},
+			{
+				"name": "STREET"
+			},
+			{
+				"name": "REGION_CODE"
+			},
+			{
+				"name": "REGION"
+			},
+			{
+				"name": "CITY"
+			},
+			{
+				"name": "ZIPCODE"
+			},
+			{
+				"name": "COUNTRY_CODE"
+			},
+			{
+				"name": "COUNTRY"
+			},
+			{
+				"name": "ACCT_GRP_CODE"
+			},
+			{
+				"name": "CONSUMER_FLG"
+			},
+			{
+				"name": "SALES_ORG_CODE"
+			},
+			{
+				"name": "CUSTOMER_GROUP_CODE"
+			},
+			{
+				"name": "CUSTOMER_GROUP"
+			},
+			{
+				"name": "TRADE_SECTOR_CODE"
+			},
+			{
+				"name": "TRADE_SECTOR"
+			},
+			{
+				"name": "SALES_GROUP_CODE"
+			},
+			{
+				"name": "SALES_ORG"
+			},
+			{
+				"name": "CUSTOMER_CODE_LVL_1"
+			},
+			{
+				"name": "CUSTOMER_CODE_LVL_2"
+			},
+			{
+				"name": "CUSTOMER_CODE_LVL_3"
+			},
+			{
+				"name": "CUSTOMER_NAME1_LVL_1"
+			},
+			{
+				"name": "CUSTOMER_NAME1_LVL_2"
+			},
+			{
+				"name": "CUSTOMER_NAME1_LVL_3"
+			},
+			{
+				"name": "OMS"
+			},
+			{
+				"name": "PLANNING_ACCT_GRP_CODE"
+			},
+			{
+				"name": "HIERARCHY_NBR"
+			},
+			{
+				"name": "PRICE_GROUP_CODE"
+			},
+			{
+				"name": "OVERRIDE_DISTRIB_CHANNEL_CODE"
+			},
+			{
+				"name": "OVERRIDE_SHIPTO_FLG"
+			},
+			{
+				"name": "SALES_DEPT_CODE"
+			},
+			{
+				"name": "SALES_REGION_CODE"
+			},
+			{
+				"name": "SALES_SECTOR_CODE"
+			},
+			{
+				"name": "SALES_DEPT"
+			},
+			{
+				"name": "SALES_REGION"
+			},
+			{
+				"name": "SALES_SECTOR"
+			},
+			{
+				"name": "SALES_DELETE_FLG"
+			},
+			{
+				"name": "CREATED_DATE"
+			},
+			{
+				"name": "MODIFIED_DATE"
+			}
+		]
+	}
+}
