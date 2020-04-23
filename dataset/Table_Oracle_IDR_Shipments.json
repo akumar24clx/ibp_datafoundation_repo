@@ -1,0 +1,13 @@
+{
+	"name": "Table_Oracle_IDR_Shipments",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "KP_Oracle_IDR",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
