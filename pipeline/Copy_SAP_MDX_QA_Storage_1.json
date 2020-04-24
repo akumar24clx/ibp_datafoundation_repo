@@ -224,7 +224,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_jwn",
+						"referenceName": "Cube_SAP_Trade_Promotions",
 						"type": "DatasetReference"
 					}
 				],
