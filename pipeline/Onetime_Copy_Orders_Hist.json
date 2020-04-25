@@ -195,8 +195,7 @@
 							},
 							{
 								"source": {
-									"name": "MATERIAL_NUM",
-									"type": "String"
+									"name": "MATERIAL_NUM"
 								},
 								"sink": {
 									"name": "military_material_num",
