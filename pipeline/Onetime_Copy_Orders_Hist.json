@@ -295,7 +295,7 @@
 							},
 							{
 								"source": {
-									"name": "PLANNED_GI_DATE_CODE",
+									"name": "DELIVERY_PLANNED_GI_DATE_CODE",
 									"type": "String"
 								},
 								"sink": {
