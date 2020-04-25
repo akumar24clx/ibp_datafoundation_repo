@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_kov",
+				"name": "Copy_Orders_Storage_SQLDW",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
