@@ -1325,7 +1325,7 @@
 							},
 							{
 								"source": {
-									"name": "LEAD_TIME_ERROR_CODE",
+									"name": "ORG_LEAD_TIME_ERROR_CODE",
 									"type": "String"
 								},
 								"sink": {
