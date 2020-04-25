@@ -195,7 +195,8 @@
 							},
 							{
 								"source": {
-									"name": "MATERIAL_NUM"
+									"name": "MATERIAL_NUM",
+									"type": "String"
 								},
 								"sink": {
 									"name": "military_material_num",
@@ -539,7 +540,7 @@
 								},
 								"sink": {
 									"name": "ord_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -549,7 +550,7 @@
 								},
 								"sink": {
 									"name": "number_of_doc_items",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -559,7 +560,7 @@
 								},
 								"sink": {
 									"name": "actual_delivery_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -569,7 +570,7 @@
 								},
 								"sink": {
 									"name": "delivery_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -579,7 +580,7 @@
 								},
 								"sink": {
 									"name": "ord_qty_purchase_uom",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -589,7 +590,7 @@
 								},
 								"sink": {
 									"name": "bw_ord_qty_ng",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -599,7 +600,7 @@
 								},
 								"sink": {
 									"name": "bw_ord_qty_liquidation",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -609,7 +610,7 @@
 								},
 								"sink": {
 									"name": "bw_dos_ord_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -619,7 +620,7 @@
 								},
 								"sink": {
 									"name": "bw_ord_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -629,7 +630,7 @@
 								},
 								"sink": {
 									"name": "bw_ord_ac_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -639,7 +640,7 @@
 								},
 								"sink": {
 									"name": "cml_cf_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -649,7 +650,7 @@
 								},
 								"sink": {
 									"name": "cml_cd_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -659,7 +660,7 @@
 								},
 								"sink": {
 									"name": "cml_order_qty",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -669,7 +670,7 @@
 								},
 								"sink": {
 									"name": "netprc_exoffinvdisc_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -679,7 +680,7 @@
 								},
 								"sink": {
 									"name": "offinvdisc_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -689,7 +690,7 @@
 								},
 								"sink": {
 									"name": "netval_discsurchrg_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -699,7 +700,7 @@
 								},
 								"sink": {
 									"name": "unsaleable_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -709,7 +710,7 @@
 								},
 								"sink": {
 									"name": "customer_expected_price_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -719,7 +720,7 @@
 								},
 								"sink": {
 									"name": "broker_comm_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -729,7 +730,7 @@
 								},
 								"sink": {
 									"name": "net_ord_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -739,7 +740,7 @@
 								},
 								"sink": {
 									"name": "cost_amt_stcurr",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -749,7 +750,7 @@
 								},
 								"sink": {
 									"name": "gross_weight_kg",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -759,7 +760,7 @@
 								},
 								"sink": {
 									"name": "net_weight_kg",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -769,7 +770,7 @@
 								},
 								"sink": {
 									"name": "volume_cubic_decs",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -779,7 +780,7 @@
 								},
 								"sink": {
 									"name": "ord_qty_eaches",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -789,7 +790,7 @@
 								},
 								"sink": {
 									"name": "ord_qty_sc",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -799,7 +800,7 @@
 								},
 								"sink": {
 									"name": "ord_qty_cs",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -809,7 +810,7 @@
 								},
 								"sink": {
 									"name": "gi_date",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -819,7 +820,7 @@
 								},
 								"sink": {
 									"name": "actual_gi_date",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -899,7 +900,7 @@
 								},
 								"sink": {
 									"name": "no_of_employees",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1149,7 +1150,7 @@
 								},
 								"sink": {
 									"name": "gross_weight",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1159,7 +1160,7 @@
 								},
 								"sink": {
 									"name": "no_of_cases_per_pallet",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1169,7 +1170,7 @@
 								},
 								"sink": {
 									"name": "no_of_cases_per_layer",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1179,7 +1180,7 @@
 								},
 								"sink": {
 									"name": "customer_lead_time",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1189,7 +1190,7 @@
 								},
 								"sink": {
 									"name": "no_of_layers_per_pallet",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1199,7 +1200,7 @@
 								},
 								"sink": {
 									"name": "loose_pick_rate_cs",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1209,7 +1210,7 @@
 								},
 								"sink": {
 									"name": "loose_pick_qty_cs",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1219,7 +1220,7 @@
 								},
 								"sink": {
 									"name": "loose_pick_cost_cs",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1229,7 +1230,7 @@
 								},
 								"sink": {
 									"name": "loose_pick_rate_lay",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1239,7 +1240,7 @@
 								},
 								"sink": {
 									"name": "pick_qty_lay",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1249,7 +1250,7 @@
 								},
 								"sink": {
 									"name": "broker_layers_picked",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1259,7 +1260,7 @@
 								},
 								"sink": {
 									"name": "loose_pick_cost_lay",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1269,7 +1270,7 @@
 								},
 								"sink": {
 									"name": "loose_lay_pick_qty_cs",
-									"type": "Double"
+									"type": "Single"
 								}
 							},
 							{
@@ -1649,7 +1650,7 @@
 								},
 								"sink": {
 									"name": "idr_load_date",
-									"type": "Date"
+									"type": "DateTime"
 								}
 							}
 						]
