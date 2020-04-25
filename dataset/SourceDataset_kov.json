@@ -22,487 +22,648 @@
 		},
 		"schema": [
 			{
-				"name": "ORD_CREATED_DATE_CODE"
+				"name": "ORD_CREATED_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SO_DOC_NBR"
+				"name": "SO_DOC_NBR",
+				"type": "String"
 			},
 			{
-				"name": "ORD_LINE_ITEM_NBR"
+				"name": "ORD_LINE_ITEM_NBR",
+				"type": "String"
 			},
 			{
-				"name": "PROFIT_CENTER_CODE"
+				"name": "PROFIT_CENTER_CODE",
+				"type": "String"
 			},
 			{
-				"name": "CTRL_AREA_CODE"
+				"name": "CTRL_AREA_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SHIPPINGPOINT_CODE"
+				"name": "SHIPPINGPOINT_CODE",
+				"type": "String"
 			},
 			{
-				"name": "FISCAL_YR_VARIANT_CODE"
+				"name": "FISCAL_YR_VARIANT_CODE",
+				"type": "String"
 			},
 			{
-				"name": "ORD_HDR_CREATED_DATE_CODE"
+				"name": "ORD_HDR_CREATED_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "PLANNED_PGI_DATE_YYYYMM"
+				"name": "PLANNED_PGI_DATE_YYYYMM",
+				"type": "String"
 			},
 			{
-				"name": "BILLTO_CUSTOMER_CODE"
+				"name": "BILLTO_CUSTOMER_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SHIPTO_CUSTOMER_CODE"
+				"name": "SHIPTO_CUSTOMER_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SOLDTO_CUSTOMER_CODE"
+				"name": "SOLDTO_CUSTOMER_CODE",
+				"type": "String"
 			},
 			{
-				"name": "PAYER_CUSTOMER_CODE"
+				"name": "PAYER_CUSTOMER_CODE",
+				"type": "String"
 			},
 			{
-				"name": "BROKER_CUSTOMER_CODE"
+				"name": "BROKER_CUSTOMER_CODE",
+				"type": "String"
 			},
 			{
-				"name": "MATERIAL_NUM"
+				"name": "MATERIAL_NUM",
+				"type": "String"
 			},
 			{
-				"name": "MILITARY_MATERIAL_NUM"
+				"name": "MILITARY_MATERIAL_NUM",
+				"type": "String"
 			},
 			{
-				"name": "SAP_UPC_NUM"
+				"name": "SAP_UPC_NUM",
+				"type": "String"
 			},
 			{
-				"name": "SALES_DIVISION_CODE"
+				"name": "SALES_DIVISION_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SALES_DISTRICT_CODE"
+				"name": "SALES_DISTRICT_CODE",
+				"type": "String"
 			},
 			{
-				"name": "DOC_CLASS_CODE"
+				"name": "DOC_CLASS_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SD_DOC_CATEGORY_CODE"
+				"name": "SD_DOC_CATEGORY_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SO_DOC_TYPE"
+				"name": "SO_DOC_TYPE",
+				"type": "String"
 			},
 			{
-				"name": "ITEM_CATEGORY_CODE"
+				"name": "ITEM_CATEGORY_CODE",
+				"type": "String"
 			},
 			{
-				"name": "ORD_PLANNED_GI_DATE_CODE"
+				"name": "ORD_PLANNED_GI_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "PLANNED_GI_DATE_CODE"
+				"name": "PLANNED_GI_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "DELIVERY_PLANNED_GI_DATE_CODE"
+				"name": "DELIVERY_PLANNED_GI_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "MAT_AVAILABLE_DATE_CODE"
+				"name": "MAT_AVAILABLE_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "ACTUAL_GI_DATE_CODE"
+				"name": "ACTUAL_GI_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "PO_DOC_NBR"
+				"name": "PO_DOC_NBR",
+				"type": "String"
 			},
 			{
-				"name": "ACCT_ASSIGNMENT_GRP_CODE"
+				"name": "ACCT_ASSIGNMENT_GRP_CODE",
+				"type": "String"
 			},
 			{
-				"name": "COMPANY_CODE"
+				"name": "COMPANY_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SHIP_FROM_PLANT_CODE"
+				"name": "SHIP_FROM_PLANT_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SALES_GROUP_CODE"
+				"name": "SALES_GROUP_CODE",
+				"type": "String"
 			},
 			{
-				"name": "OMS"
+				"name": "OMS",
+				"type": "String"
 			},
 			{
-				"name": "SHIPPING_TYPE_CODE"
+				"name": "SHIPPING_TYPE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SHIPPING_CONDITION_CODE"
+				"name": "SHIPPING_CONDITION_CODE",
+				"type": "String"
 			},
 			{
-				"name": "FORWARDING_AGENT"
+				"name": "FORWARDING_AGENT",
+				"type": "String"
 			},
 			{
-				"name": "DIVISION_CODE"
+				"name": "DIVISION_CODE",
+				"type": "String"
 			},
 			{
-				"name": "DISTRIB_CHANNEL_CODE"
+				"name": "DISTRIB_CHANNEL_CODE",
+				"type": "String"
 			},
 			{
-				"name": "BILLING_BLOCK_CODE"
+				"name": "BILLING_BLOCK_CODE",
+				"type": "String"
 			},
 			{
-				"name": "DELIVERY_BLOCK_CODE"
+				"name": "DELIVERY_BLOCK_CODE",
+				"type": "String"
 			},
 			{
-				"name": "CLX_PO_TYPE"
+				"name": "CLX_PO_TYPE",
+				"type": "String"
 			},
 			{
-				"name": "SHIP_DATE_CODE"
+				"name": "SHIP_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "CUSTOMER_REQUESTED_DATE_CODE"
+				"name": "CUSTOMER_REQUESTED_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "BRACKET_PRICE_OVERRIDE_CODE"
+				"name": "BRACKET_PRICE_OVERRIDE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "EXPECTED_PRICE_STATUS_CODE"
+				"name": "EXPECTED_PRICE_STATUS_CODE",
+				"type": "String"
 			},
 			{
-				"name": "STATS_UPDATE_DATE_CODE"
+				"name": "STATS_UPDATE_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "MULTIPLE_ORDER"
+				"name": "MULTIPLE_ORDER",
+				"type": "String"
 			},
 			{
-				"name": "DELIVERY_NBR"
+				"name": "DELIVERY_NBR",
+				"type": "String"
 			},
 			{
-				"name": "ORD_QTY"
+				"name": "ORD_QTY",
+				"type": "String"
 			},
 			{
-				"name": "NUMBER_OF_DOC_ITEMS"
+				"name": "NUMBER_OF_DOC_ITEMS",
+				"type": "String"
 			},
 			{
-				"name": "ACTUAL_DELIVERY_QTY"
+				"name": "ACTUAL_DELIVERY_QTY",
+				"type": "String"
 			},
 			{
-				"name": "DELIVERY_QTY"
+				"name": "DELIVERY_QTY",
+				"type": "String"
 			},
 			{
-				"name": "ORD_QTY_PURCHASE_UOM"
+				"name": "ORD_QTY_PURCHASE_UOM",
+				"type": "String"
 			},
 			{
-				"name": "BW_ORD_QTY_NG"
+				"name": "BW_ORD_QTY_NG",
+				"type": "String"
 			},
 			{
-				"name": "BW_ORD_QTY_LIQUIDATION"
+				"name": "BW_ORD_QTY_LIQUIDATION",
+				"type": "String"
 			},
 			{
-				"name": "BW_DOS_ORD_QTY"
+				"name": "BW_DOS_ORD_QTY",
+				"type": "String"
 			},
 			{
-				"name": "BW_ORD_QTY"
+				"name": "BW_ORD_QTY",
+				"type": "String"
 			},
 			{
-				"name": "BW_ORD_AC_QTY"
+				"name": "BW_ORD_AC_QTY",
+				"type": "String"
 			},
 			{
-				"name": "CML_CF_QTY"
+				"name": "CML_CF_QTY",
+				"type": "String"
 			},
 			{
-				"name": "CML_CD_QTY"
+				"name": "CML_CD_QTY",
+				"type": "String"
 			},
 			{
-				"name": "CML_ORDER_QTY"
+				"name": "CML_ORDER_QTY",
+				"type": "String"
 			},
 			{
-				"name": "NETPRC_EXOFFINVDISC_AMT_STCURR"
+				"name": "NETPRC_EXOFFINVDISC_AMT_STCURR",
+				"type": "String"
 			},
 			{
-				"name": "OFFINVDISC_AMT_STCURR"
+				"name": "OFFINVDISC_AMT_STCURR",
+				"type": "String"
 			},
 			{
-				"name": "NETVAL_DISCSURCHRG_AMT_STCURR"
+				"name": "NETVAL_DISCSURCHRG_AMT_STCURR",
+				"type": "String"
 			},
 			{
-				"name": "UNSALEABLE_AMT_STCURR"
+				"name": "UNSALEABLE_AMT_STCURR",
+				"type": "String"
 			},
 			{
-				"name": "CUSTOMER_EXPECTED_PRICE_STCURR"
+				"name": "CUSTOMER_EXPECTED_PRICE_STCURR",
+				"type": "String"
 			},
 			{
-				"name": "BROKER_COMM_AMT_STCURR"
+				"name": "BROKER_COMM_AMT_STCURR",
+				"type": "String"
 			},
 			{
-				"name": "NET_ORD_AMT_STCURR"
+				"name": "NET_ORD_AMT_STCURR",
+				"type": "String"
 			},
 			{
-				"name": "COST_AMT_STCURR"
+				"name": "COST_AMT_STCURR",
+				"type": "String"
 			},
 			{
-				"name": "GROSS_WEIGHT_KG"
+				"name": "GROSS_WEIGHT_KG",
+				"type": "String"
 			},
 			{
-				"name": "NET_WEIGHT_KG"
+				"name": "NET_WEIGHT_KG",
+				"type": "String"
 			},
 			{
-				"name": "VOLUME_CUBIC_DECS"
+				"name": "VOLUME_CUBIC_DECS",
+				"type": "String"
 			},
 			{
-				"name": "ORD_QTY_EACHES"
+				"name": "ORD_QTY_EACHES",
+				"type": "String"
 			},
 			{
-				"name": "ORD_QTY_SC"
+				"name": "ORD_QTY_SC",
+				"type": "String"
 			},
 			{
-				"name": "ORD_QTY_CS"
+				"name": "ORD_QTY_CS",
+				"type": "String"
 			},
 			{
-				"name": "GI_DATE"
+				"name": "GI_DATE",
+				"type": "String"
 			},
 			{
-				"name": "ACTUAL_GI_DATE"
+				"name": "ACTUAL_GI_DATE",
+				"type": "String"
 			},
 			{
-				"name": "DOS_PGI_DATE_CODE"
+				"name": "DOS_PGI_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "UOM_BASE"
+				"name": "UOM_BASE",
+				"type": "String"
 			},
 			{
-				"name": "UOM_SALES"
+				"name": "UOM_SALES",
+				"type": "String"
 			},
 			{
-				"name": "UOM"
+				"name": "UOM",
+				"type": "String"
 			},
 			{
-				"name": "UOM_SCS"
+				"name": "UOM_SCS",
+				"type": "String"
 			},
 			{
-				"name": "UOM_PAL"
+				"name": "UOM_PAL",
+				"type": "String"
 			},
 			{
-				"name": "UOM_LAY"
+				"name": "UOM_LAY",
+				"type": "String"
 			},
 			{
-				"name": "NO_OF_EMPLOYEES"
+				"name": "NO_OF_EMPLOYEES",
+				"type": "String"
 			},
 			{
-				"name": "STCURR"
+				"name": "STCURR",
+				"type": "String"
 			},
 			{
-				"name": "SUBSTITUTION_REASON"
+				"name": "SUBSTITUTION_REASON",
+				"type": "String"
 			},
 			{
-				"name": "REJECTION_STATUS_CODE"
+				"name": "REJECTION_STATUS_CODE",
+				"type": "String"
 			},
 			{
-				"name": "EXCEPTION_RESPONSIBLE_CODE"
+				"name": "EXCEPTION_RESPONSIBLE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "EQUIP_TYPE_CODE"
+				"name": "EQUIP_TYPE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "EDI_CUSTOMER_NBR"
+				"name": "EDI_CUSTOMER_NBR",
+				"type": "String"
 			},
 			{
-				"name": "CREATED_BY"
+				"name": "CREATED_BY",
+				"type": "String"
 			},
 			{
-				"name": "SALES_DEAL_NBR"
+				"name": "SALES_DEAL_NBR",
+				"type": "String"
 			},
 			{
-				"name": "ACKNOWLEDGED_DATE_CODE"
+				"name": "ACKNOWLEDGED_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "CANCEL_BY_RQST_ARR_DATE_CODE"
+				"name": "CANCEL_BY_RQST_ARR_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "CANCEL_BY_RQST_SHIP_DATE_CODE"
+				"name": "CANCEL_BY_RQST_SHIP_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "CONVERSION_DATE_CODE"
+				"name": "CONVERSION_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "DECLINED_DATE_CODE"
+				"name": "DECLINED_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "PRICING_DATE_CODE"
+				"name": "PRICING_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SERVICE_RENDERED_DATE_CODE"
+				"name": "SERVICE_RENDERED_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "QUOTE_VALID_TO_DATE_CODE"
+				"name": "QUOTE_VALID_TO_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "LAST_ACTION_DATE_CODE"
+				"name": "LAST_ACTION_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "NOT_BEFORE_RQST_ARR_DATE_CODE"
+				"name": "NOT_BEFORE_RQST_ARR_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "NOT_BEFORE_RQST_SHIP_DATE_CODE"
+				"name": "NOT_BEFORE_RQST_SHIP_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "QUOTE_VALID_FROM_DATE_CODE"
+				"name": "QUOTE_VALID_FROM_DATE_CODE",
+				"type": "String"
 			},
 			{
-				"name": "CREATED_TIME"
+				"name": "CREATED_TIME",
+				"type": "String"
 			},
 			{
-				"name": "UOM_WEIGHT"
+				"name": "UOM_WEIGHT",
+				"type": "String"
 			},
 			{
-				"name": "POOLING_ELIGIBILITY"
+				"name": "POOLING_ELIGIBILITY",
+				"type": "String"
 			},
 			{
-				"name": "PICK_METHOD_CODE"
+				"name": "PICK_METHOD_CODE",
+				"type": "String"
 			},
 			{
-				"name": "GROSS_WEIGHT"
+				"name": "GROSS_WEIGHT",
+				"type": "String"
 			},
 			{
-				"name": "NO_OF_CASES_PER_PALLET"
+				"name": "NO_OF_CASES_PER_PALLET",
+				"type": "String"
 			},
 			{
-				"name": "NO_OF_CASES_PER_LAYER"
+				"name": "NO_OF_CASES_PER_LAYER",
+				"type": "String"
 			},
 			{
-				"name": "CUSTOMER_LEAD_TIME"
+				"name": "CUSTOMER_LEAD_TIME",
+				"type": "String"
 			},
 			{
-				"name": "NO_OF_LAYERS_PER_PALLET"
+				"name": "NO_OF_LAYERS_PER_PALLET",
+				"type": "String"
 			},
 			{
-				"name": "LOOSE_PICK_RATE_CS"
+				"name": "LOOSE_PICK_RATE_CS",
+				"type": "String"
 			},
 			{
-				"name": "LOOSE_PICK_QTY_CS"
+				"name": "LOOSE_PICK_QTY_CS",
+				"type": "String"
 			},
 			{
-				"name": "LOOSE_PICK_COST_CS"
+				"name": "LOOSE_PICK_COST_CS",
+				"type": "String"
 			},
 			{
-				"name": "LOOSE_PICK_RATE_LAY"
+				"name": "LOOSE_PICK_RATE_LAY",
+				"type": "String"
 			},
 			{
-				"name": "PICK_QTY_LAY"
+				"name": "PICK_QTY_LAY",
+				"type": "String"
 			},
 			{
-				"name": "BROKER_LAYERS_PICKED"
+				"name": "BROKER_LAYERS_PICKED",
+				"type": "String"
 			},
 			{
-				"name": "LOOSE_PICK_COST_LAY"
+				"name": "LOOSE_PICK_COST_LAY",
+				"type": "String"
 			},
 			{
-				"name": "LOOSE_LAY_PICK_QTY_CS"
+				"name": "LOOSE_LAY_PICK_QTY_CS",
+				"type": "String"
 			},
 			{
-				"name": "CURRENCY_CODE"
+				"name": "CURRENCY_CODE",
+				"type": "String"
 			},
 			{
-				"name": "REF_DOC_NBR"
+				"name": "REF_DOC_NBR",
+				"type": "String"
 			},
 			{
-				"name": "REF_ITEM_NBR"
+				"name": "REF_ITEM_NBR",
+				"type": "String"
 			},
 			{
-				"name": "DIVISION_HEADER_CODE"
+				"name": "DIVISION_HEADER_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SD_REF_DOC_CATEGORY"
+				"name": "SD_REF_DOC_CATEGORY",
+				"type": "String"
 			},
 			{
-				"name": "ORG_LEAD_TIME_ERROR_CODE"
+				"name": "ORG_LEAD_TIME_ERROR_CODE",
+				"type": "String"
 			},
 			{
-				"name": "EXPECTED_PRICE_ERROR_CODE"
+				"name": "EXPECTED_PRICE_ERROR_CODE",
+				"type": "String"
 			},
 			{
-				"name": "MULTIPLE_ORDER_ERROR_CODE"
+				"name": "MULTIPLE_ORDER_ERROR_CODE",
+				"type": "String"
 			},
 			{
-				"name": "MATERIAL_REASON_ERROR_CODE"
+				"name": "MATERIAL_REASON_ERROR_CODE",
+				"type": "String"
 			},
 			{
-				"name": "LEAD_TIME_ERROR_CODE"
+				"name": "LEAD_TIME_ERROR_CODE",
+				"type": "String"
 			},
 			{
-				"name": "SALES_OFFICE"
+				"name": "SALES_OFFICE",
+				"type": "String"
 			},
 			{
-				"name": "SALES_EMPLOYEE"
+				"name": "SALES_EMPLOYEE",
+				"type": "String"
 			},
 			{
-				"name": "IO_STATUS_CODE"
+				"name": "IO_STATUS_CODE",
+				"type": "String"
 			},
 			{
-				"name": "CREDIT_DEBIT_FLG"
+				"name": "CREDIT_DEBIT_FLG",
+				"type": "String"
 			},
 			{
-				"name": "CPU_ERROR_FLG"
+				"name": "CPU_ERROR_FLG",
+				"type": "String"
 			},
 			{
-				"name": "DATE_ERROR_FLG"
+				"name": "DATE_ERROR_FLG",
+				"type": "String"
 			},
 			{
-				"name": "DUPLICATE_PO_ERROR_FLG"
+				"name": "DUPLICATE_PO_ERROR_FLG",
+				"type": "String"
 			},
 			{
-				"name": "PLOAD_ERROR_FLG"
+				"name": "PLOAD_ERROR_FLG",
+				"type": "String"
 			},
 			{
-				"name": "SRC_ERROR_FLG"
+				"name": "SRC_ERROR_FLG",
+				"type": "String"
 			},
 			{
-				"name": "MANUAL_PRICE_DATE_FLG"
+				"name": "MANUAL_PRICE_DATE_FLG",
+				"type": "String"
 			},
 			{
-				"name": "ROUNDING_OCCURRED_FLG"
+				"name": "ROUNDING_OCCURRED_FLG",
+				"type": "String"
 			},
 			{
-				"name": "MAT_ERROR_FLG"
+				"name": "MAT_ERROR_FLG",
+				"type": "String"
 			},
 			{
-				"name": "MULTIPLE_ORD_FLG"
+				"name": "MULTIPLE_ORD_FLG",
+				"type": "String"
 			},
 			{
-				"name": "CPU_RATE_ERROR_FLG"
+				"name": "CPU_RATE_ERROR_FLG",
+				"type": "String"
 			},
 			{
-				"name": "CTS_HEADER_INDICATOR_FLG"
+				"name": "CTS_HEADER_INDICATOR_FLG",
+				"type": "String"
 			},
 			{
-				"name": "LEAD_TIME_COMPLIANCE_FLG"
+				"name": "LEAD_TIME_COMPLIANCE_FLG",
+				"type": "String"
 			},
 			{
-				"name": "LT_COMPLY_NO_SO_FLG"
+				"name": "LT_COMPLY_NO_SO_FLG",
+				"type": "String"
 			},
 			{
-				"name": "ORD_ITEMS_FLG"
+				"name": "ORD_ITEMS_FLG",
+				"type": "String"
 			},
 			{
-				"name": "ORD_REASON"
+				"name": "ORD_REASON",
+				"type": "String"
 			},
 			{
-				"name": "REJECTION_REASON"
+				"name": "REJECTION_REASON",
+				"type": "String"
 			},
 			{
-				"name": "MATERIAL_REASON"
+				"name": "MATERIAL_REASON",
+				"type": "String"
 			},
 			{
-				"name": "EXCEPTION_REASON"
+				"name": "EXCEPTION_REASON",
+				"type": "String"
 			},
 			{
-				"name": "CPU_ERROR_REASON"
+				"name": "CPU_ERROR_REASON",
+				"type": "String"
 			},
 			{
-				"name": "DATE_ERROR_REASON"
+				"name": "DATE_ERROR_REASON",
+				"type": "String"
 			},
 			{
-				"name": "PLOAD_ERROR_REASON"
+				"name": "PLOAD_ERROR_REASON",
+				"type": "String"
 			},
 			{
-				"name": "SOURCE_ERROR_REASON"
+				"name": "SOURCE_ERROR_REASON",
+				"type": "String"
 			},
 			{
-				"name": "BW_RECORD_CHANGE_FLG"
+				"name": "BW_RECORD_CHANGE_FLG",
+				"type": "String"
 			},
 			{
-				"name": "LOAD_DATE"
+				"name": "LOAD_DATE",
+				"type": "String"
 			}
 		]
 	}
