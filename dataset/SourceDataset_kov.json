@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "Orders_Charcoal_All_Hist.gz",
 				"folderPath": "test/test_orders",
 				"container": "matrix-raw"
 			},
