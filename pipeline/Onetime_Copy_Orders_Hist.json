@@ -215,7 +215,7 @@
 							},
 							{
 								"source": {
-									"name": "DIVISION_CODE",
+									"name": "SALES_DIVISION_CODE",
 									"type": "String"
 								},
 								"sink": {
@@ -555,7 +555,7 @@
 							},
 							{
 								"source": {
-									"name": "DELIVERY_QTY",
+									"name": "ACTUAL_DELIVERY_QTY",
 									"type": "String"
 								},
 								"sink": {
@@ -615,7 +615,7 @@
 							},
 							{
 								"source": {
-									"name": "ORD_QTY",
+									"name": "BW_ORD_QTY",
 									"type": "String"
 								},
 								"sink": {
@@ -815,7 +815,7 @@
 							},
 							{
 								"source": {
-									"name": "GI_DATE",
+									"name": "ACTUAL_GI_DATE",
 									"type": "String"
 								},
 								"sink": {
