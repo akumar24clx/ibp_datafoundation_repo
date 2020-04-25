@@ -1,0 +1,508 @@
+{
+	"name": "SourceDataset_kov",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "test/test_orders",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"compressionCodec": "gzip",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ORD_CREATED_DATE_CODE"
+			},
+			{
+				"name": "SO_DOC_NBR"
+			},
+			{
+				"name": "ORD_LINE_ITEM_NBR"
+			},
+			{
+				"name": "PROFIT_CENTER_CODE"
+			},
+			{
+				"name": "CTRL_AREA_CODE"
+			},
+			{
+				"name": "SHIPPINGPOINT_CODE"
+			},
+			{
+				"name": "FISCAL_YR_VARIANT_CODE"
+			},
+			{
+				"name": "ORD_HDR_CREATED_DATE_CODE"
+			},
+			{
+				"name": "PLANNED_PGI_DATE_YYYYMM"
+			},
+			{
+				"name": "BILLTO_CUSTOMER_CODE"
+			},
+			{
+				"name": "SHIPTO_CUSTOMER_CODE"
+			},
+			{
+				"name": "SOLDTO_CUSTOMER_CODE"
+			},
+			{
+				"name": "PAYER_CUSTOMER_CODE"
+			},
+			{
+				"name": "BROKER_CUSTOMER_CODE"
+			},
+			{
+				"name": "MATERIAL_NUM"
+			},
+			{
+				"name": "MILITARY_MATERIAL_NUM"
+			},
+			{
+				"name": "SAP_UPC_NUM"
+			},
+			{
+				"name": "SALES_DIVISION_CODE"
+			},
+			{
+				"name": "SALES_DISTRICT_CODE"
+			},
+			{
+				"name": "DOC_CLASS_CODE"
+			},
+			{
+				"name": "SD_DOC_CATEGORY_CODE"
+			},
+			{
+				"name": "SO_DOC_TYPE"
+			},
+			{
+				"name": "ITEM_CATEGORY_CODE"
+			},
+			{
+				"name": "ORD_PLANNED_GI_DATE_CODE"
+			},
+			{
+				"name": "PLANNED_GI_DATE_CODE"
+			},
+			{
+				"name": "DELIVERY_PLANNED_GI_DATE_CODE"
+			},
+			{
+				"name": "MAT_AVAILABLE_DATE_CODE"
+			},
+			{
+				"name": "ACTUAL_GI_DATE_CODE"
+			},
+			{
+				"name": "PO_DOC_NBR"
+			},
+			{
+				"name": "ACCT_ASSIGNMENT_GRP_CODE"
+			},
+			{
+				"name": "COMPANY_CODE"
+			},
+			{
+				"name": "SHIP_FROM_PLANT_CODE"
+			},
+			{
+				"name": "SALES_GROUP_CODE"
+			},
+			{
+				"name": "OMS"
+			},
+			{
+				"name": "SHIPPING_TYPE_CODE"
+			},
+			{
+				"name": "SHIPPING_CONDITION_CODE"
+			},
+			{
+				"name": "FORWARDING_AGENT"
+			},
+			{
+				"name": "DIVISION_CODE"
+			},
+			{
+				"name": "DISTRIB_CHANNEL_CODE"
+			},
+			{
+				"name": "BILLING_BLOCK_CODE"
+			},
+			{
+				"name": "DELIVERY_BLOCK_CODE"
+			},
+			{
+				"name": "CLX_PO_TYPE"
+			},
+			{
+				"name": "SHIP_DATE_CODE"
+			},
+			{
+				"name": "CUSTOMER_REQUESTED_DATE_CODE"
+			},
+			{
+				"name": "BRACKET_PRICE_OVERRIDE_CODE"
+			},
+			{
+				"name": "EXPECTED_PRICE_STATUS_CODE"
+			},
+			{
+				"name": "STATS_UPDATE_DATE_CODE"
+			},
+			{
+				"name": "MULTIPLE_ORDER"
+			},
+			{
+				"name": "DELIVERY_NBR"
+			},
+			{
+				"name": "ORD_QTY"
+			},
+			{
+				"name": "NUMBER_OF_DOC_ITEMS"
+			},
+			{
+				"name": "ACTUAL_DELIVERY_QTY"
+			},
+			{
+				"name": "DELIVERY_QTY"
+			},
+			{
+				"name": "ORD_QTY_PURCHASE_UOM"
+			},
+			{
+				"name": "BW_ORD_QTY_NG"
+			},
+			{
+				"name": "BW_ORD_QTY_LIQUIDATION"
+			},
+			{
+				"name": "BW_DOS_ORD_QTY"
+			},
+			{
+				"name": "BW_ORD_QTY"
+			},
+			{
+				"name": "BW_ORD_AC_QTY"
+			},
+			{
+				"name": "CML_CF_QTY"
+			},
+			{
+				"name": "CML_CD_QTY"
+			},
+			{
+				"name": "CML_ORDER_QTY"
+			},
+			{
+				"name": "NETPRC_EXOFFINVDISC_AMT_STCURR"
+			},
+			{
+				"name": "OFFINVDISC_AMT_STCURR"
+			},
+			{
+				"name": "NETVAL_DISCSURCHRG_AMT_STCURR"
+			},
+			{
+				"name": "UNSALEABLE_AMT_STCURR"
+			},
+			{
+				"name": "CUSTOMER_EXPECTED_PRICE_STCURR"
+			},
+			{
+				"name": "BROKER_COMM_AMT_STCURR"
+			},
+			{
+				"name": "NET_ORD_AMT_STCURR"
+			},
+			{
+				"name": "COST_AMT_STCURR"
+			},
+			{
+				"name": "GROSS_WEIGHT_KG"
+			},
+			{
+				"name": "NET_WEIGHT_KG"
+			},
+			{
+				"name": "VOLUME_CUBIC_DECS"
+			},
+			{
+				"name": "ORD_QTY_EACHES"
+			},
+			{
+				"name": "ORD_QTY_SC"
+			},
+			{
+				"name": "ORD_QTY_CS"
+			},
+			{
+				"name": "GI_DATE"
+			},
+			{
+				"name": "ACTUAL_GI_DATE"
+			},
+			{
+				"name": "DOS_PGI_DATE_CODE"
+			},
+			{
+				"name": "UOM_BASE"
+			},
+			{
+				"name": "UOM_SALES"
+			},
+			{
+				"name": "UOM"
+			},
+			{
+				"name": "UOM_SCS"
+			},
+			{
+				"name": "UOM_PAL"
+			},
+			{
+				"name": "UOM_LAY"
+			},
+			{
+				"name": "NO_OF_EMPLOYEES"
+			},
+			{
+				"name": "STCURR"
+			},
+			{
+				"name": "SUBSTITUTION_REASON"
+			},
+			{
+				"name": "REJECTION_STATUS_CODE"
+			},
+			{
+				"name": "EXCEPTION_RESPONSIBLE_CODE"
+			},
+			{
+				"name": "EQUIP_TYPE_CODE"
+			},
+			{
+				"name": "EDI_CUSTOMER_NBR"
+			},
+			{
+				"name": "CREATED_BY"
+			},
+			{
+				"name": "SALES_DEAL_NBR"
+			},
+			{
+				"name": "ACKNOWLEDGED_DATE_CODE"
+			},
+			{
+				"name": "CANCEL_BY_RQST_ARR_DATE_CODE"
+			},
+			{
+				"name": "CANCEL_BY_RQST_SHIP_DATE_CODE"
+			},
+			{
+				"name": "CONVERSION_DATE_CODE"
+			},
+			{
+				"name": "DECLINED_DATE_CODE"
+			},
+			{
+				"name": "PRICING_DATE_CODE"
+			},
+			{
+				"name": "SERVICE_RENDERED_DATE_CODE"
+			},
+			{
+				"name": "QUOTE_VALID_TO_DATE_CODE"
+			},
+			{
+				"name": "LAST_ACTION_DATE_CODE"
+			},
+			{
+				"name": "NOT_BEFORE_RQST_ARR_DATE_CODE"
+			},
+			{
+				"name": "NOT_BEFORE_RQST_SHIP_DATE_CODE"
+			},
+			{
+				"name": "QUOTE_VALID_FROM_DATE_CODE"
+			},
+			{
+				"name": "CREATED_TIME"
+			},
+			{
+				"name": "UOM_WEIGHT"
+			},
+			{
+				"name": "POOLING_ELIGIBILITY"
+			},
+			{
+				"name": "PICK_METHOD_CODE"
+			},
+			{
+				"name": "GROSS_WEIGHT"
+			},
+			{
+				"name": "NO_OF_CASES_PER_PALLET"
+			},
+			{
+				"name": "NO_OF_CASES_PER_LAYER"
+			},
+			{
+				"name": "CUSTOMER_LEAD_TIME"
+			},
+			{
+				"name": "NO_OF_LAYERS_PER_PALLET"
+			},
+			{
+				"name": "LOOSE_PICK_RATE_CS"
+			},
+			{
+				"name": "LOOSE_PICK_QTY_CS"
+			},
+			{
+				"name": "LOOSE_PICK_COST_CS"
+			},
+			{
+				"name": "LOOSE_PICK_RATE_LAY"
+			},
+			{
+				"name": "PICK_QTY_LAY"
+			},
+			{
+				"name": "BROKER_LAYERS_PICKED"
+			},
+			{
+				"name": "LOOSE_PICK_COST_LAY"
+			},
+			{
+				"name": "LOOSE_LAY_PICK_QTY_CS"
+			},
+			{
+				"name": "CURRENCY_CODE"
+			},
+			{
+				"name": "REF_DOC_NBR"
+			},
+			{
+				"name": "REF_ITEM_NBR"
+			},
+			{
+				"name": "DIVISION_HEADER_CODE"
+			},
+			{
+				"name": "SD_REF_DOC_CATEGORY"
+			},
+			{
+				"name": "ORG_LEAD_TIME_ERROR_CODE"
+			},
+			{
+				"name": "EXPECTED_PRICE_ERROR_CODE"
+			},
+			{
+				"name": "MULTIPLE_ORDER_ERROR_CODE"
+			},
+			{
+				"name": "MATERIAL_REASON_ERROR_CODE"
+			},
+			{
+				"name": "LEAD_TIME_ERROR_CODE"
+			},
+			{
+				"name": "SALES_OFFICE"
+			},
+			{
+				"name": "SALES_EMPLOYEE"
+			},
+			{
+				"name": "IO_STATUS_CODE"
+			},
+			{
+				"name": "CREDIT_DEBIT_FLG"
+			},
+			{
+				"name": "CPU_ERROR_FLG"
+			},
+			{
+				"name": "DATE_ERROR_FLG"
+			},
+			{
+				"name": "DUPLICATE_PO_ERROR_FLG"
+			},
+			{
+				"name": "PLOAD_ERROR_FLG"
+			},
+			{
+				"name": "SRC_ERROR_FLG"
+			},
+			{
+				"name": "MANUAL_PRICE_DATE_FLG"
+			},
+			{
+				"name": "ROUNDING_OCCURRED_FLG"
+			},
+			{
+				"name": "MAT_ERROR_FLG"
+			},
+			{
+				"name": "MULTIPLE_ORD_FLG"
+			},
+			{
+				"name": "CPU_RATE_ERROR_FLG"
+			},
+			{
+				"name": "CTS_HEADER_INDICATOR_FLG"
+			},
+			{
+				"name": "LEAD_TIME_COMPLIANCE_FLG"
+			},
+			{
+				"name": "LT_COMPLY_NO_SO_FLG"
+			},
+			{
+				"name": "ORD_ITEMS_FLG"
+			},
+			{
+				"name": "ORD_REASON"
+			},
+			{
+				"name": "REJECTION_REASON"
+			},
+			{
+				"name": "MATERIAL_REASON"
+			},
+			{
+				"name": "EXCEPTION_REASON"
+			},
+			{
+				"name": "CPU_ERROR_REASON"
+			},
+			{
+				"name": "DATE_ERROR_REASON"
+			},
+			{
+				"name": "PLOAD_ERROR_REASON"
+			},
+			{
+				"name": "SOURCE_ERROR_REASON"
+			},
+			{
+				"name": "BW_RECORD_CHANGE_FLG"
+			},
+			{
+				"name": "LOAD_DATE"
+			}
+		]
+	}
+}
