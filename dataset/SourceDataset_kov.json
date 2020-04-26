@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Orders_Litter_All_Hist.gz",
+				"fileName": "Orders_Food_All_Hist_1.gz",
 				"folderPath": "test/test_orders",
 				"container": "matrix-raw"
 			},
