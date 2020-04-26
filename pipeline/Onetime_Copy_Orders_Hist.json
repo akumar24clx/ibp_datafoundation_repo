@@ -1649,7 +1649,7 @@
 									"type": "String"
 								},
 								"sink": {
-									"name": "idr_load_date",
+									"name": "load_date",
 									"type": "DateTime"
 								}
 							}
