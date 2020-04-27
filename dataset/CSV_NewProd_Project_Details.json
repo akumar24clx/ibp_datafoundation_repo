@@ -1,0 +1,77 @@
+{
+	"name": "CSV_NewProd_Project_Details",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "L1 - Project Details.csv",
+				"folderPath": "New Product Repository",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ProjectNumber",
+				"type": "String"
+			},
+			{
+				"name": "ProjectName",
+				"type": "String"
+			},
+			{
+				"name": "Division",
+				"type": "String"
+			},
+			{
+				"name": "BusinessUnit",
+				"type": "String"
+			},
+			{
+				"name": "Brand",
+				"type": "String"
+			},
+			{
+				"name": "ProjectDescription",
+				"type": "String"
+			},
+			{
+				"name": "StageGate",
+				"type": "String"
+			},
+			{
+				"name": "SOS",
+				"type": "String"
+			},
+			{
+				"name": "FYGrossVol(Msc)",
+				"type": "String"
+			},
+			{
+				"name": "TFI($M)",
+				"type": "String"
+			},
+			{
+				"name": "Coupons($M)",
+				"type": "String"
+			},
+			{
+				"name": "Adv&SP($M)",
+				"type": "String"
+			},
+			{
+				"name": "LoadDate",
+				"type": "String"
+			}
+		]
+	}
+}
