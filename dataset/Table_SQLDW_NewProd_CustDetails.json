@@ -1,0 +1,16 @@
+{
+	"name": "Table_SQLDW_NewProd_CustDetails",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "newprod_cust_details"
+		}
+	}
+}
