@@ -1,0 +1,53 @@
+{
+	"name": "CSV_NewProd_Cust_Details",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "L2 - Customer Detail.csv",
+				"folderPath": "New Product Repository",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SnapShotName",
+				"type": "String"
+			},
+			{
+				"name": "ProjectNumber",
+				"type": "String"
+			},
+			{
+				"name": "ProjectName",
+				"type": "String"
+			},
+			{
+				"name": "Customer",
+				"type": "String"
+			},
+			{
+				"name": "ACV_Date",
+				"type": "String"
+			},
+			{
+				"name": "ACV_%Value",
+				"type": "String"
+			},
+			{
+				"name": "LoadDate",
+				"type": "String"
+			}
+		]
+	}
+}
