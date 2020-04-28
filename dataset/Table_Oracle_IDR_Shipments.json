@@ -1,0 +1,12 @@
+{
+	"name": "Table_Oracle_IDR_Shipments",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Oracle1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
