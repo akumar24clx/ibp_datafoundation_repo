@@ -30,7 +30,7 @@
 				}
 			},
 			{
-				"name": "Lookup1",
+				"name": "Get IDR Record Count",
 				"type": "Lookup",
 				"dependsOn": [
 					{
@@ -60,6 +60,61 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "IDR To Storage",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Get Last Load Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": {
+							"value": "select * from\n(select *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date} \nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand billto_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%WAL-MART%')\nunion\nselect *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd')  > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand payer_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%DOLLAR GENERAL CORP%')\nunion\nselect *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand payer_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%KROGER%'))\n",
+							"type": "Expression"
+						},
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_Shipments1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_Incremental_IDR_Litter_Shipments2",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
