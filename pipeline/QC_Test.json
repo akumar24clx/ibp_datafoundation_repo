@@ -19,7 +19,10 @@
 						"referenceName": "CSV_Incremental_IDR_Litter_Shipments1",
 						"type": "DatasetReference"
 					},
-					"fieldList": [],
+					"fieldList": [
+						"contentMD5",
+						"itemName"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true
