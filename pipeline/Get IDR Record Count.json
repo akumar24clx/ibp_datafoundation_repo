@@ -1955,6 +1955,48 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "QC Check - Storage to Staging",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "QC Check - Source to Storage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('IDR To Storage').output.rowsCopied,activity('Get Staging Record Count').output.firstRow.staging_record_count)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Send email on failure1",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure1",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Send email on Failure",
+									"Activity": "Test",
+									"ErrorMessage": "Test Failed"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"annotations": []
