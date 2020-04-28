@@ -115,6 +115,46 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "QC Check - Source to Storage",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Get IDR Record Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "IDR To Storage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Get IDR Record Count').output.idr_record_count,activity('IDR To Storage').output.rowsCopied)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Send email on failure",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					]
+				}
 			}
 		],
 		"annotations": []
