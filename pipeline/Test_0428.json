@@ -62,7 +62,7 @@
 				}
 			},
 			{
-				"name": "IDR To Storage",
+				"name": "Copy IDR To Storage",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -127,7 +127,7 @@
 						]
 					},
 					{
-						"activity": "IDR To Storage",
+						"activity": "Copy IDR To Storage",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -2019,6 +2019,37 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Failure Alert - 1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Copy IDR To Storage",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Send email on failure",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"EmailTo": "kalyani.pernapati@clorox.com",
+						"Subject": "Azure DF error",
+						"DataFactoryName": "clxdev-adf-matrix",
+						"PipelineName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
+						"Activity": "Copy IDR to Storage",
+						"ErrorMessage": ""
+					}
 				}
 			}
 		],
