@@ -136,7 +136,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('Get IDR Record Count').output.idr_record_count,activity('IDR To Storage').output.rowsCopied)",
+						"value": "@equals(activity('Get IDR Record Count').output.firstRow.idr_record_count,activity('IDR To Storage').output.rowsCopied)",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
