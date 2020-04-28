@@ -1990,8 +1990,8 @@
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
 									"PipelineName": "Send email on Failure",
-									"Activity": "Test",
-									"ErrorMessage": "Test Failed"
+									"Activity": "QC Check - Storage to Staging",
+									"ErrorMessage": "Record counts didn't match between storage and staging, please check."
 								}
 							}
 						}
