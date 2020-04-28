@@ -1995,6 +1995,21 @@
 								}
 							}
 						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Send email on success",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on success",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
 					]
 				}
 			}
