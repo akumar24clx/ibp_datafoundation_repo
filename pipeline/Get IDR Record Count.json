@@ -150,7 +150,15 @@
 									"referenceName": "Send email on failure",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Send email on Failure",
+									"Activity": "QC Check - IDR To Storage",
+									"ErrorMessage": "Record counts between IDR and storage file didn't match, please take a look."
+								}
 							}
 						}
 					]
