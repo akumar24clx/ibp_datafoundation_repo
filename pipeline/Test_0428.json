@@ -2044,7 +2044,7 @@
 						"Subject": "Azure DF error",
 						"DataFactoryName": "clxdev-adf-matrix",
 						"PipelineName": {
-							"value": "@pipeline().Pipeline",
+							"value": "Load IDR Shipments",
 							"type": "Expression"
 						},
 						"Activity": "Copy IDR to Storage",
