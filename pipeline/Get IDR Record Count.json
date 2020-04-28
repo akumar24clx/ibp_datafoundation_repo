@@ -2007,7 +2007,15 @@
 									"referenceName": "Send email on success",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "ADF pipeline finished successfully",
+									"DataFactoryName": "ADF",
+									"PipelineName": "Send email on success",
+									"Activity": "Success notification",
+									"ErrorMessage": "ADF pipeline finished successfully"
+								}
 							}
 						}
 					]
