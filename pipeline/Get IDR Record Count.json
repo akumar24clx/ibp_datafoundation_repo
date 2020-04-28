@@ -1,6 +1,67 @@
 {
-	"name": "Test_0428",
+	"name": "Get IDR Record Count",
 	"properties": {
+		"activities": [
+			{
+				"name": "Get Last Load Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": {
+							"value": "select CONVERT(VARCHAR(10), max(idr_load_date), 112)  as max_idr_load_date from base_litter_shipments",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Query_SQLDW_Base_Litter_Shipments1",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Get Last Load Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select * from\n(select *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date} \nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand billto_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%WAL-MART%')\nunion\nselect *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd')  > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand payer_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%DOLLAR GENERAL CORP%')\nunion\nselect *\nfrom clxbw.apo_bw_b_billing\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand material_num in (select material_num from clxbw.apo_bw_d_material where division_name like '%Litter%')\nand payer_customer_code in (select customer_code from clxbw.apo_bw_d_customer where customer_name_1 like '%KROGER%'))\n",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Table_Oracle_IDR_Shipments1",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
 		"annotations": []
 	}
 }
