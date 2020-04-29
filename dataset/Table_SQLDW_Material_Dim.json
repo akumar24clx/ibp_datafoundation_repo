@@ -1,0 +1,317 @@
+{
+	"name": "Table_SQLDW_Material_Dim",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "material_num",
+				"type": "varchar"
+			},
+			{
+				"name": "sap_upc_num",
+				"type": "varchar"
+			},
+			{
+				"name": "sap_material_type",
+				"type": "varchar"
+			},
+			{
+				"name": "sap_division_code",
+				"type": "varchar"
+			},
+			{
+				"name": "division_name",
+				"type": "varchar"
+			},
+			{
+				"name": "sap_prod_hier_code",
+				"type": "varchar"
+			},
+			{
+				"name": "sap_upc_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "gbc_code",
+				"type": "varchar"
+			},
+			{
+				"name": "gbc_name",
+				"type": "varchar"
+			},
+			{
+				"name": "brand_code",
+				"type": "varchar"
+			},
+			{
+				"name": "brand_name",
+				"type": "varchar"
+			},
+			{
+				"name": "purpose_code",
+				"type": "varchar"
+			},
+			{
+				"name": "purpose_name",
+				"type": "varchar"
+			},
+			{
+				"name": "type_code",
+				"type": "varchar"
+			},
+			{
+				"name": "type_name",
+				"type": "varchar"
+			},
+			{
+				"name": "pack_size_code",
+				"type": "varchar"
+			},
+			{
+				"name": "pack_size_name",
+				"type": "varchar"
+			},
+			{
+				"name": "conv_factor_ton",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "conv_factor_pal",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "conv_factor_scs",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "material_group",
+				"type": "varchar"
+			},
+			{
+				"name": "base_uom",
+				"type": "varchar"
+			},
+			{
+				"name": "ean_upc",
+				"type": "varchar"
+			},
+			{
+				"name": "apo_brand_code",
+				"type": "varchar"
+			},
+			{
+				"name": "apo_sub_brand_code",
+				"type": "varchar"
+			},
+			{
+				"name": "apo_pmu_code",
+				"type": "varchar"
+			},
+			{
+				"name": "apo_planner_id",
+				"type": "varchar"
+			},
+			{
+				"name": "apo_brand_name",
+				"type": "varchar"
+			},
+			{
+				"name": "apo_sub_brand_name",
+				"type": "varchar"
+			},
+			{
+				"name": "apo_pmu_name",
+				"type": "varchar"
+			},
+			{
+				"name": "profit_center_code",
+				"type": "varchar"
+			},
+			{
+				"name": "profit_center_name",
+				"type": "varchar"
+			},
+			{
+				"name": "apo_planner_name",
+				"type": "varchar"
+			},
+			{
+				"name": "general_item_cat_grp",
+				"type": "varchar"
+			},
+			{
+				"name": "created_date",
+				"type": "date"
+			},
+			{
+				"name": "modified_date",
+				"type": "date"
+			},
+			{
+				"name": "packaging_type_name",
+				"type": "varchar"
+			},
+			{
+				"name": "size_name",
+				"type": "varchar"
+			},
+			{
+				"name": "size_uom",
+				"type": "varchar"
+			},
+			{
+				"name": "material_num_padded",
+				"type": "varchar"
+			},
+			{
+				"name": "size_val",
+				"type": "varchar"
+			},
+			{
+				"name": "gross_weight",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "net_weight",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "weight_uom",
+				"type": "varchar"
+			},
+			{
+				"name": "volume",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "volume_uom",
+				"type": "varchar"
+			},
+			{
+				"name": "width",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "height",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "item_length",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pmu_name",
+				"type": "varchar"
+			},
+			{
+				"name": "material_num_unpadded",
+				"type": "varchar"
+			},
+			{
+				"name": "sap_material_status",
+				"type": "varchar"
+			},
+			{
+				"name": "cons_upc_num",
+				"type": "varchar"
+			},
+			{
+				"name": "cons_upc10_num",
+				"type": "varchar"
+			},
+			{
+				"name": "sap_material_grp",
+				"type": "varchar"
+			},
+			{
+				"name": "material_basic_data_text",
+				"type": "varchar"
+			},
+			{
+				"name": "case_container_type",
+				"type": "varchar"
+			},
+			{
+				"name": "piece_container_type",
+				"type": "varchar"
+			},
+			{
+				"name": "sap_base_uom",
+				"type": "varchar"
+			},
+			{
+				"name": "material_valid_from_date",
+				"type": "date"
+			},
+			{
+				"name": "material_ship_start_date",
+				"type": "date"
+			},
+			{
+				"name": "material_sap_modified_date",
+				"type": "date"
+			},
+			{
+				"name": "material_list_price_date",
+				"type": "date"
+			},
+			{
+				"name": "material_sap_created_date",
+				"type": "date"
+			},
+			{
+				"name": "case_stat_factor",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pieces_per_case",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "unit_stat_factor",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "case_stat_factor_nr",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "case_stat_factor_dr",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pieces_per_case_nr",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pieces_per_case_dr",
+				"type": "float",
+				"precision": 15
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "material_dim"
+		}
+	}
+}
