@@ -5,6 +5,9 @@
 			"referenceName": "SAPBW_MDX_QA",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "SAP - Cubes"
+		},
 		"annotations": [],
 		"type": "SapBwCube",
 		"schema": []

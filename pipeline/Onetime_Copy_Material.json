@@ -757,18 +757,21 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_vfx",
+						"referenceName": "CSV_Material_Hist",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_vfx",
+						"referenceName": "Table_SQLDW_Staging_Material",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
+		"folder": {
+			"name": "Clorox - Dimensions"
+		},
 		"annotations": []
 	}
 }

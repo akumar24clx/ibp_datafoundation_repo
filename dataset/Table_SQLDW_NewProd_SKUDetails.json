@@ -5,6 +5,9 @@
 			"referenceName": "AzureSQLDW",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "SQLDW - Base Tables"
+		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
 		"schema": [],

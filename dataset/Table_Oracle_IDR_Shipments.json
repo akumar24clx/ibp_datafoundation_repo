@@ -5,6 +5,9 @@
 			"referenceName": "Oracle1",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Oracle - Tables"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": []

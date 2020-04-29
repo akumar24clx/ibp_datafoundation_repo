@@ -86,19 +86,7 @@
 						"type": "SqlDWSink"
 					},
 					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "Table_SQLDW_Staging_Litter_Shipments2",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Table_SQLDW_Base_Litter_Shipments2",
-						"type": "DatasetReference"
-					}
-				]
+				}
 			},
 			{
 				"name": "Failure Alert - 1",
@@ -1957,12 +1945,6 @@
 						"referenceName": "CSV_Incremental_IDR_Litter_Shipments_AZ2",
 						"type": "DatasetReference"
 					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Table_SQLDW_Staging_Litter_Shipments2",
-						"type": "DatasetReference"
-					}
 				]
 			},
 			{
@@ -2004,6 +1986,9 @@
 			"IDR_Load_Date": {
 				"type": "string"
 			}
+		},
+		"folder": {
+			"name": "Shipments"
 		},
 		"annotations": []
 	}

@@ -1658,18 +1658,15 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_kov",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DestinationDataset_kov",
+						"referenceName": "GZIP_Orders_Hist",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
+		"folder": {
+			"name": "Orders"
+		},
 		"annotations": []
 	}
 }

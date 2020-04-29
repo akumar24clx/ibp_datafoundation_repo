@@ -457,18 +457,21 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_2g7",
+						"referenceName": "CSV_Hist_Customer",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_2g7",
+						"referenceName": "Table_SQLDW_Staging_Custpmer",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
+		"folder": {
+			"name": "Clorox - Dimensions"
+		},
 		"annotations": []
 	}
 }

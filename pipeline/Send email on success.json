@@ -53,6 +53,9 @@
 				"defaultValue": "ADF pipeline finished successfully"
 			}
 		},
+		"folder": {
+			"name": "Notifications-Alerts"
+		},
 		"annotations": []
 	}
 }
