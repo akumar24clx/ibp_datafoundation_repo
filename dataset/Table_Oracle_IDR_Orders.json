@@ -1,6 +1,9 @@
 {
 	"name": "Table_Oracle_IDR_Orders",
 	"properties": {
+		"folder": {
+			"name": "Oracle - Tables"
+		},
 		"annotations": [],
 		"type": "OracleTable",
 		"schema": []
