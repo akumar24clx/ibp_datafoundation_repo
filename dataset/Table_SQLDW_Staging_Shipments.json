@@ -738,7 +738,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "stg_shipments_all"
+			"table": "stg_shipments"
 		}
 	}
 }
