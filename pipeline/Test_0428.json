@@ -2046,6 +2046,37 @@
 									"type": "DatasetReference"
 								}
 							]
+						},
+						{
+							"name": "Failure Alert - 3",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Load SQLDW Target",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Load IDR Shipments",
+									"Activity": "Load SQLDW Target",
+									"ErrorMessage": {
+										"value": "@activity('Load SQLDW Target').Error.Message",
+										"type": "Expression"
+									}
+								}
+							}
 						}
 					]
 				}
