@@ -463,7 +463,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Table_SQLDW_Staging_Custpmer",
+						"referenceName": "Table_SQLDW_Staging_Customer",
 						"type": "DatasetReference"
 					}
 				]
