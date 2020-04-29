@@ -1,0 +1,8 @@
+{
+	"name": "Table_Oracle_IDR_Orders",
+	"properties": {
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": []
+	}
+}
