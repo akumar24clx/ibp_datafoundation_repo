@@ -1,0 +1,16 @@
+{
+	"name": "Table_Oracle_IDR_Material",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Oracle1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "clxbw",
+			"table": "apo_bw_d_material"
+		}
+	}
+}
