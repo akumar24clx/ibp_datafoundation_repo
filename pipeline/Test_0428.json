@@ -2081,7 +2081,14 @@
 						{
 							"name": "Get Target Record Count",
 							"type": "Lookup",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Load SQLDW Target",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -2089,7 +2096,21 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": []
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlDWSource",
+									"sqlReaderQuery": {
+										"value": "select count(*) as target_record_count\nfrom dbo.base_shipments \nwhere CONVERT(varchar, idr_load_date, 112) >= ",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00"
+								},
+								"dataset": {
+									"referenceName": "Table_SQLDW_Base_Shipments",
+									"type": "DatasetReference"
+								}
+							}
 						}
 					]
 				}
