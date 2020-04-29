@@ -19,6 +19,13 @@
 						"referenceName": "merge_material_dim",
 						"type": "DataFlowReference"
 					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "AzureBlobStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "matrix-raw/dimensions"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
