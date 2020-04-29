@@ -144,7 +144,7 @@
 					},
 					"ifFalseActivities": [
 						{
-							"name": "Send email on failure_copy1",
+							"name": "QC Check - Failure Alert 1",
 							"type": "ExecutePipeline",
 							"dependsOn": [],
 							"userProperties": [],
@@ -158,8 +158,8 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
-									"PipelineName": "Send email on Failure",
-									"Activity": "QC Check - IDR To Storage",
+									"PipelineName": "Load IDR Shipments",
+									"Activity": "QC Check - Copy IDR To Storage",
 									"ErrorMessage": "Record counts between IDR and storage file didn't match, please take a look."
 								}
 							}
