@@ -1,9 +1,12 @@
 {
-	"name": "SourceDataset_2g7",
+	"name": "CSV_Hist_Customer",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Blob Storage - Files"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
