@@ -2162,7 +2162,30 @@
 					"expression": {
 						"value": "@equals(activity('Get Staging Record Count').output.firstRow.staging_record_count,activity('Get Target Record Count').output.firstRow.target_record_count)",
 						"type": "Expression"
-					}
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Pipeline Success Notification",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on success",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "ADF pipeline Load IDR Litter Shipments finished successfully",
+									"DataFactoryName": "ADF",
+									"PipelineName": "Load IDR Litter Shipments",
+									"Activity": "Load IDR Litter Shipments",
+									"ErrorMessage": "No errors"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
