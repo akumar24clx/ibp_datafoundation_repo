@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "merge_material_dim",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
