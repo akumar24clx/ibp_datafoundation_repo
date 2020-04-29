@@ -1,5 +1,5 @@
 {
-	"name": "DestinationDataset_2g7",
+	"name": "Table_SQLDW_Staging_Custpmer",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
