@@ -2042,7 +2042,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Table_SQLDW_Base_Litter_Shipments2",
+									"referenceName": "Table_SQLDW_Base_Shipments",
 									"type": "DatasetReference"
 								}
 							]
