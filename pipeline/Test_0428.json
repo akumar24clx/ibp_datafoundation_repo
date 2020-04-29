@@ -2111,6 +2111,19 @@
 						"ErrorMessage": "@activity('Copy IDR To Storage').Error.Message"
 					}
 				}
+			},
+			{
+				"name": "QC Check - Staging to Target",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "QC Check - Storage to Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": []
 			}
 		],
 		"annotations": []
