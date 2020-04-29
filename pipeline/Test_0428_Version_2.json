@@ -2141,7 +2141,7 @@
 				]
 			},
 			{
-				"name": "Get Staging Record Count_copy1",
+				"name": "Get Staging Record Count",
 				"type": "Lookup",
 				"dependsOn": [
 					{
