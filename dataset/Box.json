@@ -10,6 +10,9 @@
 		},
 		"annotations": [],
 		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "https://clorox.app.box.com/file/644655264100"
+		},
 		"schema": []
 	}
 }
