@@ -1961,7 +1961,7 @@
 									"PipelineName": "Load IDR Shipments",
 									"Activity": "Load SQLDW Staging",
 									"ErrorMessage": {
-										"value": "@activity('Load SQLDW Staging').ErrorMessage",
+										"value": "@activity('Load SQLDW Staging').Error.Message",
 										"type": "Expression"
 									}
 								}
