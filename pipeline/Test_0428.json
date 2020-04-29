@@ -192,7 +192,7 @@
 								},
 								"sink": {
 									"type": "SqlDWSink",
-									"preCopyScript": "truncate table dbo.stg_litter_shipments",
+									"preCopyScript": "truncate table dbo.stg_shipments",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
@@ -1894,13 +1894,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "CSV_Incremental_IDR_Litter_Shipments_AZ2",
+									"referenceName": "CSV_Incremental_IDR_Shipments_AZ",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Table_SQLDW_Staging_Litter_Shipments2",
+									"referenceName": "Table_SQLDW_Staging_Shipments",
 									"type": "DatasetReference"
 								}
 							]
