@@ -1984,18 +1984,18 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('IDR To Storage').output.rowsCopied,activity('Get Staging Record Count').output.firstRow.staging_record_count)",
+						"value": "@equals(activity('Copy IDR To Storage').output.rowsCopied,activity('Get Staging Record Count').output.firstRow.staging_record_count)",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
 						{
-							"name": "Send email on failure1",
+							"name": "QC Check - Failure Alert 2",
 							"type": "ExecutePipeline",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "Send email on failure1",
+									"referenceName": "Send email on failure",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true,
@@ -2003,9 +2003,9 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
-									"PipelineName": "Send email on Failure",
-									"Activity": "QC Check - Storage to Staging",
-									"ErrorMessage": "Record counts didn't match between storage and staging, please check."
+									"PipelineName": "Load IDR Shipments",
+									"Activity": "QC Check - Storage to SQLDW Staging",
+									"ErrorMessage": "Record counts between incremental data file and SQLDW \nstaging did not match, please take a look."
 								}
 							}
 						}
