@@ -2101,7 +2101,7 @@
 								"source": {
 									"type": "SqlDWSource",
 									"sqlReaderQuery": {
-										"value": "select count(*) as target_record_count\nfrom dbo.base_shipments \nwhere CONVERT(varchar, idr_load_date, 112) >= @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}",
+										"value": "select count(*) as target_record_count\nfrom dbo.base_shipments \nwhere CONVERT(varchar, idr_load_date, 112) > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00"
