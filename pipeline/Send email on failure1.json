@@ -55,6 +55,9 @@
 				"defaultValue": "Test Failed"
 			}
 		},
+		"folder": {
+			"name": "Notifications-Alerts"
+		},
 		"annotations": []
 	}
 }
