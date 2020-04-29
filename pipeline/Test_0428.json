@@ -1927,11 +1927,11 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlDWSource",
-									"sqlReaderQuery": "select count(*) as staging_record_count from stg_litter_shipments",
+									"sqlReaderQuery": "select count(*) as staging_record_count from stg_shipments",
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
-									"referenceName": "Table_SQLDW_Staging_Litter_Shipments",
+									"referenceName": "Table_SQLDW_Staging_Shipments",
 									"type": "DatasetReference"
 								}
 							}
