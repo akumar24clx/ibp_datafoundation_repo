@@ -177,6 +177,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Send email on success",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true,
 					"parameters": {
 						"EmailTo": "kalyani.pernapati@clorox.com",
