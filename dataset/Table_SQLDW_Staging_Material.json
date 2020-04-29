@@ -1,5 +1,5 @@
 {
-	"name": "DestinationDataset_vfx",
+	"name": "Table_SQLDW_Staging_Material",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
