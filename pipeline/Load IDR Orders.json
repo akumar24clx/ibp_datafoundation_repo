@@ -24,7 +24,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "Query_SQLDW_Base_Shipments",
+						"referenceName": "Query_SQLDW_Base_Orders",
 						"type": "DatasetReference"
 					}
 				}
