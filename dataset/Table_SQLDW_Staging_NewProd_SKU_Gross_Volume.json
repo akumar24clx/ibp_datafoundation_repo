@@ -1,9 +1,12 @@
 {
-	"name": "Table_SQLDW_NewProd_SKU_Gross_Volume",
+	"name": "Table_SQLDW_Staging_NewProd_SKU_Gross_Volume",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLDW - Staging Tables"
 		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
