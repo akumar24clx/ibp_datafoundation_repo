@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "newprod_sku_gross_volume"
+			"table": "stg_newprod_sku_gross_volume"
 		}
 	}
 }
