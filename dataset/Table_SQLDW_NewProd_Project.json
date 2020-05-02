@@ -1,5 +1,5 @@
 {
-	"name": "Table_SQLDW_NewProd_Table1",
+	"name": "Table_SQLDW_NewProd_Project",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
