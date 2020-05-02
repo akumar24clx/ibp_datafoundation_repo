@@ -39,7 +39,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Table_SQLDW_NewProd_SKU_Velocity",
+						"referenceName": "Table_SQLDW_Staging_NewProd_SKU_Velocity",
 						"type": "DatasetReference"
 					}
 				]
