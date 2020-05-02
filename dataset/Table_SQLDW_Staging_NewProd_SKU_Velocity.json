@@ -1,16 +1,19 @@
 {
-	"name": "Table_SQLDW_NewProd_SKU_Velocity",
+	"name": "Table_SQLDW_Staging_NewProd_SKU_Velocity",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
 			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLDW - Base Tables"
 		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "newprod_sku_velocity"
+			"table": "stg_newprod_sku_velocity"
 		}
 	}
 }
