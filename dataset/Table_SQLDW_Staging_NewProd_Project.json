@@ -1,5 +1,5 @@
 {
-	"name": "Table_SQLDW_NewProd_Project",
+	"name": "Table_SQLDW_Staging_NewProd_Project",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
@@ -13,7 +13,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "newprod_project_details"
+			"table": "stg_newprod_project_details"
 		}
 	}
 }
