@@ -39,7 +39,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Table_SQLDW_NewProd_Table1",
+						"referenceName": "Table_SQLDW_NewProd_Project",
 						"type": "DatasetReference"
 					}
 				]
