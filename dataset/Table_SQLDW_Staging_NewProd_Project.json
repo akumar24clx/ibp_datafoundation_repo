@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "SQLDW - Base Tables"
+			"name": "SQLDW - Staging Tables"
 		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
