@@ -1,6 +1,10 @@
 {
 	"name": "Table_Oracle_IDR_Orders",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Oracle1",
+			"type": "LinkedServiceReference"
+		},
 		"folder": {
 			"name": "Oracle - Tables"
 		},
