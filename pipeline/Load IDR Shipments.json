@@ -108,7 +108,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Table_Oracle_IDR_Shipments1",
+						"referenceName": "Table_Oracle_IDR_Shipments",
 						"type": "DatasetReference"
 					}
 				],
@@ -2142,7 +2142,10 @@
 							"type": "Expression"
 						},
 						"Activity": "Copy IDR to Storage",
-						"ErrorMessage": "@activity('Copy IDR To Storage').Error.Message"
+						"ErrorMessage": {
+							"value": "@activity('Copy IDR To Storage').Error.Message",
+							"type": "Expression"
+						}
 					}
 				}
 			},
