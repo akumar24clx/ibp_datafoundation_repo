@@ -1,9 +1,0 @@
-{
-	"name": "Load Media Spend",
-	"properties": {
-		"folder": {
-			"name": "Finance - SpendDatasets"
-		},
-		"annotations": []
-	}
-}
