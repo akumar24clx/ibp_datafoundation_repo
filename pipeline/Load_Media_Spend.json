@@ -19,6 +19,10 @@
 					"method": "POST",
 					"headers": {
 						"Content-Type": "application/json"
+					},
+					"body": {
+						"value": "{\"PipelineName\":\"@{pipeline().parameters.PipelineName}\",\n\"SourceURL\":\"@{pipeline().parameters.PipelineName}\",\n\"DestinationURL\":\"@{pipeline().parameters.DestinationURL}\" }",
+						"type": "Expression"
 					}
 				}
 			}
