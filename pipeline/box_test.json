@@ -37,6 +37,17 @@
 				}
 			}
 		],
+		"parameters": {
+			"PipelineName": {
+				"type": "string"
+			},
+			"SourceURL": {
+				"type": "string"
+			},
+			"FileID": {
+				"type": "int"
+			}
+		},
 		"annotations": []
 	}
 }
