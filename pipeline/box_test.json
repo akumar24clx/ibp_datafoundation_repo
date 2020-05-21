@@ -21,18 +21,8 @@
 						"Content-Type": "application/json"
 					},
 					"body": {
-						"properties": {
-							"SourceURL": {
-								"type": "string"
-							},
-							"PipelineName": {
-								"type": "string"
-							},
-							"FolderID": {
-								"type": "string"
-							}
-						},
-						"type": "object"
+						"value": "{\"PipelineName\":\"@{pipeline().parameters.PipelineName}\",\n\"SourceURL\":\"@{pipeline().parameters.SourceURL}\",\n\"FileID\":\"@{pipeline().parameters.FileID}\" }",
+						"type": "Expression"
 					}
 				}
 			}
