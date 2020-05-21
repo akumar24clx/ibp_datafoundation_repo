@@ -1,6 +1,39 @@
 {
 	"name": "box_test",
 	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/7bfe6cb9ecac44119209edd7b68ef283/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mrLk7fj02Xt9M2wfsejgBQ9leEMdAebfYmQjMrJrqH0",
+					"method": "POST",
+					"body": {
+						"properties": {
+							"SourceURL": {
+								"type": "string"
+							},
+							"PipelineName": {
+								"type": "string"
+							},
+							"FolderID": {
+								"type": "string"
+							}
+						},
+						"type": "object"
+					}
+				}
+			}
+		],
 		"annotations": []
 	}
 }
