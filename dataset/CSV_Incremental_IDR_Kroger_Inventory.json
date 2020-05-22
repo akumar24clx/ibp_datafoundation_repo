@@ -10,12 +10,11 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "incremental_kroger_whs_inventory.parquet",
+				"fileName": "incremental_kroger_whs_inventory.csv",
 				"folderPath": "inventory",
 				"container": "matrix-raw"
 			},
 			"columnDelimiter": ",",
-			"compressionCodec": "snappy",
 			"escapeChar": "\\",
 			"quoteChar": "\""
 		},
