@@ -2182,7 +2182,7 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
-									"PipelineName": "Load IDR Shipments",
+									"PipelineName": "Load IDR Kroger Inventory",
 									"Activity": "QC Check - Load Staging to Target",
 									"ErrorMessage": "Record counts between SQLDW staging and Target\ndoesn't match, please take a look."
 								}
