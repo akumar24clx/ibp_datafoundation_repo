@@ -1961,11 +1961,11 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlDWSource",
-									"sqlReaderQuery": "select count(*) as staging_record_count from stg_shipments",
+									"sqlReaderQuery": "select count(*) as staging_record_count from stg_kroger_whs_inventory",
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
-									"referenceName": "Table_SQLDW_Staging_Shipments",
+									"referenceName": "Table_SQLDW_Staging_Kroger_WHS_Inventory",
 									"type": "DatasetReference"
 								}
 							}
