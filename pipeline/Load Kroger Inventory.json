@@ -18,13 +18,48 @@
 					"source": {
 						"type": "SqlDWSource",
 						"sqlReaderQuery": {
-							"value": "select max(kr_date_nbr) from dbo.base_kroger_whs_inventory",
+							"value": "select max(kr_date_nbr) as max_load_date from dbo.base_kroger_whs_inventory",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
 						"referenceName": "Query_SQLDW_Base_Shipments",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Get IDR Record Count",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Get Last Load Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": {
+							"value": "select count(*)\nfrom clxrdr_kr.kr_b_whs_inv_day\nwhere kr_date_nbr > @{activity('Get Last Load Date').output.firstRow.max_load_date}",
+							"type": "Expression"
+						},
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Table_Oracle_IDR_Shipments",
 						"type": "DatasetReference"
 					}
 				}
