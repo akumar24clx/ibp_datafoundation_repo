@@ -114,7 +114,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CSV_Incremental_IDR_Shipments",
+						"referenceName": "CSV_Incremental_IDR_Kroger_Inventory",
 						"type": "DatasetReference"
 					}
 				]
@@ -226,7 +226,7 @@
 								},
 								"sink": {
 									"type": "SqlDWSink",
-									"preCopyScript": "truncate table dbo.stg_shipments",
+									"preCopyScript": "truncate table dbo.stg_kroger_whs_inventory",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
@@ -1928,13 +1928,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "CSV_Incremental_IDR_Shipments_AZ",
+									"referenceName": "CSV_Incremental_IDR_Kroger_Inventory",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Table_SQLDW_Staging_Shipments",
+									"referenceName": "Table_SQLDW_Staging_Kroger_WHS_Inventory",
 									"type": "DatasetReference"
 								}
 							]
