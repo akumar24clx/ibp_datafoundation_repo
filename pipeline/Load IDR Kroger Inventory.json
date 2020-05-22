@@ -1,5 +1,5 @@
 {
-	"name": "Load Kroger Inventory",
+	"name": "Load IDR Kroger Inventory",
 	"properties": {
 		"activities": [
 			{
