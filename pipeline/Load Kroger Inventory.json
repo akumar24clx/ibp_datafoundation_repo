@@ -67,7 +67,14 @@
 			{
 				"name": "Copy IDR To Storage",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Get Last Load Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -80,7 +87,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "select *\nfrom clxbw.apo_bw_b_billing ship join clxbw.apo_bw_d_material mat on ship.material_num=mat.material_num\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand (mat.division_name like '%Litter%' or mat.division_name like '%Charcoal%' or mat.division_name like '%Food Products%')",
+							"value": "select * from clxrdr_kr.kr_b_whs_inv_day \nwhere kr_date_nbr >  @{activity('Get Last Load Date').output.firstRow.max_load_date}",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
