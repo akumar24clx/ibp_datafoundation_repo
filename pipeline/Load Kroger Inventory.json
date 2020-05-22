@@ -2148,6 +2148,71 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "QC Check - Staging to Target",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "QC Check - Storage to Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Get Staging Record Count').output.firstRow.staging_record_count,activity('Get Target Record Count').output.firstRow.target_record_count)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "QC Check - Failure Alert 3",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Load IDR Shipments",
+									"Activity": "QC Check - Load Staging to Target",
+									"ErrorMessage": "Record counts between SQLDW staging and Target\ndoesn't match, please take a look."
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Pipeline Success Notification",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on success",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "ADF pipeline Load Kroger Inventory finished successfully",
+									"DataFactoryName": "ADF",
+									"PipelineName": "Load IDR Kroger Inventory",
+									"Activity": "Load IDR Kroger Inventory",
+									"ErrorMessage": "No errors"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"annotations": []
