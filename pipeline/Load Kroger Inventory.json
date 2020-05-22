@@ -2076,7 +2076,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Table_SQLDW_Base_Shipments",
+									"referenceName": "Table_SQLDW_Base_Kroger_WHS_Inventory",
 									"type": "DatasetReference"
 								}
 							]
@@ -2103,7 +2103,7 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
-									"PipelineName": "Load IDR Shipments",
+									"PipelineName": "Load IDR Kroger Inventory",
 									"Activity": "Load SQLDW Target",
 									"ErrorMessage": {
 										"value": "@activity('Load SQLDW Target').Error.Message",
@@ -2135,13 +2135,13 @@
 								"source": {
 									"type": "SqlDWSource",
 									"sqlReaderQuery": {
-										"value": "select count(*) as target_record_count\nfrom dbo.base_shipments \nwhere CONVERT(varchar, idr_load_date, 112) > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}",
+										"value": "select count(*) as target_record_count\nfrom dbo.base_kroger_whs_inventory\nwhere kr_date_nbr > @{activity('Get Last Load Date').output.firstRow.max_load_date}",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
-									"referenceName": "Table_SQLDW_Base_Shipments",
+									"referenceName": "Table_SQLDW_Base_Kroger_WHS_Inventory",
 									"type": "DatasetReference"
 								}
 							}

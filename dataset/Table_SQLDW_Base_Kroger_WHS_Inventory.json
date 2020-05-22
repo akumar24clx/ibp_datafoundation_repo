@@ -1,0 +1,80 @@
+{
+	"name": "Table_SQLDW_Base_Kroger_WHS_Inventory",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "KR_DATE_NBR",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "KR_DATE_TIME",
+				"type": "date"
+			},
+			{
+				"name": "KR_DAY_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "KR_WK",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WHS_NBR",
+				"type": "varchar"
+			},
+			{
+				"name": "CASE_UPC",
+				"type": "varchar"
+			},
+			{
+				"name": "KR_LINE_NBR",
+				"type": "varchar"
+			},
+			{
+				"name": "INVENTORY_QTY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_UOM",
+				"type": "varchar"
+			},
+			{
+				"name": "OPEN_STORE_ORDER_QTY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "QTY_ON_ORDER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "INNER_PACK_QTY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "STORE_PACK",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Azure_Load_Date",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "base_kroger_whs_inventory"
+		}
+	}
+}
