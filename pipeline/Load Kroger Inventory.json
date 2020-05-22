@@ -63,6 +63,54 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "Copy IDR To Storage",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": {
+							"value": "select *\nfrom clxbw.apo_bw_b_billing ship join clxbw.apo_bw_d_material mat on ship.material_num=mat.material_num\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand (mat.division_name like '%Litter%' or mat.division_name like '%Charcoal%' or mat.division_name like '%Food Products%')",
+							"type": "Expression"
+						},
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_Shipments",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_Incremental_IDR_Shipments",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
