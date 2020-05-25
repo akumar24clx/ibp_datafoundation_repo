@@ -1958,7 +1958,7 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
-									"PipelineName": "Load IDR Shipments",
+									"PipelineName": "Load IDR Orders",
 									"Activity": "Load SQLDW Staging",
 									"ErrorMessage": {
 										"value": "@activity('Load SQLDW Staging').Error.Message",
