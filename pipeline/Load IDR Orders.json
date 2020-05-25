@@ -1931,7 +1931,7 @@
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
-									"referenceName": "Table_SQLDW_Staging_Shipments",
+									"referenceName": "Table_SQLDW_Staging_Orders",
 									"type": "DatasetReference"
 								}
 							}
