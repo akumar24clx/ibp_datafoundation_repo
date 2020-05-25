@@ -1,0 +1,70 @@
+{
+	"name": "Debug",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get IDR Record Count",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Get Last Load Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": {
+							"value": "select count(*) as idr_record_count\nfrom clxbw.apo_bw_b_order fact join clxbw.apo_bw_d_material mat on fact.material_num=mat.material_num\nwhere to_char(fact.load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand (mat.division_name like '%Litter%' or mat.division_name like '%Charcoal%' or mat.division_name like '%Food Products%')",
+							"type": "Expression"
+						},
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Table_Oracle_IDR_Orders",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Get Last Load Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": {
+							"value": "select CONVERT(VARCHAR(10), max(idr_load_date), 112)  as max_idr_load_date from base_orders",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Query_SQLDW_Base_Orders",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}
