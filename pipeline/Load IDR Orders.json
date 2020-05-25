@@ -114,7 +114,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CSV_Incremental_IDR_Shipments",
+						"referenceName": "CSV_Incremental_IDR_Litter_Orders",
 						"type": "DatasetReference"
 					}
 				]
