@@ -114,7 +114,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CSV_Incremental_IDR_Litter_Orders",
+						"referenceName": "CSV_Incremental_IDR_Orders",
 						"type": "DatasetReference"
 					}
 				]
@@ -1814,7 +1814,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "CSV_Incremental_IDR_Litter_Orders_AZ",
+									"referenceName": "CSV_Incremental_IDR_Orders_AZ",
 									"type": "DatasetReference"
 								}
 							],
