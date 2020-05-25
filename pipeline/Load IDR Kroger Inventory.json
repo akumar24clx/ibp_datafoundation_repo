@@ -142,7 +142,7 @@
 						"Subject": "Azure DF error",
 						"DataFactoryName": "clxdev-adf-matrix",
 						"PipelineName": {
-							"value": "Load IDR Shipments",
+							"value": "Load IDR Kroger Inventory",
 							"type": "Expression"
 						},
 						"Activity": "Copy IDR to Storage",
@@ -192,7 +192,7 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
-									"PipelineName": "Load IDR Shipments",
+									"PipelineName": "Load IDR Kroger Inventory",
 									"Activity": "QC Check - Copy IDR To Storage",
 									"ErrorMessage": "Record counts between IDR and storage file didn't match, please take a look."
 								}
