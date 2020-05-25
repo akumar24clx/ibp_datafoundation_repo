@@ -52,7 +52,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "select count(*) as idr_record_count\nfrom clxbw.apo_bw_b_order order join clxbw.apo_bw_d_material mat on order.material_num=mat.material_num\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand (mat.division_name like '%Litter%' or mat.division_name like '%Charcoal%' or mat.division_name like '%Food Products%')",
+							"value": "select count(*) as idr_record_count\nfrom clxbw.apo_bw_b_order fact join clxbw.apo_bw_d_material mat on fact.material_num=mat.material_num\nwhere to_char(fact.load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand (mat.division_name like '%Litter%' or mat.division_name like '%Charcoal%' or mat.division_name like '%Food Products%')",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
@@ -87,7 +87,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "select * \nfrom clxbw.apo_bw_b_order order join clxbw.apo_bw_d_material mat on order.material_num=mat.material_num\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand (mat.division_name like '%Litter%' or mat.division_name like '%Charcoal%' or mat.division_name like '%Food Products%')",
+							"value": "select * \nfrom clxbw.apo_bw_b_order fact join clxbw.apo_bw_d_material mat on fact.material_num=mat.material_num\nwhere to_char(fact.load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand (mat.division_name like '%Litter%' or mat.division_name like '%Charcoal%' or mat.division_name like '%Food Products%')",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
@@ -2142,7 +2142,10 @@
 							"type": "Expression"
 						},
 						"Activity": "Copy IDR to Storage",
-						"ErrorMessage": "@activity('Copy IDR To Storage').Error.Message"
+						"ErrorMessage": {
+							"value": "@activity('Copy IDR To Storage').Error.Message",
+							"type": "Expression"
+						}
 					}
 				}
 			},
