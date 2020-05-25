@@ -2003,7 +2003,7 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
-									"PipelineName": "Load IDR Shipments",
+									"PipelineName": "Load IDR Orders",
 									"Activity": "QC Check - Storage to SQLDW Staging",
 									"ErrorMessage": "Record counts between incremental data file and SQLDW \nstaging did not match, please take a look."
 								}
