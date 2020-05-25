@@ -500,7 +500,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlDWSource",
-									"sqlReaderQuery": "select [KR_DATE_NBR]\n      ,[KR_DATE_TIME]\n      ,[KR_DAY_NAME]\n      ,[KR_WK]\n      ,[WHS_NBR]\n      ,[CASE_UPC]\n      ,[KR_LINE_NBR]\n      ,[INVENTORY_QTY]\n      ,[QTY_UOM]\n      ,[OPEN_STORE_ORDER_QTY]\n      ,[QTY_ON_ORDER]\n      ,[INNER_PACK_QTY]\n      ,[STORE_PACK] \n\t  ,CONVERT (date, SYSDATETIME()) as azure_load_date\n\t  from [dbo].[stg_kroger_whs_inventory]",
+									"sqlReaderQuery": "select [KR_DATE_NBR]\n      ,[KR_DATE_TIME]\n      ,[KR_DAY_NAME]\n      ,[KR_WK]\n      ,[WHS_NBR]\n      ,[CASE_UPC]\n      ,[KR_LINE_NBR]\n      ,[INVENTORY_QTY]\n      ,[QTY_UOM]\n      ,[OPEN_STORE_ORDER_QTY]\n      ,[QTY_ON_ORDER]\n      ,[INNER_PACK_QTY]\n      ,[STORE_PACK] \n\t  ,CONVERT (date, SYSDATETIME()) as Azure_Load_Date\n\t  from [dbo].[stg_kroger_whs_inventory]",
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
