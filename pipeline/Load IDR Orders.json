@@ -192,7 +192,7 @@
 								},
 								"sink": {
 									"type": "SqlDWSink",
-									"preCopyScript": "truncate table dbo.stg_shipments",
+									"preCopyScript": "truncate table dbo.stg_orders",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
@@ -1900,7 +1900,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Table_SQLDW_Staging_Shipments",
+									"referenceName": "Table_SQLDW_Staging_Orders",
 									"type": "DatasetReference"
 								}
 							]
