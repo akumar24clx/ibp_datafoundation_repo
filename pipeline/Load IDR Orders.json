@@ -2042,7 +2042,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Table_SQLDW_Base_Shipments",
+									"referenceName": "Table_SQLDW_Base_Orders",
 									"type": "DatasetReference"
 								}
 							]
