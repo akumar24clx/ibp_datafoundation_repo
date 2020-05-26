@@ -1,0 +1,21 @@
+{
+	"name": "Parquet_Kroger_POS_Hist",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_OnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "kroger_pos_hist_2016.parquet",
+				"folderPath": "pos_retail/kroger",
+				"container": "matrix-raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
