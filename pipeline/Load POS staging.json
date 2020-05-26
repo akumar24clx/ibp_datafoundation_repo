@@ -35,7 +35,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Parquet_Kroger_POS_Hist",
+						"referenceName": "Parquet_Kroger_POS_Hist_AZ",
 						"type": "DatasetReference"
 					}
 				],

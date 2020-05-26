@@ -1,0 +1,78 @@
+{
+	"name": "Parquet_Kroger_POS_Hist_AZ",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "kroger_pos_hist_2016.parquet",
+				"folderPath": "pos_retail/kroger",
+				"container": "matrix-raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "DIV_NBR",
+				"type": "UTF8"
+			},
+			{
+				"name": "STORE_NBR",
+				"type": "UTF8"
+			},
+			{
+				"name": "CONSUMER_UPC",
+				"type": "UTF8"
+			},
+			{
+				"name": "KR_WK",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "KR_DATE_NBR",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "KR_DAY_NAME",
+				"type": "UTF8"
+			},
+			{
+				"name": "SALES_QTY_UOM",
+				"type": "UTF8"
+			},
+			{
+				"name": "SALES_QTY",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "SALES_AMT",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "POS_AVG_UNIT_PRICE",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "GROSS_MARGIN_AMT",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "INV_MULTIPLIER",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "ESTIMATED_FLAG",
+				"type": "UTF8"
+			},
+			{
+				"name": "RESTATEMENT_FLAG",
+				"type": "UTF8"
+			}
+		]
+	}
+}
