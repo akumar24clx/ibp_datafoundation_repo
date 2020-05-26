@@ -23,15 +23,154 @@
 						}
 					},
 					"sink": {
-						"type": "SqlDWSink",
-						"allowPolyBase": true,
-						"polyBaseSettings": {
-							"rejectValue": 0,
-							"rejectType": "value",
-							"useTypeDefault": true
-						}
+						"type": "SqlDWSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIV_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "div_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_UPC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "consumer_upc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "KR_WK",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "kr_wk",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "KR_DATE_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "kr_date_nbr",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "KR_DAY_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "kr_day_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_QTY_UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_qty_uom",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_QTY",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "sales_qty",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_AMT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "sales_amt",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "POS_AVG_UNIT_PRICE",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "pos_avg_unit_price",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "GROSS_MARGIN_AMT",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "gross_margin_amt",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "INV_MULTIPLIER",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "inv_multiplier",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "ESTIMATED_FLAG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "estimated_flag",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "RESTATEMENT_FLAG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "restatement_flag",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
