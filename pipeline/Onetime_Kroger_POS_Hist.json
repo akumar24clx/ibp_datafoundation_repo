@@ -1,6 +1,36 @@
 {
 	"name": "Onetime_Kroger_POS_Hist",
 	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select * from clxrdr_kr.kr_b_pos_day where kr_date_nbr between 20160101 and 20161231",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_Material",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
 		"annotations": []
 	}
 }
