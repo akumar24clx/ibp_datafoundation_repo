@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "OracleSource",
-						"oracleReaderQuery": "select * from clxrdr_kr.kr_b_pos_day where kr_date_nbr between 20170101 and 20171231",
+						"oracleReaderQuery": "select * from clxrdr_kr.kr_b_pos_day where kr_date_nbr between 20200101 and 20201231",
 						"partitionOption": "None",
 						"queryTimeout": "02:00:00"
 					},
