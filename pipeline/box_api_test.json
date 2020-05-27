@@ -17,12 +17,10 @@
 				"typeProperties": {
 					"url": "https://api.box.com/2.0/files/666026230553/content",
 					"method": "GET",
-					"linkedServices": [
-						{
-							"referenceName": "RestService1",
-							"type": "LinkedServiceReference"
-						}
-					]
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://management.azure.com/"
+					}
 				}
 			}
 		],
