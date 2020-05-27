@@ -16,11 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://api.box.com/2.0/files/666026230553/content",
-					"method": "GET",
-					"authentication": {
-						"type": "Basic",
-						"username": "kpernapa"
-					}
+					"method": "GET"
 				}
 			}
 		],
