@@ -1,0 +1,16 @@
+{
+	"name": "Table_SQLDW_Kroger_Store_Item",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "kroger_store_item_dim"
+		}
+	}
+}
