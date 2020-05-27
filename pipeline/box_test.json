@@ -38,6 +38,9 @@
 				"type": "int"
 			}
 		},
+		"folder": {
+			"name": "Finance - Spend Datasets"
+		},
 		"annotations": []
 	}
 }
