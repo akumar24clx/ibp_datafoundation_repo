@@ -16,16 +16,121 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "OracleSource",
-						"oracleReaderQuery": "select * from clxrdr_kr.kr_r_store_item",
-						"partitionOption": "None",
-						"queryTimeout": "02:00:00"
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "SqlDWSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIV_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "div_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BASE_UPC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "base_upc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_UPC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "consumer_upc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CASE_UPC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "case_upc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "WHS_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "whs_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "KR_LINE_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "kr_line_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "MODIFIED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modified_date",
+									"type": "DateTime"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "Table_Oracle_IDR_Material",
+						"referenceName": "Parquet_Kroger_POS_Hist_AZ",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Kroger_Store_Item",
 						"type": "DatasetReference"
 					}
 				]
