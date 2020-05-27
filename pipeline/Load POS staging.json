@@ -186,6 +186,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "Retail - POS"
+		},
 		"annotations": []
 	}
 }
