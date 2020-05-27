@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "kroger_item.parquet",
+				"fileName": "kroger_store_item.parquet",
 				"folderPath": "pos_retail/kroger",
 				"container": "matrix-raw"
 			},
