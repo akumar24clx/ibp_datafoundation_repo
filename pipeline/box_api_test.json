@@ -18,8 +18,16 @@
 					"url": "https://api.box.com/2.0/files/666026230553/content",
 					"method": "GET",
 					"authentication": {
-						"type": "MSI",
-						"resource": "https://management.azure.com/"
+						"type": "Basic",
+						"username": "kpernapa",
+						"password": {
+							"type": "AzureKeyVaultSecret",
+							"store": {
+								"referenceName": "AzureKeyVault1",
+								"type": "LinkedServiceReference"
+							},
+							"secretName": "Saketh711"
+						}
 					}
 				}
 			}
