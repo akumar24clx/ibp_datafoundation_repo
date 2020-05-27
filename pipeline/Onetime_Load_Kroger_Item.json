@@ -25,7 +25,232 @@
 					"sink": {
 						"type": "SqlDWSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIV_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "div_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_UPC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "consumer_upc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_UPC_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "consumer_upc_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_UPC_SIZE_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "consumer_upc_size_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_ACTIVE_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "consumer_active_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_QTY_UOM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "consumer_qty_uom",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BASE_UPC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "base_upc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BASE_UPC_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "base_upc_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEFAULT_CASE_UPC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "default_case_upc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEPT_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "dept_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DEPT_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "dept_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SUB_DEPT_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sub_dept_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SUB_DEPT_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sub_dept_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMODITY_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "commodity_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COMMODITY_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "commodity_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SUB_COMMODITY_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sub_commodity_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SUB_COMMODITY_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sub_commodity_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REF_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ref_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "MODIFIED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "modified_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "CLX_CLOROX_ITEM_FLAG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "clx_clorox_item_flag",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLX_VENDOR_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "clx_vendor_name",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
