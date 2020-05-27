@@ -1,6 +1,764 @@
 {
 	"name": "Onetime_Load_Kroger_Store",
 	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "DIV_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "div_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_BANNER",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_banner",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CHECKOUT_LANE_QTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "checkout_lane_qty",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_SQUARE_FEET",
+									"type": "String"
+								},
+								"sink": {
+									"name": "sales_square_feet",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "PHONE_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "phone_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ADDRESS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "address",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CITY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "city",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "COUNTY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "county",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "state",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ZIP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "zip",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "OPEN_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "open_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "OPEN_FLAG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "open_flag",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CLOSE_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "close_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "MAJOR_TYPE_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "major_type_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MSA_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "msa_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MSA_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "msa_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AD_WEEK_START_DAY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ad_week_start_day",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "MGT_ZONE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "mgt_zone",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DIV_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "div_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MGT_DIV_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "mgt_div_nbr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MGT_DIV_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "mgt_div_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REGION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "region_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "REGION_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "region_desc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GAS_STATION_OPEN_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gas_station_open_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "GAS_STATION_CLOSE_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gas_station_close_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "GAS_STATION_FLAG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "gas_station_flag",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_OPEN_HOUR_MON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_open_hour_mon",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_CLOSE_HOUR_MON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_close_hour_mon",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_OPEN_HOUR_TUE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_open_hour_tue",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_CLOSE_HOUR_TUE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_close_hour_tue",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_OPEN_HOUR_WED",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_open_hour_wed",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_CLOSE_HOUR_WED",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_close_hour_wed",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_OPEN_HOUR_THU",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_open_hour_thu",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_CLOSE_HOUR_THU",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_close_hour_thu",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_OPEN_HOUR_FRI",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_open_hour_fri",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_CLOSE_HOUR_FRI",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_close_hour_fri",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_OPEN_HOUR_SAT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_open_hour_sat",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_CLOSE_HOUR_SAT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_close_hour_sat",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_OPEN_HOUR_SUN",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_open_hour_sun",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STORE_CLOSE_HOUR_SUN",
+									"type": "String"
+								},
+								"sink": {
+									"name": "store_close_hour_sun",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "created_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "MODIFIED_DATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "modified_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "IDR_ORG_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "idr_org_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IDR_BSNS_UNIT_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "idr_bsns_unit_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_BSNS_UNIT_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_bsns_unit_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_ADDR_LINE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_addr_line",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_CITY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_city",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_STATE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_state",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_CNTRY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_cntry",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_POST_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_post_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_DSTRCT_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_dstrct_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_SLNG_AREA",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_slng_area",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_STATE_FIPS_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_state_fips_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_FULL_TIME_EMP_EQVLNTS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_full_time_emp_eqvlnts",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_NBR_OF_CHECKOUTS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_nbr_of_checkouts",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_BNR_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_bnr_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "IDR_DFLT_WHSE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "idr_dflt_whse",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_CNTY_FIPS_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_cnty_fips_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_STR_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_str_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_STR_STATUS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_str_status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_SUB_CHNL_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_sub_chnl_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_CMPNY_SIZE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_cmpny_size",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_LAT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_lat",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_LON",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_lon",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_STR_ACV_RANGE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_str_acv_range",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_FAMILY_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_family_cd",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_OWNER_OPER_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_owner_oper_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_MKTG_GRP_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_mktg_grp_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_NON_CORP_OWNED",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_non_corp_owned",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TDX_IRI_MARKET",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tdx_iri_market",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CSV_Kroger_Store",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Kroger_Store_Dim",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
 		"annotations": []
 	}
 }

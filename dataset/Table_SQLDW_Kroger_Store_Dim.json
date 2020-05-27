@@ -1,0 +1,306 @@
+{
+	"name": "Table_SQLDW_Kroger_Store_Dim",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "div_nbr",
+				"type": "varchar"
+			},
+			{
+				"name": "store_nbr",
+				"type": "varchar"
+			},
+			{
+				"name": "store_banner",
+				"type": "varchar"
+			},
+			{
+				"name": "checkout_lane_qty",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sales_square_feet",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "phone_nbr",
+				"type": "varchar"
+			},
+			{
+				"name": "address",
+				"type": "varchar"
+			},
+			{
+				"name": "city",
+				"type": "varchar"
+			},
+			{
+				"name": "county",
+				"type": "varchar"
+			},
+			{
+				"name": "state",
+				"type": "varchar"
+			},
+			{
+				"name": "zip",
+				"type": "varchar"
+			},
+			{
+				"name": "open_date",
+				"type": "date"
+			},
+			{
+				"name": "open_flag",
+				"type": "varchar"
+			},
+			{
+				"name": "close_date",
+				"type": "date"
+			},
+			{
+				"name": "major_type_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "msa_code",
+				"type": "varchar"
+			},
+			{
+				"name": "msa_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "ad_week_start_day",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "mgt_zone",
+				"type": "varchar"
+			},
+			{
+				"name": "div_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "mgt_div_nbr",
+				"type": "varchar"
+			},
+			{
+				"name": "mgt_div_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "region_code",
+				"type": "varchar"
+			},
+			{
+				"name": "region_desc",
+				"type": "varchar"
+			},
+			{
+				"name": "gas_station_open_date",
+				"type": "date"
+			},
+			{
+				"name": "gas_station_close_date",
+				"type": "date"
+			},
+			{
+				"name": "gas_station_flag",
+				"type": "varchar"
+			},
+			{
+				"name": "store_open_hour_mon",
+				"type": "varchar"
+			},
+			{
+				"name": "store_close_hour_mon",
+				"type": "varchar"
+			},
+			{
+				"name": "store_open_hour_tue",
+				"type": "varchar"
+			},
+			{
+				"name": "store_close_hour_tue",
+				"type": "varchar"
+			},
+			{
+				"name": "store_open_hour_wed",
+				"type": "varchar"
+			},
+			{
+				"name": "store_close_hour_wed",
+				"type": "varchar"
+			},
+			{
+				"name": "store_open_hour_thu",
+				"type": "varchar"
+			},
+			{
+				"name": "store_close_hour_thu",
+				"type": "varchar"
+			},
+			{
+				"name": "store_open_hour_fri",
+				"type": "varchar"
+			},
+			{
+				"name": "store_close_hour_fri",
+				"type": "varchar"
+			},
+			{
+				"name": "store_open_hour_sat",
+				"type": "varchar"
+			},
+			{
+				"name": "store_close_hour_sat",
+				"type": "varchar"
+			},
+			{
+				"name": "store_open_hour_sun",
+				"type": "varchar"
+			},
+			{
+				"name": "store_close_hour_sun",
+				"type": "varchar"
+			},
+			{
+				"name": "created_date",
+				"type": "date"
+			},
+			{
+				"name": "modified_date",
+				"type": "date"
+			},
+			{
+				"name": "idr_org_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "idr_bsns_unit_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_bsns_unit_name",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_addr_line",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_city",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_state",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_cntry",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_post_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_dstrct_name",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_slng_area",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_state_fips_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_full_time_emp_eqvlnts",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "tdx_nbr_of_checkouts",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "tdx_bnr_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "idr_dflt_whse",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_cnty_fips_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_str_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_str_status",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_sub_chnl_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_cmpny_size",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_lat",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_lon",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_str_acv_range",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_family_cd",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_owner_oper_name",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_mktg_grp_name",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_non_corp_owned",
+				"type": "varchar"
+			},
+			{
+				"name": "tdx_iri_market",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "kroger_store_dim"
+		}
+	}
+}
