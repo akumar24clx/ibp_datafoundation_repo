@@ -1,0 +1,663 @@
+{
+	"name": "Load IDR Kroger POS",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Last Load Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": {
+							"value": "select max(kr_date_nbr) as max_load_date from dbo.base_kroger_whs_inventory",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Query_SQLDW_Base_Shipments",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Get IDR Record Count",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Get Last Load Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": {
+							"value": "select count(*) as idr_record_count\nfrom clxrdr_kr.kr_b_whs_inv_day\nwhere kr_date_nbr > @{activity('Get Last Load Date').output.firstRow.max_load_date}",
+							"type": "Expression"
+						},
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Table_Oracle_IDR_Shipments",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Copy IDR To Storage",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Get Last Load Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": {
+							"value": "select * from clxrdr_kr.kr_b_whs_inv_day \nwhere kr_date_nbr >  @{activity('Get Last Load Date').output.firstRow.max_load_date}",
+							"type": "Expression"
+						},
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_Shipments",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_Incremental_IDR_Kroger_Inventory",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Failure Alert - 1",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Copy IDR To Storage",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Send email on failure",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"EmailTo": "kalyani.pernapati@clorox.com",
+						"Subject": "Azure DF error",
+						"DataFactoryName": "clxdev-adf-matrix",
+						"PipelineName": {
+							"value": "Load IDR Kroger Inventory",
+							"type": "Expression"
+						},
+						"Activity": "Copy IDR to Storage",
+						"ErrorMessage": {
+							"value": "@activity('Copy IDR To Storage').Error.Message",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "QC Check - Source to Storage",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Get IDR Record Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Copy IDR To Storage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Get IDR Record Count').output.firstRow.idr_record_count,activity('Copy IDR To Storage').output.rowsCopied)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "QC Check - Failure Alert 1",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Load IDR Kroger Inventory",
+									"Activity": "QC Check - Copy IDR To Storage",
+									"ErrorMessage": "Record counts between IDR and storage file didn't match, please take a look."
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Load SQLDW Staging",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": false,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "SqlDWSink",
+									"preCopyScript": "truncate table dbo.stg_kroger_whs_inventory",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 1
+											},
+											"sink": {
+												"name": "KR_DATE_NBR",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 2
+											},
+											"sink": {
+												"name": "KR_DATE_TIME",
+												"type": "DateTime"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 3
+											},
+											"sink": {
+												"name": "KR_DAY_NAME",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 4
+											},
+											"sink": {
+												"name": "KR_WK",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 5
+											},
+											"sink": {
+												"name": "WHS_NBR",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 6
+											},
+											"sink": {
+												"name": "CASE_UPC",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 7
+											},
+											"sink": {
+												"name": "KR_LINE_NBR",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 8
+											},
+											"sink": {
+												"name": "INVENTORY_QTY",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 9
+											},
+											"sink": {
+												"name": "QTY_UOM",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 10
+											},
+											"sink": {
+												"name": "OPEN_STORE_ORDER_QTY",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 11
+											},
+											"sink": {
+												"name": "QTY_ON_ORDER",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 12
+											},
+											"sink": {
+												"name": "INNER_PACK_QTY",
+												"type": "Int32"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 13
+											},
+											"sink": {
+												"name": "STORE_PACK",
+												"type": "Int32"
+											}
+										}
+									]
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "CSV_Inc_IDR_Kroger_Inventory_Azure",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Table_SQLDW_Staging_Kroger_WHS_Inventory",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "Get Staging Record Count",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Load SQLDW Staging",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlDWSource",
+									"sqlReaderQuery": "select count(*) as staging_record_count from stg_kroger_whs_inventory",
+									"queryTimeout": "02:00:00"
+								},
+								"dataset": {
+									"referenceName": "Table_SQLDW_Staging_Kroger_WHS_Inventory",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "Failure Alert - 2",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Load SQLDW Staging",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Load IDR Kroger Inventory",
+									"Activity": "Load SQLDW Staging",
+									"ErrorMessage": {
+										"value": "@activity('Load SQLDW Staging').Error.Message",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "QC Check - Storage to Staging",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "QC Check - Source to Storage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Copy IDR To Storage').output.rowsCopied,activity('Get Staging Record Count').output.firstRow.staging_record_count)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "QC Check - Failure Alert 2",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Load IDR Shipments",
+									"Activity": "QC Check - Storage to SQLDW Staging",
+									"ErrorMessage": "Record counts between incremental data file and SQLDW \nstaging did not match, please take a look."
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Load SQLDW Target",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlDWSource",
+									"sqlReaderQuery": "select [KR_DATE_NBR]\n      ,[KR_DATE_TIME]\n      ,[KR_DAY_NAME]\n      ,[KR_WK]\n      ,[WHS_NBR]\n      ,[CASE_UPC]\n      ,[KR_LINE_NBR]\n      ,[INVENTORY_QTY]\n      ,[QTY_UOM]\n      ,[OPEN_STORE_ORDER_QTY]\n      ,[QTY_ON_ORDER]\n      ,[INNER_PACK_QTY]\n      ,[STORE_PACK] \n\t  ,CONVERT (date, SYSDATETIME()) as Azure_Load_Date\n\t  from [dbo].[stg_kroger_whs_inventory]",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "SqlDWSink"
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Table_SQLDW_Staging_Kroger_WHS_Inventory",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Table_SQLDW_Base_Kroger_WHS_Inventory",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "Failure Alert - 3",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Load SQLDW Target",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Load IDR Kroger Inventory",
+									"Activity": "Load SQLDW Target",
+									"ErrorMessage": {
+										"value": "@activity('Load SQLDW Target').Error.Message",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "Get Target Record Count",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Load SQLDW Target",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlDWSource",
+									"sqlReaderQuery": {
+										"value": "select count(*) as target_record_count\nfrom dbo.base_kroger_whs_inventory\nwhere kr_date_nbr > @{activity('Get Last Load Date').output.firstRow.max_load_date}",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00"
+								},
+								"dataset": {
+									"referenceName": "Table_SQLDW_Base_Kroger_WHS_Inventory",
+									"type": "DatasetReference"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "QC Check - Staging to Target",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "QC Check - Storage to Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Get Staging Record Count').output.firstRow.staging_record_count,activity('Get Target Record Count').output.firstRow.target_record_count)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "QC Check - Failure Alert 3",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on failure",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "Azure DF error",
+									"DataFactoryName": "DF",
+									"PipelineName": "Load IDR Kroger Inventory",
+									"Activity": "QC Check - Load Staging to Target",
+									"ErrorMessage": "Record counts between SQLDW staging and Target\ndoesn't match, please take a look."
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Pipeline Success Notification",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Send email on success",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"EmailTo": "kalyani.pernapati@clorox.com",
+									"Subject": "ADF pipeline Load Kroger Inventory finished successfully",
+									"DataFactoryName": "ADF",
+									"PipelineName": "Load IDR Kroger Inventory",
+									"Activity": "Load IDR Kroger Inventory",
+									"ErrorMessage": "No errors"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "Retail - Inventory"
+		},
+		"annotations": []
+	}
+}
