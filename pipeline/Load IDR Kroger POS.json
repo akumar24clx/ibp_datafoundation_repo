@@ -374,7 +374,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "Table_SQLDW_Staging_Kroger_WHS_Inventory",
+									"referenceName": "Table_SQLDW_Staging_Kroger_POS",
 									"type": "DatasetReference"
 								}
 							]
