@@ -405,7 +405,7 @@
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
-									"referenceName": "Table_SQLDW_Staging_Kroger_WHS_Inventory",
+									"referenceName": "Table_SQLDW_Staging_Kroger_POS",
 									"type": "DatasetReference"
 								}
 							}
