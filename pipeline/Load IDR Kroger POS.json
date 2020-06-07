@@ -142,7 +142,7 @@
 						"Subject": "Azure DF error",
 						"DataFactoryName": "clxdev-adf-matrix",
 						"PipelineName": {
-							"value": "Load IDR Kroger Inventory",
+							"value": "Load IDR Kroger POS",
 							"type": "Expression"
 						},
 						"Activity": "Copy IDR to Storage",
