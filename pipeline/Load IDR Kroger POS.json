@@ -543,7 +543,7 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
-									"PipelineName": "Load IDR Kroger Inventory",
+									"PipelineName": "Load IDR Kroger POS",
 									"Activity": "Load SQLDW Target",
 									"ErrorMessage": {
 										"value": "@activity('Load SQLDW Target').Error.Message",
