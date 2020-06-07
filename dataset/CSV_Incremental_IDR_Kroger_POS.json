@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "incremental_kroger_pos_day.csv",
 				"folderPath": "pos_retail/kroger",
 				"container": "matrix-raw"
 			},
