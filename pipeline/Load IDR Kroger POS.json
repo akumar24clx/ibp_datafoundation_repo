@@ -401,7 +401,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlDWSource",
-									"sqlReaderQuery": "select count(*) as staging_record_count from stg_kroger_whs_inventory",
+									"sqlReaderQuery": "select count(*) as staging_record_count from stg_kroger_pos",
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
