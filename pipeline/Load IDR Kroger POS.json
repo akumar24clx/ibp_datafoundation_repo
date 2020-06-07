@@ -226,7 +226,7 @@
 								},
 								"sink": {
 									"type": "SqlDWSink",
-									"preCopyScript": "truncate table dbo.stg_kroger_whs_inventory",
+									"preCopyScript": "truncate table dbo.stg_kroger_pos",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
