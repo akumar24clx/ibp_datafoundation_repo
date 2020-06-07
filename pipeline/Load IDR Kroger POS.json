@@ -585,7 +585,7 @@
 								"source": {
 									"type": "SqlDWSource",
 									"sqlReaderQuery": {
-										"value": "select count(*) as target_record_count\nfrom dbo.base_kroger_pos\nwhere kr_date_nbr > @{activity('Get Last Load Date').output.firstRow.max_load_date}",
+										"value": "select count(*) as target_record_count\nfrom dbo.base_kroger_pos_day\nwhere kr_date_nbr > @{activity('Get Last Load Date').output.firstRow.max_load_date}",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00"
