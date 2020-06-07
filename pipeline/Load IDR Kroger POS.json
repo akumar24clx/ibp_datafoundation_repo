@@ -645,7 +645,7 @@
 									"EmailTo": "kalyani.pernapati@clorox.com",
 									"Subject": "ADF pipeline Load Kroger Inventory finished successfully",
 									"DataFactoryName": "ADF",
-									"PipelineName": "Load IDR Kroger Inventory",
+									"PipelineName": "Load IDR Kroger POS",
 									"Activity": "Load IDR Kroger Inventory",
 									"ErrorMessage": "No errors"
 								}
