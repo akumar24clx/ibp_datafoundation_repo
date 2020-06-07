@@ -310,7 +310,7 @@
 											},
 											"sink": {
 												"name": "sales_qty",
-												"type": "Int32"
+												"type": "Single"
 											}
 										},
 										{
@@ -320,7 +320,7 @@
 											},
 											"sink": {
 												"name": "sales_amt",
-												"type": "Int32"
+												"type": "Single"
 											}
 										},
 										{
@@ -330,7 +330,7 @@
 											},
 											"sink": {
 												"name": "pos_avg_unit_price",
-												"type": "Int32"
+												"type": "Single"
 											}
 										},
 										{
@@ -340,7 +340,7 @@
 											},
 											"sink": {
 												"name": "gross_margin_amt",
-												"type": "Int32"
+												"type": "Single"
 											}
 										},
 										{
@@ -350,7 +350,7 @@
 											},
 											"sink": {
 												"name": "inv_multiplier",
-												"type": "Int32"
+												"type": "Single"
 											}
 										},
 										{
