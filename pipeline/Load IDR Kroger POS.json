@@ -510,7 +510,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlDWSource",
-									"sqlReaderQuery": "SELECT [div_nbr]\n      ,[store_nbr]\n      ,[consumer_upc]\n      ,[kr_wk]\n      ,[kr_date_nbr]\n      ,[kr_day_name]\n      ,[sales_qty_uom]\n      ,[sales_qty]\n      ,[sales_amt]\n      ,[pos_avg_unit_price]\n      ,[gross_margin_amt]\n      ,[inv_multiplier]\n      ,[estimated_flag]\n      ,[restatement_flag]\n\t  ,CONVERT (date, SYSDATETIME()) as Azure_Load_Date\n  FROM [dbo].[stg_kroger_pos]",
+									"sqlReaderQuery": "SELECT [div_nbr]\n      ,[store_nbr]\n      ,[consumer_upc]\n      ,[kr_wk]\n      ,[kr_date_nbr]\n      ,[kr_day_name]\n      ,[sales_qty_uom]\n      ,[sales_qty]\n      ,[sales_amt]\n      ,[pos_avg_unit_price]\n      ,[gross_margin_amt]\n      ,[inv_multiplier]\n      ,[estimated_flag]\n      ,[restatement_flag]\n\t  ,CONVERT (date, SYSDATETIME()) as azure_load_date\n  FROM [dbo].[stg_kroger_pos]",
 									"queryTimeout": "02:00:00"
 								},
 								"sink": {
