@@ -114,7 +114,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CSV_Incremental_IDR_Kroger_Inventory",
+						"referenceName": "CSV_Incremental_IDR_Kroger_POS",
 						"type": "DatasetReference"
 					}
 				]
