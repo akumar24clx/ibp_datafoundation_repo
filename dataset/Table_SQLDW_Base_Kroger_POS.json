@@ -1,0 +1,84 @@
+{
+	"name": "Table_SQLDW_Base_Kroger_POS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "div_nbr",
+				"type": "varchar"
+			},
+			{
+				"name": "store_nbr",
+				"type": "varchar"
+			},
+			{
+				"name": "consumer_upc",
+				"type": "varchar"
+			},
+			{
+				"name": "kr_wk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "kr_date_nbr",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "kr_day_name",
+				"type": "varchar"
+			},
+			{
+				"name": "sales_qty_uom",
+				"type": "varchar"
+			},
+			{
+				"name": "sales_qty",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sales_amt",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "pos_avg_unit_price",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "gross_margin_amt",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "inv_multiplier",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "estimated_flag",
+				"type": "varchar"
+			},
+			{
+				"name": "restatement_flag",
+				"type": "varchar"
+			},
+			{
+				"name": "azure_load_date",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "base_kroger_pos"
+		}
+	}
+}
