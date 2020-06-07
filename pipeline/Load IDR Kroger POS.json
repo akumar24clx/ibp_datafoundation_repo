@@ -24,7 +24,7 @@
 						"queryTimeout": "02:00:00"
 					},
 					"dataset": {
-						"referenceName": "Query_SQLDW_Base_Shipments",
+						"referenceName": "Table_SQLDW_Base_Kroger_POS",
 						"type": "DatasetReference"
 					}
 				}
