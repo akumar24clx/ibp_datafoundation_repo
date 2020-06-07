@@ -239,8 +239,8 @@
 												"ordinal": 1
 											},
 											"sink": {
-												"name": "KR_DATE_NBR",
-												"type": "Int32"
+												"name": "div_nbr",
+												"type": "String"
 											}
 										},
 										{
@@ -249,8 +249,8 @@
 												"ordinal": 2
 											},
 											"sink": {
-												"name": "KR_DATE_TIME",
-												"type": "DateTime"
+												"name": "store_nbr",
+												"type": "String"
 											}
 										},
 										{
@@ -259,7 +259,7 @@
 												"ordinal": 3
 											},
 											"sink": {
-												"name": "KR_DAY_NAME",
+												"name": "consumer_upc",
 												"type": "String"
 											}
 										},
@@ -269,7 +269,7 @@
 												"ordinal": 4
 											},
 											"sink": {
-												"name": "KR_WK",
+												"name": "kr_wk",
 												"type": "Int32"
 											}
 										},
@@ -279,8 +279,8 @@
 												"ordinal": 5
 											},
 											"sink": {
-												"name": "WHS_NBR",
-												"type": "String"
+												"name": "kr_date_nbr",
+												"type": "Int32"
 											}
 										},
 										{
@@ -289,7 +289,7 @@
 												"ordinal": 6
 											},
 											"sink": {
-												"name": "CASE_UPC",
+												"name": "kr_day_name",
 												"type": "String"
 											}
 										},
@@ -299,7 +299,7 @@
 												"ordinal": 7
 											},
 											"sink": {
-												"name": "KR_LINE_NBR",
+												"name": "sales_qty_uom",
 												"type": "String"
 											}
 										},
@@ -309,7 +309,7 @@
 												"ordinal": 8
 											},
 											"sink": {
-												"name": "INVENTORY_QTY",
+												"name": "sales_qty",
 												"type": "Int32"
 											}
 										},
@@ -319,8 +319,8 @@
 												"ordinal": 9
 											},
 											"sink": {
-												"name": "QTY_UOM",
-												"type": "String"
+												"name": "sales_amt",
+												"type": "Int32"
 											}
 										},
 										{
@@ -329,7 +329,7 @@
 												"ordinal": 10
 											},
 											"sink": {
-												"name": "OPEN_STORE_ORDER_QTY",
+												"name": "pos_avg_unit_price",
 												"type": "Int32"
 											}
 										},
@@ -339,7 +339,7 @@
 												"ordinal": 11
 											},
 											"sink": {
-												"name": "QTY_ON_ORDER",
+												"name": "gross_margin_amt",
 												"type": "Int32"
 											}
 										},
@@ -349,7 +349,7 @@
 												"ordinal": 12
 											},
 											"sink": {
-												"name": "INNER_PACK_QTY",
+												"name": "inv_multiplier",
 												"type": "Int32"
 											}
 										},
@@ -359,8 +359,18 @@
 												"ordinal": 13
 											},
 											"sink": {
-												"name": "STORE_PACK",
-												"type": "Int32"
+												"name": "estimated_flag",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"type": "String",
+												"ordinal": 14
+											},
+											"sink": {
+												"name": "restatement_flag",
+												"type": "String"
 											}
 										}
 									]
