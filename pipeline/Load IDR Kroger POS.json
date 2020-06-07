@@ -368,7 +368,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "CSV_Inc_IDR_Kroger_Inventory_Azure",
+									"referenceName": "CSV_Inc_IDR_Kroger_POS_Azure",
 									"type": "DatasetReference"
 								}
 							],
