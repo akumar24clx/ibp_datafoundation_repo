@@ -52,7 +52,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "select count(*) as idr_record_count\nfrom clxrdr_kr.kr_b_whs_inv_day\nwhere kr_date_nbr > @{activity('Get Last Load Date').output.firstRow.max_load_date}",
+							"value": "select count(*) as idr_record_count\nfrom clxrdr_kr.kr_b_pos_day\nwhere kr_date_nbr > @{activity('Get Last Load Date').output.firstRow.max_load_date}",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
@@ -87,7 +87,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "select * from clxrdr_kr.kr_b_whs_inv_day \nwhere kr_date_nbr >  @{activity('Get Last Load Date').output.firstRow.max_load_date}",
+							"value": "select * from clxrdr_kr.kr_b_pos_day\nwhere kr_date_nbr >  @{activity('Get Last Load Date').output.firstRow.max_load_date}",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
