@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "incremental_idr_litter_orders.csv",
-				"folderPath": "orders",
+				"fileName": "incremental_idr_shipments.csv",
+				"folderPath": "shipments",
 				"container": "matrix-raw"
 			},
 			"columnDelimiter": ",",
