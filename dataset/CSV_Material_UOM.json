@@ -2,7 +2,7 @@
 	"name": "CSV_Material_UOM",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage_OnPrem",
+			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
