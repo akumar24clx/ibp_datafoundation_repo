@@ -16,33 +16,30 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "OracleSource",
-						"oracleReaderQuery": "select * from clxbw.apo_bw_d_material_uom ",
-						"partitionOption": "None",
-						"queryTimeout": "02:00:00"
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "DelimitedTextReadSettings"
 						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"tableOption": "autoCreate"
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "Table_Oracle_IDR_Material",
+						"referenceName": "CSV_Material_UOM",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "CSV_Material_UOM",
+						"referenceName": "Table_SQLDW_Material_UOM",
 						"type": "DatasetReference"
 					}
 				]
