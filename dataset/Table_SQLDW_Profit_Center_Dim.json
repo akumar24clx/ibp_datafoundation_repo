@@ -1,0 +1,16 @@
+{
+	"name": "Table_SQLDW_Profit_Center_Dim",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "profit_center_dim"
+		}
+	}
+}
