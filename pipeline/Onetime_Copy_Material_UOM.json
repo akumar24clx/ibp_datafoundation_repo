@@ -59,7 +59,7 @@
 								},
 								"sink": {
 									"name": "conv_factor",
-									"type": "Int32"
+									"type": "Single"
 								}
 							},
 							{
