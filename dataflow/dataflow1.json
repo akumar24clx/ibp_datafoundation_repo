@@ -1,0 +1,20 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Autoresolve_test",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\tCUSTOMER_CODE as string,\n\t\tCUSTOMER_NAME_1 as string,\n\t\tCUSTOMER_NAME_2 as string,\n\t\tCUSTOMER_NAME_3 as string,\n\t\tPO_BOX as string,\n\t\tSTREET as string,\n\t\tREGION_CODE as string,\n\t\tREGION as string,\n\t\tCITY as string,\n\t\tZIPCODE as string,\n\t\tCOUNTRY_CODE as string,\n\t\tCOUNTRY as string,\n\t\tACCT_GRP_CODE as string,\n\t\tCONSUMER_FLG as string,\n\t\tSALES_ORG_CODE as string,\n\t\tCUSTOMER_GROUP_CODE as string,\n\t\tCUSTOMER_GROUP as string,\n\t\tTRADE_SECTOR_CODE as string,\n\t\tTRADE_SECTOR as string,\n\t\tSALES_GROUP_CODE as string,\n\t\tSALES_ORG as string,\n\t\tCUSTOMER_CODE_LVL_1 as string,\n\t\tCUSTOMER_CODE_LVL_2 as string,\n\t\tCUSTOMER_CODE_LVL_3 as string,\n\t\tCUSTOMER_NAME1_LVL_1 as string,\n\t\tCUSTOMER_NAME1_LVL_2 as string,\n\t\tCUSTOMER_NAME1_LVL_3 as string,\n\t\tOMS as string,\n\t\tPLANNING_ACCT_GRP_CODE as string,\n\t\tHIERARCHY_NBR as integer,\n\t\tPRICE_GROUP_CODE as string,\n\t\tOVERRIDE_DISTRIB_CHANNEL_CODE as string,\n\t\tOVERRIDE_SHIPTO_FLG as string,\n\t\tSALES_DEPT_CODE as string,\n\t\tSALES_REGION_CODE as string,\n\t\tSALES_SECTOR_CODE as string,\n\t\tSALES_DEPT as string,\n\t\tSALES_REGION as string,\n\t\tSALES_SECTOR as string,\n\t\tSALES_DELETE_FLG as string,\n\t\tCREATED_DATE as date,\n\t\tMODIFIED_DATE as date\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table',\n\tstaged: false) ~> source1"
+		}
+	}
+}
