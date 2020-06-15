@@ -78,7 +78,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "base_kroger_pos_day"
+			"table": "base_kroger_pos"
 		}
 	}
 }
