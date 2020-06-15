@@ -6,10 +6,10 @@
 		"type": "AzureSqlDW",
 		"typeProperties": {
 			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=clxdev-sqldw-server.database.windows.net;initial catalog=clxdev-matrix-dw101;user id=kpernapa",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJhMjYzMjNhNi0zZWJlLTQ2NGYtYjhmMS02ZDQ3YTAyNjdhZmIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1ODg2ZDNjYy0xZWIwLTQwMjQtOGI1MC1hYWIyYTdiYzYzYmUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
-			"referenceName": "clxdev-az-ir-linked",
+			"referenceName": "clxdev-onprem-ir-linked",
 			"type": "IntegrationRuntimeReference"
 		}
 	}
