@@ -1,0 +1,44 @@
+{
+	"name": "iri_sftp_data_file",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dev_iri_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": "HomeCareCategories_06.01.20_Comma_2020-06-01-23-00-01_FINAL.csv",
+				"folderPath": "/pos/syndicated/iri/landing"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Time",
+				"type": "String"
+			},
+			{
+				"name": "Geography",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			},
+			{
+				"name": "Dollar Sales",
+				"type": "String"
+			},
+			{
+				"name": "Dollar Sales Year Ago",
+				"type": "String"
+			}
+		]
+	}
+}
