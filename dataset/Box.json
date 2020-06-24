@@ -1,10 +1,6 @@
 {
 	"name": "Box",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "RestService1",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "REST - Sources"
 		},
