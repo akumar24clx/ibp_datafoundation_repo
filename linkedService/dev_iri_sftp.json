@@ -5,12 +5,12 @@
 		"annotations": [],
 		"type": "Sftp",
 		"typeProperties": {
-			"host": "aftpppl0",
+			"host": "asftppl1",
 			"port": 22,
 			"skipHostKeyValidation": true,
 			"authenticationType": "Basic",
 			"userName": "kpernapa",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlYWUwODdhNC00NzMwLTRkYWItOWRiOC0zNzI5YjE5YWVlNzAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmZjI4NDNjYy1mNDZlLTQzM2MtYjc2OC1iY2RjMTExZTlmZjciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "clxdev-onprem-ir-linked",
