@@ -6,10 +6,10 @@
 		"type": "AzureBlobFS",
 		"typeProperties": {
 			"url": "https://clxdevdatalake.dfs.core.windows.net",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5Yjk5OWQ5ZC1jMGJkLTRjYjgtYjI1NS1lZmRjM2U1N2I5YTEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjZWQ0ZmI3MC04ZTczLTQxYjQtYmQxYy1jZjM2YjJlMzg3YzAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
-			"referenceName": "clxdev-az-ir-linked",
+			"referenceName": "clxdev-onprem-ir-linked",
 			"type": "IntegrationRuntimeReference"
 		}
 	}
