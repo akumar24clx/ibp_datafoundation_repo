@@ -359,6 +359,9 @@
 				]
 			}
 		],
+		"folder": {
+			"name": "IRI - POS"
+		},
 		"annotations": []
 	}
 }

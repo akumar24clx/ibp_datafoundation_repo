@@ -5,6 +5,9 @@
 			"referenceName": "AzureBlobStorage_OnPrem",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "SFTP - Sources"
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {

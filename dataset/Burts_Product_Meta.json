@@ -11,6 +11,9 @@
 				"defaultValue": "Burts_Product_Meta.txt.zip"
 			}
 		},
+		"folder": {
+			"name": "SFTP - Sources"
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
