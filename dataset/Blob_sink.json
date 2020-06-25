@@ -1,0 +1,18 @@
+{
+	"name": "Blob_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_OnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Testing_Folder",
+				"container": "matrix-raw"
+			}
+		}
+	}
+}

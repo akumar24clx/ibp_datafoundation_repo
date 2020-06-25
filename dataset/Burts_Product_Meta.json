@@ -1,0 +1,27 @@
+{
+	"name": "Burts_Product_Meta",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dev_iri_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sftp_file_name": {
+				"type": "string",
+				"defaultValue": "Burts_Product_Meta.txt.zip"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": {
+					"value": "@dataset().sftp_file_name",
+					"type": "Expression"
+				},
+				"folderPath": "/pos/syndicated/iri/landing"
+			}
+		}
+	}
+}
