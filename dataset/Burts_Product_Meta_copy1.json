@@ -1,0 +1,20 @@
+{
+	"name": "Burts_Product_Meta_copy1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dev_iri_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SFTP - Sources"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"folderPath": "/pos/syndicated/iri/landing"
+			}
+		}
+	}
+}
