@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "get_latest_file_ADLS",
 	"properties": {
 		"activities": [
 			{
@@ -20,10 +20,12 @@
 						"type": "DatasetReference"
 					},
 					"fieldList": [
+						"lastModified",
 						"childItems"
 					],
 					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings"
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true
 					},
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
@@ -161,7 +163,8 @@
 									"lastModified"
 								],
 								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings"
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
