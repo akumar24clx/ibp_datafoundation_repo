@@ -1,5 +1,5 @@
 {
-	"name": "sftp_test2",
+	"name": "sftp_to_adls_ingestion_static",
 	"properties": {
 		"activities": [
 			{
@@ -43,7 +43,10 @@
 				"inputs": [
 					{
 						"referenceName": "Burts_Product_Meta",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"sftp_file_name": "Burts_Product_Meta.txt.zip"
+						}
 					}
 				],
 				"outputs": [
@@ -133,11 +136,17 @@
 						"additionalColumns": [
 							{
 								"name": "src_count",
-								"value": "@activity('AT_CPY_SFTP_TO_ADLS').output.filesRead"
+								"value": {
+									"value": "@activity('AT_CPY_SFTP_TO_ADLS').output.filesRead",
+									"type": "Expression"
+								}
 							},
 							{
 								"name": "tgt_count",
-								"value": "@activity('AT_CPY_SFTP_TO_ADLS').output.filesWritten"
+								"value": {
+									"value": "@activity('AT_CPY_SFTP_TO_ADLS').output.filesWritten",
+									"type": "Expression"
+								}
 							},
 							{
 								"name": "src_name",
@@ -149,7 +158,10 @@
 							},
 							{
 								"name": "Total_time_taken",
-								"value": "@activity('AT_CPY_SFTP_TO_ADLS').output.copyDuration"
+								"value": {
+									"value": "@activity('AT_CPY_SFTP_TO_ADLS').output.copyDuration",
+									"type": "Expression"
+								}
 							},
 							{
 								"name": "Pipeline_name",
@@ -169,7 +181,10 @@
 							},
 							{
 								"name": "status",
-								"value": "@activity('AT_CPY_SFTP_TO_ADLS').output.executionDetails[0].status"
+								"value": {
+									"value": "@activity('AT_CPY_SFTP_TO_ADLS').output.executionDetails[0].status",
+									"type": "Expression"
+								}
 							},
 							{
 								"name": "activity_name",
@@ -177,11 +192,17 @@
 							},
 							{
 								"name": "activity_start_dt",
-								"value": "@activity('Activity_Start_Date').output.firstrow.at_start_time"
+								"value": {
+									"value": "@activity('Activity_Start_Date').output.firstrow.at_start_time",
+									"type": "Expression"
+								}
 							},
 							{
 								"name": "activity_end_dt",
-								"value": "@activity('Activity_End_Date').output.firstrow.at_end_time"
+								"value": {
+									"value": "@activity('Activity_End_Date').output.firstrow.at_end_time",
+									"type": "Expression"
+								}
 							},
 							{
 								"name": "rows_inserted",
