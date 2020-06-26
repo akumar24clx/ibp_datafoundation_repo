@@ -18,6 +18,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().src",
+					"type": "Expression"
+				},
 				"folderPath": "Testing_Folder/test_10",
 				"container": "matrix-raw"
 			}

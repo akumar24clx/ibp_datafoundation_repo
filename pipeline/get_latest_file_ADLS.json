@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
+				"name": "Get_List_of_files",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "test_src_folder",
+						"referenceName": "Binary_src_test_folder",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -28,16 +28,16 @@
 						"recursive": true
 					},
 					"formatSettings": {
-						"type": "DelimitedTextReadSettings"
+						"type": "BinaryReadSettings"
 					}
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "Iterate_on_each_file",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Get_List_of_files",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -46,17 +46,17 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('Get_List_of_files').output.childItems",
 						"type": "Expression"
 					},
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "If Condition1",
+							"name": "Check_for_latest_file",
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Get Metadata2",
+									"activity": "Get_last_modified_dt",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -65,12 +65,12 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(activity('Get Metadata2').output.lastModified,startOfDay(utcnow()))",
+									"value": "@greater(activity('Get_last_modified_dt').output.lastModified,startOfDay(utcnow()))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Copy data1",
+										"name": "Push_file",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
@@ -83,44 +83,30 @@
 										"userProperties": [],
 										"typeProperties": {
 											"source": {
-												"type": "DelimitedTextSource",
+												"type": "BinarySource",
 												"storeSettings": {
 													"type": "AzureBlobStorageReadSettings",
-													"recursive": true,
-													"enablePartitionDiscovery": false
+													"recursive": true
 												},
 												"formatSettings": {
-													"type": "DelimitedTextReadSettings"
+													"type": "BinaryReadSettings"
 												}
 											},
 											"sink": {
-												"type": "DelimitedTextSink",
+												"type": "BinarySink",
 												"storeSettings": {
 													"type": "AzureBlobStorageWriteSettings"
-												},
-												"formatSettings": {
-													"type": "DelimitedTextWriteSettings",
-													"quoteAllText": true,
-													"fileExtension": ""
 												}
 											},
-											"enableStaging": false,
-											"translator": {
-												"type": "TabularTranslator",
-												"typeConversion": true,
-												"typeConversionSettings": {
-													"allowDataTruncation": true,
-													"treatBooleanAsNumber": false
-												}
-											}
+											"enableStaging": false
 										},
 										"inputs": [
 											{
-												"referenceName": "test_src",
+												"referenceName": "Binary_src_test",
 												"type": "DatasetReference",
 												"parameters": {
-													"src_file": {
-														"value": "@activity('Get Metadata2').output.ItemName",
+													"src": {
+														"value": "@activity('Get_last_modified_dt').output.ItemName",
 														"type": "Expression"
 													}
 												}
@@ -128,11 +114,11 @@
 										],
 										"outputs": [
 											{
-												"referenceName": "test_sink",
+												"referenceName": "Binary_sink_test",
 												"type": "DatasetReference",
 												"parameters": {
-													"sink": {
-														"value": "@activity('Get Metadata2').output.ItemName",
+													"sink_file": {
+														"value": "@activity('Get_last_modified_dt').output.ItemName",
 														"type": "Expression"
 													}
 												}
@@ -143,7 +129,7 @@
 							}
 						},
 						{
-							"name": "Get Metadata2",
+							"name": "Get_last_modified_dt",
 							"type": "GetMetadata",
 							"dependsOn": [],
 							"policy": {
@@ -156,10 +142,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "test_src",
+									"referenceName": "Binary_src_test",
 									"type": "DatasetReference",
 									"parameters": {
-										"src_file": {
+										"src": {
 											"value": "@item().name",
 											"type": "Expression"
 										}
@@ -174,7 +160,7 @@
 									"recursive": true
 								},
 								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
+									"type": "BinaryReadSettings"
 								}
 							}
 						}

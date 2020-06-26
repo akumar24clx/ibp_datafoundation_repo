@@ -5,6 +5,11 @@
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"sink_file": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "SFTP - Sources"
 		},
@@ -13,6 +18,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().sink_file",
+					"type": "Expression"
+				},
 				"folderPath": "Testing_Folder/test_src",
 				"container": "matrix-raw"
 			}
