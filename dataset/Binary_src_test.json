@@ -1,0 +1,26 @@
+{
+	"name": "Binary_src_test",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"src": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "SFTP - Sources"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Testing_Folder/test_10",
+				"container": "matrix-raw"
+			}
+		}
+	}
+}

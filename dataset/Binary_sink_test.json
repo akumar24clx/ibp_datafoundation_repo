@@ -1,0 +1,21 @@
+{
+	"name": "Binary_sink_test",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SFTP - Sources"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Testing_Folder/test_src",
+				"container": "matrix-raw"
+			}
+		}
+	}
+}

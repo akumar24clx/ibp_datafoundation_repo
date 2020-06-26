@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "Testing_Folder",
+				"folderPath": "Testing_Folder/test_10",
 				"container": "matrix-raw"
 			},
 			"columnDelimiter": ",",

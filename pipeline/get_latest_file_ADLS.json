@@ -101,7 +101,7 @@
 												"formatSettings": {
 													"type": "DelimitedTextWriteSettings",
 													"quoteAllText": true,
-													"fileExtension": ".txt"
+													"fileExtension": ""
 												}
 											},
 											"enableStaging": false,
@@ -129,7 +129,13 @@
 										"outputs": [
 											{
 												"referenceName": "test_sink",
-												"type": "DatasetReference"
+												"type": "DatasetReference",
+												"parameters": {
+													"sink": {
+														"value": "@activity('Get Metadata2').output.ItemName",
+														"type": "Expression"
+													}
+												}
 											}
 										]
 									}
@@ -154,13 +160,14 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"src_file": {
-											"value": "@item()",
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
 								},
 								"fieldList": [
-									"lastModified"
+									"lastModified",
+									"itemName"
 								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
