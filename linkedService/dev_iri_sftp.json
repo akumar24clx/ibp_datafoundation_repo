@@ -9,8 +9,8 @@
 			"port": 22,
 			"skipHostKeyValidation": true,
 			"authenticationType": "Basic",
-			"userName": "kpernapa",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxMjI3NzY2NS01ZWIyLTQzYTMtYTZhNS1jZjYwNzJkMTM1MTIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"userName": "clx-iri-sftp-user",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjNzA1MmFhNi1lZTNiLTQ4MWUtYTU5Ny04ZmViNmU4NzExMDQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "clxdev-onprem-ir-linked",
