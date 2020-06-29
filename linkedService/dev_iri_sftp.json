@@ -5,12 +5,12 @@
 		"annotations": [],
 		"type": "Sftp",
 		"typeProperties": {
-			"host": "aftpppl0",
+			"host": "asftppl1.clorox.com",
 			"port": 22,
 			"skipHostKeyValidation": true,
 			"authenticationType": "Basic",
-			"userName": "clx-iri-sftp-user",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjNzA1MmFhNi1lZTNiLTQ4MWUtYTU5Ny04ZmViNmU4NzExMDQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"userName": "kpernapa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1ZGVmZTA1ZC03YzkzLTQ2MjMtYTcyZi1lNDExZGVmMTg2NGQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "clxdev-onprem-ir-linked",
