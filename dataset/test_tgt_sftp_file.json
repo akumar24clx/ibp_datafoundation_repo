@@ -1,0 +1,29 @@
+{
+	"name": "test_tgt_sftp_file",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sa_dev_iri_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"src_file": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "SFTP - Sources/sftp_testing"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": {
+					"value": "@dataset().src_file",
+					"type": "Expression"
+				},
+				"folderPath": "/pos/syndicated/iri/landing"
+			}
+		}
+	}
+}

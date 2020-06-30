@@ -1,0 +1,22 @@
+{
+	"name": "Binary2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_OnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@item().Name",
+					"type": "Expression"
+				},
+				"folderPath": "Testing_Folder/test_10",
+				"container": "matrix-raw"
+			}
+		}
+	}
+}

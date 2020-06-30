@@ -1,0 +1,20 @@
+{
+	"name": "test_src_archive",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sa_dev_iri_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SFTP - Sources/sftp_testing"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"folderPath": "/pos/syndicated/iri/archive"
+			}
+		}
+	}
+}

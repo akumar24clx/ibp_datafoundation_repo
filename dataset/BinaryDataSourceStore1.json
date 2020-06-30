@@ -1,0 +1,29 @@
+{
+	"name": "BinaryDataSourceStore1",
+	"properties": {
+		"description": "Connection to your data source store. ",
+		"linkedServiceName": {
+			"referenceName": "sa_dev_iri_sftp",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FolderPath": {
+				"type": "string"
+			},
+			"Directory": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"folderPath": {
+					"value": "@concat(dataset().FolderPath,'/',dataset().Directory)",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
