@@ -22,7 +22,10 @@
 					"value": "@variables('filename')",
 					"type": "Expression"
 				},
-				"folderPath": "/pos/syndicated/iri/archive"
+				"folderPath": {
+					"value": "@dataset().Directory",
+					"type": "Expression"
+				}
 			}
 		}
 	}
