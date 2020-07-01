@@ -1,5 +1,5 @@
 {
-	"name": "test_src_archive",
+	"name": "test_src_archive_file_3",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sa_dev_iri_sftp",
@@ -18,10 +18,11 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"folderPath": {
-					"value": "@dataset().Directory",
+				"fileName": {
+					"value": "@variables('filename')",
 					"type": "Expression"
-				}
+				},
+				"folderPath": "/pos/syndicated/iri/archive"
 			}
 		}
 	}

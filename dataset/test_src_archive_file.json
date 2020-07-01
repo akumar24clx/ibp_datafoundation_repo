@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"src": {
+			"Directory": {
 				"type": "string"
 			}
 		},
@@ -19,7 +19,7 @@
 			"location": {
 				"type": "SftpLocation",
 				"fileName": {
-					"value": "@dataset().src",
+					"value": "@item().Name",
 					"type": "Expression"
 				},
 				"folderPath": "/pos/syndicated/iri/archive"

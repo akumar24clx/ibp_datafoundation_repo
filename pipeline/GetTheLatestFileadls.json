@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata1",
+				"name": "Read_all_SFTP_files",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -16,16 +16,21 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "Binary11",
-						"type": "DatasetReference"
+						"referenceName": "test_src_archive",
+						"type": "DatasetReference",
+						"parameters": {
+							"Directory": {
+								"value": "@pipeline().parameters.DirectoryPath",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
 						"lastModified",
 						"childItems"
 					],
 					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true
+						"type": "SftpReadSettings"
 					},
 					"formatSettings": {
 						"type": "BinaryReadSettings"
@@ -33,11 +38,11 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "Iterate_to_fetch_latest_file",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata1",
+						"activity": "Filter_IRI_files",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -46,12 +51,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata1').output.childItems",
+						"value": "@activity('Filter_IRI_files').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Get Metadata2",
+							"name": "Read_all_IRI_files",
 							"type": "GetMetadata",
 							"dependsOn": [],
 							"policy": {
@@ -64,16 +69,21 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "Binary2",
-									"type": "DatasetReference"
+									"referenceName": "test_src_archive_file",
+									"type": "DatasetReference",
+									"parameters": {
+										"Directory": {
+											"value": "@pipeline().parameters.DirectoryPath",
+											"type": "Expression"
+										}
+									}
 								},
 								"fieldList": [
 									"lastModified",
 									"itemName"
 								],
 								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true
+									"type": "SftpReadSettings"
 								},
 								"formatSettings": {
 									"type": "BinaryReadSettings"
@@ -85,7 +95,7 @@
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Get Metadata2",
+									"activity": "Read_all_IRI_files",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -94,29 +104,29 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(activity('Get Metadata2').output.lastModified,variables('maxtime'))",
+									"value": "@greater(activity('Read_all_IRI_files').output.lastModified,variables('maxtime'))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Set variable1",
+										"name": "Set_latest_last_modified_date",
 										"type": "SetVariable",
 										"dependsOn": [],
 										"userProperties": [],
 										"typeProperties": {
 											"variableName": "maxtime",
 											"value": {
-												"value": "@activity('Get Metadata2').output.lastModified",
+												"value": "@activity('Read_all_IRI_files').output.lastModified",
 												"type": "Expression"
 											}
 										}
 									},
 									{
-										"name": "Set variable2",
+										"name": "Set_current_FileName",
 										"type": "SetVariable",
 										"dependsOn": [
 											{
-												"activity": "Set variable1",
+												"activity": "Set_latest_last_modified_date",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -126,7 +136,7 @@
 										"typeProperties": {
 											"variableName": "filename",
 											"value": {
-												"value": "@activity('Get Metadata2').output.itemName",
+												"value": "@activity('Read_all_IRI_files').output.itemName",
 												"type": "Expression"
 											}
 										}
@@ -136,8 +146,82 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Filter_IRI_files",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Read_all_SFTP_files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Read_all_SFTP_files').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@startswith(item().name,pipeline().parameters.GetFileName)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Get_latest_file_info",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "Iterate_to_fetch_latest_file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "test_src_archive_file_3",
+						"type": "DatasetReference",
+						"parameters": {
+							"Directory": {
+								"value": "@pipeline().parameters.DirectoryPath",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"lastModified",
+						"itemName"
+					],
+					"storeSettings": {
+						"type": "SftpReadSettings"
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
 			}
 		],
+		"parameters": {
+			"GetFileName": {
+				"type": "string"
+			},
+			"DirectoryPath": {
+				"type": "string",
+				"defaultValue": "/pos/syndicated/iri/archive"
+			}
+		},
 		"variables": {
 			"filename": {
 				"type": "String",
