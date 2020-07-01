@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Read_all_SFTP_files",
+				"name": "Read_from_SFTP_folder",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -42,7 +42,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Filter_IRI_files",
+						"activity": "File_based_filter",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -56,7 +56,7 @@
 					},
 					"activities": [
 						{
-							"name": "Read_all_IRI_files",
+							"name": "Get_file_details",
 							"type": "GetMetadata",
 							"dependsOn": [],
 							"policy": {
@@ -91,11 +91,11 @@
 							}
 						},
 						{
-							"name": "If Condition1",
+							"name": "Check_latest_file",
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Read_all_IRI_files",
+									"activity": "Get_file_details",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -148,11 +148,11 @@
 				}
 			},
 			{
-				"name": "Filter_IRI_files",
+				"name": "File_based_filter",
 				"type": "Filter",
 				"dependsOn": [
 					{
-						"activity": "Read_all_SFTP_files",
+						"activity": "Read_from_SFTP_folder",
 						"dependencyConditions": [
 							"Succeeded"
 						]
