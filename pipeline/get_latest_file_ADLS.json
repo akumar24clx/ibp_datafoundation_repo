@@ -102,7 +102,7 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "Binary_src_test",
+												"referenceName": "Binary_src_test_ADLS",
 												"type": "DatasetReference",
 												"parameters": {
 													"src": {
@@ -142,7 +142,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "Binary_src_test",
+									"referenceName": "Binary_src_test_ADLS",
 									"type": "DatasetReference",
 									"parameters": {
 										"src": {

@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "clx_product_master_2020-06-25_v4.csv",
 				"folderPath": "Testing_Folder/test_10",
 				"container": "matrix-raw"
 			},

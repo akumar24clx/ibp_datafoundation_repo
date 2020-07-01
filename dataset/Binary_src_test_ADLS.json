@@ -1,8 +1,8 @@
 {
-	"name": "Binary_src_test",
+	"name": "Binary_src_test_ADLS",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage1",
+			"referenceName": "AzureBlobStorage_OnPrem",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

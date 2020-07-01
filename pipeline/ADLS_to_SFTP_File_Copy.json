@@ -1,5 +1,5 @@
 {
-	"name": "latest_file_push_ADLS",
+	"name": "ADLS_to_SFTP_File_Copy",
 	"properties": {
 		"activities": [
 			{
@@ -16,48 +16,37 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "BinarySource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": false,
-							"wildcardFolderPath": "Testing_*",
-							"wildcardFileName": "*.csv",
-							"enablePartitionDiscovery": false
+							"recursive": true
 						},
 						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
+							"type": "BinaryReadSettings"
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "BinarySink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "SftpWriteSettings",
+							"operationTimeout": "01:00:00",
+							"useTempFileRename": true
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "test_src_folder",
-						"type": "DatasetReference"
+						"referenceName": "Binary_src_test_ADLS",
+						"type": "DatasetReference",
+						"parameters": {
+							"src": "clx_product_master_2020-06-25_v4.csv"
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "test_sink",
+						"referenceName": "test_tgt_sftp",
 						"type": "DatasetReference"
 					}
 				]
