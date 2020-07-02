@@ -5,7 +5,14 @@
 			{
 				"name": "Read_from_SFTP_folder",
 				"type": "GetMetadata",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Activity_Start_Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -30,7 +37,8 @@
 						"childItems"
 					],
 					"storeSettings": {
-						"type": "SftpReadSettings"
+						"type": "SftpReadSettings",
+						"recursive": true
 					},
 					"formatSettings": {
 						"type": "BinaryReadSettings"
@@ -51,7 +59,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter_IRI_files').output.value",
+						"value": "@activity('File_based_filter').output.value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -83,7 +91,8 @@
 									"itemName"
 								],
 								"storeSettings": {
-									"type": "SftpReadSettings"
+									"type": "SftpReadSettings",
+									"recursive": true
 								},
 								"formatSettings": {
 									"type": "BinaryReadSettings"
@@ -104,7 +113,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(activity('Read_all_IRI_files').output.lastModified,variables('maxtime'))",
+									"value": "@greater(activity('Get_file_details').output.lastModified,variables('maxtime'))",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
@@ -116,7 +125,7 @@
 										"typeProperties": {
 											"variableName": "maxtime",
 											"value": {
-												"value": "@activity('Read_all_IRI_files').output.lastModified",
+												"value": "@activity('Get_file_details').output.lastModified",
 												"type": "Expression"
 											}
 										}
@@ -136,7 +145,7 @@
 										"typeProperties": {
 											"variableName": "filename",
 											"value": {
-												"value": "@activity('Read_all_IRI_files').output.itemName",
+												"value": "@activity('Get_file_details').output.itemName",
 												"type": "Expression"
 											}
 										}
@@ -161,7 +170,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Read_all_SFTP_files').output.childItems",
+						"value": "@activity('Read_from_SFTP_folder').output.childItems",
 						"type": "Expression"
 					},
 					"condition": {
@@ -205,7 +214,8 @@
 						"itemName"
 					],
 					"storeSettings": {
-						"type": "SftpReadSettings"
+						"type": "SftpReadSettings",
+						"recursive": true
 					},
 					"formatSettings": {
 						"type": "BinaryReadSettings"
@@ -268,6 +278,524 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Activity_Start_Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_start_time",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Table_SQLDW_etl_audit_log",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Activity_End_Date",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Push_to_ADLS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_end_time",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Table_SQLDW_etl_audit_log",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Audit_logging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Activity_End_Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"additionalColumns": [
+							{
+								"name": "src_count",
+								"value": {
+									"value": "@activity('Push_to_ADLS').output.filesRead",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "tgt_count",
+								"value": {
+									"value": "@activity('Push_to_ADLS').output.filesWritten",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "src_name",
+								"value": "Burts_Product_Meta"
+							},
+							{
+								"name": "tgt_name",
+								"value": "Burts_Product_Meta"
+							},
+							{
+								"name": "Total_time_taken",
+								"value": {
+									"value": "@activity('Push_to_ADLS').output.copyDuration",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "Pipeline_name",
+								"value": "sftp_test2"
+							},
+							{
+								"name": "Datafactory_Name",
+								"value": "clxdev-adf-matrix"
+							},
+							{
+								"name": "src_type",
+								"value": "file"
+							},
+							{
+								"name": "tgt_type",
+								"value": "file"
+							},
+							{
+								"name": "status",
+								"value": {
+									"value": "@activity('Push_to_ADLS').output.executionDetails[0].status",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "activity_name",
+								"value": "AT_CPY_SFTP_TO_ADLS"
+							},
+							{
+								"name": "activity_start_dt",
+								"value": {
+									"value": "@activity('Activity_Start_Date').output.firstrow.at_start_time",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "activity_end_dt",
+								"value": {
+									"value": "@activity('Activity_End_Date').output.firstrow.at_end_time",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "rows_inserted",
+								"value": "0"
+							},
+							{
+								"name": "rows_updated",
+								"value": "0"
+							}
+						],
+						"sqlReaderQuery": "select isnull(max(batch_id),0)+1 as Batch_ID\nfrom dbo.etl_audit_log;",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlDWSink"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Batch_ID"
+								},
+								"sink": {
+									"name": "batch_id"
+								}
+							},
+							{
+								"source": {
+									"name": "Datafactory_Name"
+								},
+								"sink": {
+									"name": "Datafactory_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "Pipeline_name"
+								},
+								"sink": {
+									"name": "Pipeline_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "activity_name"
+								},
+								"sink": {
+									"name": "Activity_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "src_type"
+								},
+								"sink": {
+									"name": "Source_Type"
+								}
+							},
+							{
+								"source": {
+									"name": "tgt_type"
+								},
+								"sink": {
+									"name": "Destination_Type"
+								}
+							},
+							{
+								"source": {
+									"name": "src_name"
+								},
+								"sink": {
+									"name": "Source_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "tgt_name"
+								},
+								"sink": {
+									"name": "Target_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "src_count"
+								},
+								"sink": {
+									"name": "Source_Count"
+								}
+							},
+							{
+								"source": {
+									"name": "tgt_count"
+								},
+								"sink": {
+									"name": "Target_Count"
+								}
+							},
+							{
+								"source": {
+									"name": "status"
+								},
+								"sink": {
+									"name": "Status"
+								}
+							},
+							{
+								"source": {
+									"name": "activity_start_dt"
+								},
+								"sink": {
+									"name": "Activity_Start_Time"
+								}
+							},
+							{
+								"source": {
+									"name": "activity_end_dt"
+								},
+								"sink": {
+									"name": "Activity_End_Time"
+								}
+							},
+							{
+								"source": {
+									"name": "Total_time_taken"
+								},
+								"sink": {
+									"name": "Total_time_taken_in_sec"
+								}
+							},
+							{
+								"source": {
+									"name": "rows_inserted"
+								},
+								"sink": {
+									"name": "rows_inserted"
+								}
+							},
+							{
+								"source": {
+									"name": "rows_updated"
+								},
+								"sink": {
+									"name": "rows_updated"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_SQLDW_etl_audit_log",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_etl_audit_log",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "File_Read_Error",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Read_from_SFTP_folder",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"Status": "Failed",
+						"Env": "Dev",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+						"MessageBody1": "Hi All,",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory for reading the file metadata from the SFTP server.",
+						"MessageBody3": "Please find below the pipeline execution details:",
+						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+						"MessageBody5": " - Thanks"
+					}
+				}
+			},
+			{
+				"name": "File_Filter_Error",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "File_based_filter",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"Status": "Failed",
+						"Env": "Dev",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+						"MessageBody1": "Hi All,",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured at file filter component.",
+						"MessageBody3": "Please find below the pipeline execution details:",
+						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+						"MessageBody5": " - Thanks"
+					}
+				}
+			},
+			{
+				"name": "Fetch_latest_file_error",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Get_latest_file_info",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"Status": "Failed",
+						"Env": "Dev",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+						"MessageBody1": "Hi All,",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while fetching the latest file from the SFTP server.",
+						"MessageBody3": "Please find below the pipeline execution details:",
+						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+						"MessageBody5": " - Thanks"
+					}
+				}
+			},
+			{
+				"name": "SFTP_to_ADLS_error",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Push_to_ADLS",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"Status": "Failed",
+						"Env": "Dev",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+						"MessageBody1": "Hi All,",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage.",
+						"MessageBody3": "Please find below the pipeline execution details:",
+						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+						"MessageBody5": " - Thanks"
+					}
+				}
+			},
+			{
+				"name": "Job_Completion_Alert",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Audit_logging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"Status": "Successful",
+						"Env": "Dev",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com",
+						"MessageBody1": "Hi All,",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory for copying the file from the SFTP server to Azure Data Lake Storage.",
+						"MessageBody3": "Please find below the pipeline execution details:",
+						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+						"MessageBody5": " - Thanks"
+					}
+				}
 			}
 		],
 		"parameters": {
