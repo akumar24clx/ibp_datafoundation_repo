@@ -1,0 +1,63 @@
+{
+	"name": "dos_shipments_test",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"oracleReaderQuery": "select (case when a.fiscal_year_month like 'JAN%' then replace(a.fiscal_year_month,'JAN','FY MONTH 1 -')\n             when a.fiscal_year_month like 'FEB%' then replace(a.fiscal_year_month,'JAN','FY MONTH 2 -')\n             when a.fiscal_year_month like 'MAR%' then replace(a.fiscal_year_month,'JAN','FY MONTH 3 -')\n             when a.fiscal_year_month like 'APR%' then replace(a.fiscal_year_month,'JAN','FY MONTH 4 -')\n             when a.fiscal_year_month like 'MAY%' then replace(a.fiscal_year_month,'JAN','FY MONTH 5 -')\n             when a.fiscal_year_month like 'JUN%' then replace(a.fiscal_year_month,'JAN','FY MONTH 6 -')\n             when a.fiscal_year_month like 'JUL%' then replace(a.fiscal_year_month,'JAN','FY MONTH 7 -')\n             when a.fiscal_year_month like 'AUG%' then replace(a.fiscal_year_month,'JAN','FY MONTH 8 -')\n             when a.fiscal_year_month like 'SEP%' then replace(a.fiscal_year_month,'JAN','FY MONTH 9 -')\n             when a.fiscal_year_month like 'OCT%' then replace(a.fiscal_year_month,'JAN','FY MONTH 10 -')\n             when a.fiscal_year_month like 'NOV%' then replace(a.fiscal_year_month,'JAN','FY MONTH 11 -')\n             when a.fiscal_year_month like 'DEC%' then replace(a.fiscal_year_month,'JAN','FY MONTH 12 -')\n      else '' end) as fiscal_year_month,       \n       a.calendar_year_month,\n       a.division,\n       a.brand,\n       a.profit_center_name,\n       a.shipto_customer_name,\n       a.customer_hier_level_1,\n       a.customer_hier_level_2,\n       a.customer_hier_level_3,\n       a.billed_qty_sc as volume_in_stat_cases\nfrom\n(select\n--cal.fiscal_mnth_cd as fiscal_yearmonth_Code,\nto_char(to_date(substr(cal.fiscal_mnth_cd,1,6),'YYYYMM'),'MON YYYY') as fiscal_year_month,\n--substr(billing_date_code,1,6) as calendar_yearmonth_code,\nto_char(to_date(substr(billing_date_code,1,6),'YYYYMM'),'MON YYYY') as calendar_year_month,\nmat.division_name as division,\nmat.brand_name as brand,\nprofit.medium_name as PROFIT_CENTER_NAME,\ncust.customer_name_1 as shipto_customer_name,\ncust.customer_name1_lvl_1 as customer_hier_level_1,\ncust.customer_name1_lvl_2 as customer_hier_level_2,\ncust.customer_name1_lvl_3 as customer_hier_level_3,\nsum(billed_qty_sc) as billed_qty_sc\nfrom clxbw.dos_etl_ship_v ship\nleft outer join clxbw.apo_bw_d_material mat on ship.material_num=mat.material_num\nleft outer join clxbw.apo_bw_d_fiscal_cal cal on cal.cal_date_code = ship.billing_date_code\nleft outer join clxbw.APO_BW_D_PROFITCENTER profit on ship.profit_center_code=profit.profit_center_code\nleft outer join clxbw.apo_bw_d_customer cust on ship.shipto_customer_code=cust.customer_code\nwhere billing_date_code <> '20200701' and rownum < 30\ngroup by substr(billing_date_code,1,6),--cal.fiscal_mnth_cd\nmat.division_name,\n--to_char(to_date(substr(billing_date_code,1,6),'YYYYMM'),'MON YYYY'),\nmat.brand_name,profit.medium_name,\nto_char(to_date(substr(cal.fiscal_mnth_cd,1,6),'YYYYMM'),'MON YYYY'),--cal.fiscal_mnth_cd,\nto_char(to_date(substr(cal.fiscal_mnth_cd,1,6),'YYYYMM'),'MON YYYY'),\ncust.customer_name_1,\ncust.customer_name1_lvl_1,\ncust.customer_name1_lvl_2,\ncust.customer_name1_lvl_3\norder by substr(billing_date_code,1,6)) a;\n",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "SftpWriteSettings",
+							"operationTimeout": "01:00:00",
+							"useTempFileRename": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "OracleTable1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DOS_Shipments_CSV",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
