@@ -1,0 +1,171 @@
+{
+	"name": "GetAllFilesTo_ADLS",
+	"properties": {
+		"activities": [
+			{
+				"name": "Read_from_SFTP_folder",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "test_src_archive",
+						"type": "DatasetReference",
+						"parameters": {
+							"Directory": {
+								"value": "@pipeline().parameters.DirectoryPath",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"lastModified",
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "SftpReadSettings",
+						"recursive": true
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "Iterate_to_fetch_latest_file",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "File_based_filter",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('File_based_filter').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Push_to_ADLS_copy1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "SftpReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "test_src_archive_file_4",
+									"type": "DatasetReference",
+									"parameters": {
+										"Directory": {
+											"value": "@pipeline().parameters.DirectoryPath",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Binary_sink_test_ADLS2",
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": {
+											"value": "@concat(item().name,'_',utcnow())",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "File_based_filter",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Read_from_SFTP_folder",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Read_from_SFTP_folder').output.childItems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@startswith(item().name,pipeline().parameters.GetFileName)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"GetFileName": {
+				"type": "string",
+				"defaultValue": "clx_product_master"
+			},
+			"DirectoryPath": {
+				"type": "string",
+				"defaultValue": "/pos/syndicated/iri/landing"
+			}
+		},
+		"variables": {
+			"filename": {
+				"type": "String",
+				"defaultValue": "clx_product_master"
+			},
+			"maxtime": {
+				"type": "String",
+				"defaultValue": "2020-02-01T00:00:00Z"
+			}
+		},
+		"folder": {
+			"name": "IRI - POS"
+		},
+		"annotations": []
+	}
+}
