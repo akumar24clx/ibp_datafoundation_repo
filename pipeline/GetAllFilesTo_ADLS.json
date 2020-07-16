@@ -39,7 +39,7 @@
 				}
 			},
 			{
-				"name": "Iterate_to_fetch_latest_file",
+				"name": "Iterate_to_copy_files_to_ADLS",
 				"type": "ForEach",
 				"dependsOn": [
 					{
