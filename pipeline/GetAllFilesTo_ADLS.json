@@ -27,7 +27,8 @@
 					},
 					"fieldList": [
 						"lastModified",
-						"childItems"
+						"childItems",
+						"exists"
 					],
 					"storeSettings": {
 						"type": "SftpReadSettings",
@@ -43,7 +44,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "File_based_filter",
+						"activity": "Check_if_file_exists",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -120,8 +121,8 @@
 				}
 			},
 			{
-				"name": "File_based_filter",
-				"type": "Filter",
+				"name": "Check_if_file_exists",
+				"type": "IfCondition",
 				"dependsOn": [
 					{
 						"activity": "Read_from_SFTP_folder",
@@ -132,14 +133,115 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"items": {
-						"value": "@activity('Read_from_SFTP_folder').output.childItems",
+					"expression": {
+						"value": "@equals(activity('Read_from_SFTP_folder').output.exists,true)",
 						"type": "Expression"
 					},
-					"condition": {
-						"value": "@startswith(item().name,pipeline().parameters.GetFileName)",
-						"type": "Expression"
+					"ifTrueActivities": [
+						{
+							"name": "File_based_filter",
+							"type": "Filter",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"items": {
+									"value": "@activity('Read_from_SFTP_folder').output.childItems",
+									"type": "Expression"
+								},
+								"condition": {
+									"value": "@startswith(item().name,pipeline().parameters.GetFileName)",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "DQ Checks",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Iterate_to_copy_files_to_ADLS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Push_to_ADLS_copy1').output.dataRead,activity('Push_to_ADLS_copy1').output.dataWritten)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "SFTP_to_ADLS_error",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Job_Completion_Alert",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Successful",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for copying the file from the SFTP server to Azure Data Lake Storage.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
