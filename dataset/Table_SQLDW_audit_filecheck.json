@@ -1,0 +1,37 @@
+{
+	"name": "Table_SQLDW_audit_filecheck",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLDW - Base Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "Audit_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FileName_keyword",
+				"type": "varchar"
+			},
+			{
+				"name": "filteredfiles",
+				"type": "varchar"
+			},
+			{
+				"name": "adls_push_flag",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Audit_file_check"
+		}
+	}
+}
