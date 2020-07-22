@@ -1,0 +1,388 @@
+{
+	"name": "Iterate and copy sftp_to_ADLS",
+	"properties": {
+		"activities": [
+			{
+				"name": "StatusCheck",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": {
+							"value": "select case when (select status from dbo.Audit_run\nwhere Audit_id =\n(select max(Audit_id) from dbo.Audit_run\nwhere Pipeline_Name='@{pipeline().Pipeline}' and flow_id=(select max(flow_id) from dbo.Audit_flow where param_id='@{pipeline().parameters.Param_id}')))='Success' then '1' else '0' end as status",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Audit_dataflow",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "If Condition",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "StatusCheck",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@and(not(equals(0,pipeline().parameters.Param_id)),equals('1',activity('StatusCheck').output.firstRow.status))",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Iterate_to_copy_files_to_ADLS",
+							"type": "ForEach",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"items": {
+									"value": "@activity('File_based_filter').output.value",
+									"type": "Expression"
+								},
+								"activities": [
+									{
+										"name": "Push_to_ADLS_copy1",
+										"type": "Copy",
+										"dependsOn": [
+											{
+												"activity": "Audit Start_copy1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "BinarySource",
+												"storeSettings": {
+													"type": "SftpReadSettings",
+													"recursive": true
+												},
+												"formatSettings": {
+													"type": "BinaryReadSettings"
+												}
+											},
+											"sink": {
+												"type": "BinarySink",
+												"storeSettings": {
+													"type": "AzureBlobStorageWriteSettings"
+												}
+											},
+											"enableStaging": false
+										},
+										"inputs": [
+											{
+												"referenceName": "test_src_archive_file_4",
+												"type": "DatasetReference",
+												"parameters": {
+													"Directory": {
+														"value": "@pipeline().parameters.DirectoryPath",
+														"type": "Expression"
+													},
+													"filename": {
+														"value": "@item().name",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "Binary_sink_test_ADLS2",
+												"type": "DatasetReference",
+												"parameters": {
+													"filename": {
+														"value": "@concat(item().name,'_',utcnow())",
+														"type": "Expression"
+													}
+												}
+											}
+										]
+									},
+									{
+										"name": "Audit Start_copy1",
+										"description": "",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[Start_AuditRun]",
+											"storedProcedureParameters": {
+												"Param_id": {
+													"value": {
+														"value": "@pipeline().parameters.Param_id",
+														"type": "Expression"
+													},
+													"type": "Int32"
+												},
+												"PipelineName": {
+													"value": {
+														"value": "@pipeline().Pipeline",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"DataFactoryName": {
+													"value": {
+														"value": "@pipeline().DataFactory",
+														"type": "Expression"
+													},
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "AzureSQLDW",
+											"type": "LinkedServiceReference"
+										}
+									},
+									{
+										"name": "Audit Success_copy1",
+										"description": "",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "Push_to_ADLS_copy1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[Success_AuditRun]",
+											"storedProcedureParameters": {
+												"Rows_Updated": {
+													"value": "0",
+													"type": "Int32"
+												},
+												"PipelineName": {
+													"value": {
+														"value": "@pipeline().Pipeline",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"Rows_Deleted": {
+													"value": "0",
+													"type": "Int32"
+												},
+												"Destination_Type": {
+													"value": null,
+													"type": "String"
+												},
+												"DestinationName": {
+													"value": null,
+													"type": "String"
+												},
+												"Rows_Inserted": {
+													"value": null,
+													"type": "String"
+												},
+												"Rows_Rejected": {
+													"value": null,
+													"type": "String"
+												},
+												"RowsRead_SourceCount": {
+													"value": null,
+													"type": "String"
+												},
+												"Source_Type": {
+													"value": null,
+													"type": "String"
+												},
+												"SourceName": {
+													"value": null,
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "AzureSQLDW",
+											"type": "LinkedServiceReference"
+										}
+									},
+									{
+										"name": "Audit Fail_copy1",
+										"description": "",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "Push_to_ADLS_copy1",
+												"dependencyConditions": [
+													"Failed"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[Failure_AuditRun]",
+											"storedProcedureParameters": {
+												"Rows_Updated": {
+													"value": "0",
+													"type": "Int32"
+												},
+												"PipelineName": {
+													"value": {
+														"value": "@pipeline().Pipeline",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"Rows_Deleted": {
+													"value": "0",
+													"type": "Int32"
+												},
+												"Destination_Type": {
+													"value": null,
+													"type": "String"
+												},
+												"DestinationName": {
+													"value": null,
+													"type": "String"
+												},
+												"Rows_Inserted": {
+													"value": null,
+													"type": "String"
+												},
+												"Rows_Rejected": {
+													"value": null,
+													"type": "String"
+												},
+												"RowsRead_SourceCount": {
+													"value": null,
+													"type": "String"
+												},
+												"Source_Type": {
+													"value": null,
+													"type": "String"
+												},
+												"SourceName": {
+													"value": null,
+													"type": "String"
+												},
+												"Error_Code": {
+													"value": {
+														"value": "@{activity('Push_to_ADLS').error.errorCode}",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"ErrorMessage": {
+													"value": {
+														"value": "@{activity('Push_to_ADLS').error.message}",
+														"type": "Expression"
+													},
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "AzureSQLDW",
+											"type": "LinkedServiceReference"
+										}
+									},
+									{
+										"name": "Send_error_Mail_copy1",
+										"type": "WebActivity",
+										"dependsOn": [
+											{
+												"activity": "Audit Fail_copy1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+											"method": "POST",
+											"headers": {
+												"Content-Type": "application/json"
+											},
+											"body": {
+												"DataFactoryName": "@{pipeline().DataFactory}",
+												"Status": "Failed",
+												"Env": "Dev",
+												"PipelineName": "@{pipeline().Pipeline}",
+												"EmailTo": "abhijeet.kumar@bridgei2i.com",
+												"MessageBody1": "Hi All,",
+												"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage. Error Message : @{activity('Push_to_ADLS').Error.message}",
+												"MessageBody3": "Please find below the pipeline execution details:",
+												"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+												"MessageBody5": " - Thanks"
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"Param_id": {
+				"type": "int"
+			}
+		},
+		"folder": {
+			"name": "IRI - POS"
+		},
+		"annotations": []
+	}
+}
