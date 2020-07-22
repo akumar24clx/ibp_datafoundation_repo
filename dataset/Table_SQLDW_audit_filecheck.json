@@ -27,6 +27,16 @@
 			{
 				"name": "adls_push_flag",
 				"type": "varchar"
+			},
+			{
+				"name": "src_sftp_file_size_in_kb",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "tgt_adls_file_size_in_kb",
+				"type": "bigint",
+				"precision": 19
 			}
 		],
 		"typeProperties": {
