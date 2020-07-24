@@ -1,0 +1,88 @@
+{
+	"name": "STG_NEWPROD_CUSTOMER2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Avengers Ext Datasets/Staging Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "SnapShotName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectInputType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Brand",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SKU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TempSKU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "New Product Item",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH1 - Global Category",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH2 - Brand",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH3 - Purpose",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH4 - Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH5 - Size",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Customer",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ACV_Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ACV_Pct_Value",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LoadDate",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stg_newprod_customer"
+		}
+	}
+}
