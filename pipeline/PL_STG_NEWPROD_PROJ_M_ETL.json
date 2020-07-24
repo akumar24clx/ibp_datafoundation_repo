@@ -1,0 +1,321 @@
+{
+	"name": "PL_STG_NEWPROD_PROJ_M_ETL",
+	"properties": {
+		"activities": [
+			{
+				"name": "AT_CPY_ADLS_TO_STG_NEWPROD_PROJECT",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Activity_Start_Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.stg_newprod_project",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ProjectNumber",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectNumber",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Project Input Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Project Input Type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Division",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Division",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SBU",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SBU",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Brand",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Brand",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectDescription",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectDescription",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "StageGate",
+									"type": "String"
+								},
+								"sink": {
+									"name": "StageGate",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "StartOfShip",
+									"type": "String"
+								},
+								"sink": {
+									"name": "StartOfShip",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FiscalYearofLaunch",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FiscalYearofLaunch",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FYGrossVol_Msc",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FYGrossVol_Msc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FYIncrVol_Msc",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FYIncrVol_Msc",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "VolumeLift_Pct",
+									"type": "String"
+								},
+								"sink": {
+									"name": "VolumeLift_Pct",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TFI_$M",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TFI_$M",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Coupons_$M",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Coupons_$M",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Adv_SP_$M",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Adv_SP_$M",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LoadDate",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LoadDate",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "L1_Project_Details",
+						"type": "DatasetReference",
+						"parameters": {
+							"sub_dir": {
+								"value": "@pipeline().parameters.subdir_name",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.file_name",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "STG_NEWPROD_PROJECT",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": {
+								"value": "@pipeline().parameters.staging_table_name",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Activity_Start_Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_start_time",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Audit_table51",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Activity_End_Date",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "AT_CPY_ADLS_TO_STG_NEWPROD_PROJECT",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_end_time",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Audit_table51",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"subdir_name": {
+				"type": "string",
+				"defaultValue": "Litter"
+			},
+			"file_name": {
+				"type": "string",
+				"defaultValue": "L1 - Project Details.csv"
+			},
+			"staging_table_name": {
+				"type": "string",
+				"defaultValue": "stg_newprod_project"
+			}
+		},
+		"folder": {
+			"name": "Avengers/New Product Repo"
+		},
+		"annotations": []
+	}
+}

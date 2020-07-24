@@ -1,0 +1,86 @@
+{
+	"name": "Audit_table51",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Avengers Ext Datasets/Audit Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "batch_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Datafactory_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Pipeline_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Source_Type",
+				"type": "varchar"
+			},
+			{
+				"name": "Destination_Type",
+				"type": "varchar"
+			},
+			{
+				"name": "Source_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Target_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Source_Count",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Target_Count",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Status",
+				"type": "varchar"
+			},
+			{
+				"name": "Activity_Start_Time",
+				"type": "date"
+			},
+			{
+				"name": "Activity_End_Time",
+				"type": "date"
+			},
+			{
+				"name": "Total_time_taken",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rows_inserted",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rows_updated",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "etl_audit_log"
+		}
+	}
+}

@@ -1,0 +1,96 @@
+{
+	"name": "STG_NEWPROD_PROJECT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Avengers Ext Datasets/Staging Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "ProjectNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Project Input Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Division",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SBU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Brand",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectDescription",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StageGate",
+				"type": "nvarchar"
+			},
+			{
+				"name": "StartOfShip",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FiscalYearofLaunch",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FYGrossVol_Msc",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FYIncrVol_Msc",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VolumeLift_Pct",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TFI_$M",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Coupons_$M",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Adv_SP_$M",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LoadDate",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
