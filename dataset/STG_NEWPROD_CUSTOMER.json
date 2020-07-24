@@ -1,5 +1,5 @@
 {
-	"name": "STG_NEWPROD_CUSTOMER2",
+	"name": "STG_NEWPROD_CUSTOMER",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
