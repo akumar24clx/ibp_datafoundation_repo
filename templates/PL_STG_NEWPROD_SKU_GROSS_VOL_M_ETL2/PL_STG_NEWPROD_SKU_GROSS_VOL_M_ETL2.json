@@ -1,0 +1,889 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"AzureBlobStorage1": {
+			"type": "string"
+		},
+		"LS_az_datalake_azure_IR": {
+			"type": "string"
+		},
+		"IBP_AzureSynapseAnalytics": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_STG_NEWPROD_SKU_GROSS_VOL_M_ETL1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "AT_CPY_ADLS_TO_STG_NEWPROD_SKU_GROSS_VOL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Activity_Start_Date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "TRUNCATE TABLE dbo.stg_newprod_sku_gross_volume;",
+								"allowPolyBase": true,
+								"polyBaseSettings": {
+									"rejectValue": 0,
+									"rejectType": "value",
+									"useTypeDefault": true
+								},
+								"disableMetricsCollection": false
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "[parameters('AzureBlobStorage1')]",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "SnapShotName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SnapShotName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ProjectNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProjectNumber",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ProjectName",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProjectName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ProjectInputType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProjectInputType",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Brand",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Brand",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SKU",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SKU",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "TempSKU",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TempSKU",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NewProductItem",
+											"type": "String"
+										},
+										"sink": {
+											"name": "NewProductItem",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PH1_Global_Category",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PH1_Global_Category",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PH2_Brand",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PH2_Brand",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PH3_Purpose",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PH3_Purpose",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PH4_Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PH4_Type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PH5 _Size",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PH5 _Size",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CannibItem",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CannibItem",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cannib_Pct",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cannib_Pct",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Customer",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Customer",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "GrossVolume_Date",
+											"type": "String"
+										},
+										"sink": {
+											"name": "GrossVolume_Date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "GrossVolume_SCS_Value",
+											"type": "String"
+										},
+										"sink": {
+											"name": "GrossVolume_SCS_Value",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LoadDate",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LoadDate",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "L3_SKU_GROSS_VOLUME_DETAIL2",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "STG_NEWPROD_SKU_GROSS_VOLUME11",
+								"type": "DatasetReference"
+							}
+						]
+					},
+					{
+						"name": "Audit_Log",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Activity_End_Date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"additionalColumns": [
+									{
+										"name": "src_count",
+										"value": {
+											"value": "@activity('AT_CPY_ADLS_TO_STG_NEWPROD_SKU_GROSS_VOL').output.rowsRead",
+											"type": "Expression"
+										}
+									},
+									{
+										"name": "tgt_count",
+										"value": {
+											"value": "@activity('AT_CPY_ADLS_TO_STG_NEWPROD_SKU_GROSS_VOL').output.rowsCopied",
+											"type": "Expression"
+										}
+									},
+									{
+										"name": "src_name",
+										"value": "L3 - SKU Gross Volume Detail.csv"
+									},
+									{
+										"name": "tgt_name",
+										"value": "stg_newprod_sku_gross_volume"
+									},
+									{
+										"name": "Total_time_taken",
+										"value": {
+											"value": "@activity('AT_CPY_ADLS_TO_STG_NEWPROD_SKU_GROSS_VOL').output.copyDuration",
+											"type": "Expression"
+										}
+									},
+									{
+										"name": "Pipeline_name",
+										"value": "PL_STG_NEWPROD_SKU_GROSS_VOL_M_ETL"
+									},
+									{
+										"name": "Datafactory_Name",
+										"value": "clxdev-adf-sandbox"
+									},
+									{
+										"name": "src_type",
+										"value": "file"
+									},
+									{
+										"name": "tgt_type",
+										"value": "table"
+									},
+									{
+										"name": "status",
+										"value": {
+											"value": "@activity('AT_CPY_ADLS_TO_STG_NEWPROD_SKU_GROSS_VOL').output.executionDetails[0].status\n",
+											"type": "Expression"
+										}
+									},
+									{
+										"name": "activity_name",
+										"value": "AT_CPY_ADLS_TO_STG_NEWPROD_SKU_GROSS_VOL"
+									},
+									{
+										"name": "activity_start_dt",
+										"value": {
+											"value": "@activity('Activity_Start_Date').output.firstrow.at_start_time\n",
+											"type": "Expression"
+										}
+									},
+									{
+										"name": "activity_end_dt",
+										"value": {
+											"value": "@activity('Activity_End_Date').output.firstrow.at_end_time\n",
+											"type": "Expression"
+										}
+									}
+								],
+								"sqlReaderQuery": "select isnull(max(batch_id),0)+1 as Batch_ID\nfrom dbo.etl_audit_log;",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowPolyBase": true,
+								"polyBaseSettings": {
+									"rejectValue": 0,
+									"rejectType": "value",
+									"useTypeDefault": true
+								}
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "[parameters('AzureBlobStorage1')]",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Batch_ID"
+										},
+										"sink": {
+											"name": "batch_id"
+										}
+									},
+									{
+										"source": {
+											"name": "Datafactory_Name",
+											"type": "varchar"
+										},
+										"sink": {
+											"name": "Datafactory_Name"
+										}
+									},
+									{
+										"source": {
+											"name": "src_type"
+										},
+										"sink": {
+											"name": "Source_Type"
+										}
+									},
+									{
+										"source": {
+											"name": "tgt_type"
+										},
+										"sink": {
+											"name": "Destination_Type"
+										}
+									},
+									{
+										"source": {
+											"name": "src_count"
+										},
+										"sink": {
+											"name": "Source_Count"
+										}
+									},
+									{
+										"source": {
+											"name": "tgt_count"
+										},
+										"sink": {
+											"name": "Target_Count"
+										}
+									},
+									{
+										"source": {
+											"name": "src_name"
+										},
+										"sink": {
+											"name": "Source_Name"
+										}
+									},
+									{
+										"source": {
+											"name": "tgt_name"
+										},
+										"sink": {
+											"name": "Target_Name"
+										}
+									},
+									{
+										"source": {
+											"name": "Total_time_taken"
+										},
+										"sink": {
+											"name": "Total_time_taken_in_sec"
+										}
+									},
+									{
+										"source": {
+											"name": "status"
+										},
+										"sink": {
+											"name": "Status"
+										}
+									},
+									{
+										"source": {
+											"name": "Pipeline_name"
+										},
+										"sink": {
+											"name": "Pipeline_Name"
+										}
+									},
+									{
+										"source": {
+											"name": "activity_name"
+										},
+										"sink": {
+											"name": "Activity_Name"
+										}
+									},
+									{
+										"source": {
+											"name": "activity_start_dt"
+										},
+										"sink": {
+											"name": "Activity_Start_Time"
+										}
+									},
+									{
+										"source": {
+											"name": "activity_end_dt"
+										},
+										"sink": {
+											"name": "Activity_End_Time"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Audit_table5",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Audit_table5",
+								"type": "DatasetReference"
+							}
+						]
+					},
+					{
+						"name": "Activity_Start_Date",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_start_time",
+								"queryTimeout": "02:00:00"
+							},
+							"dataset": {
+								"referenceName": "Audit_table5",
+								"type": "DatasetReference"
+							}
+						}
+					},
+					{
+						"name": "Activity_End_Date",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "AT_CPY_ADLS_TO_STG_NEWPROD_SKU_GROSS_VOL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_end_time",
+								"queryTimeout": "02:00:00"
+							},
+							"dataset": {
+								"referenceName": "Audit_table5",
+								"type": "DatasetReference"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "Avengers/New Product Repo"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/L3_SKU_GROSS_VOLUME_DETAIL2')]",
+				"[concat(variables('factoryId'), '/datasets/STG_NEWPROD_SKU_GROSS_VOLUME11')]",
+				"[concat(variables('factoryId'), '/datasets/Audit_table5')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/L3_SKU_GROSS_VOLUME_DETAIL2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('LS_az_datalake_azure_IR')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Avengers Ext Datasets/Source Files"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "L3 - SKU Gross Volume Detail.csv",
+						"folderPath": "New Product Repository",
+						"fileSystem": "matrix-raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "SnapShotName",
+						"type": "String"
+					},
+					{
+						"name": "ProjectNumber",
+						"type": "String"
+					},
+					{
+						"name": "ProjectName",
+						"type": "String"
+					},
+					{
+						"name": "ProjectInputType",
+						"type": "String"
+					},
+					{
+						"name": "Brand",
+						"type": "String"
+					},
+					{
+						"name": "SKU",
+						"type": "String"
+					},
+					{
+						"name": "TempSKU",
+						"type": "String"
+					},
+					{
+						"name": "NewProductItem",
+						"type": "String"
+					},
+					{
+						"name": "PH1_Global_Category",
+						"type": "String"
+					},
+					{
+						"name": "PH2_Brand",
+						"type": "String"
+					},
+					{
+						"name": "PH3_Purpose",
+						"type": "String"
+					},
+					{
+						"name": "PH4_Type",
+						"type": "String"
+					},
+					{
+						"name": "PH5 _Size",
+						"type": "String"
+					},
+					{
+						"name": "CannibItem",
+						"type": "String"
+					},
+					{
+						"name": "Cannib_Pct",
+						"type": "String"
+					},
+					{
+						"name": "Customer",
+						"type": "String"
+					},
+					{
+						"name": "GrossVolume_Date",
+						"type": "String"
+					},
+					{
+						"name": "GrossVolume_SCS_Value",
+						"type": "String"
+					},
+					{
+						"name": "LoadDate",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STG_NEWPROD_SKU_GROSS_VOLUME11')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('IBP_AzureSynapseAnalytics')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Avengers Ext Datasets/Staging Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "ProjectNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Project Input Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Division",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SBU",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Brand",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ProjectDescription",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StageGate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "StartOfShip",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FiscalYearofLaunch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FYGrossVol_Msc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FYIncrVol_Msc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "VolumeLift_Pct",
+						"type": "nvarchar"
+					},
+					{
+						"name": "TFI_$M",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Coupons_$M",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Adv_SP_$M",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LoadDate",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "stg_newprod_sku_gross_volume"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Audit_table5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('IBP_AzureSynapseAnalytics')]",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Avengers Ext Datasets/Audit Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "batch_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Datafactory_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Pipeline_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Destination_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Target_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_Count",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Target_Count",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Activity_Start_Time",
+						"type": "date"
+					},
+					{
+						"name": "Activity_End_Time",
+						"type": "date"
+					},
+					{
+						"name": "Total_time_taken",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rows_inserted",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rows_updated",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "etl_audit_log"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
