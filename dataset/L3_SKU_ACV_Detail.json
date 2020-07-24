@@ -1,0 +1,110 @@
+{
+	"name": "L3_SKU_ACV_Detail",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sub_dir": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Avengers Ext Datasets/Source Files"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('New Product Data V2/',dataset().sub_dir)",
+					"type": "Expression"
+				},
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ProjectNumber",
+				"type": "String"
+			},
+			{
+				"name": "ProjectName",
+				"type": "String"
+			},
+			{
+				"name": "Project Input Type",
+				"type": "String"
+			},
+			{
+				"name": "Division",
+				"type": "String"
+			},
+			{
+				"name": "SBU",
+				"type": "String"
+			},
+			{
+				"name": "Brand",
+				"type": "String"
+			},
+			{
+				"name": "ProjectDescription",
+				"type": "String"
+			},
+			{
+				"name": "StageGate",
+				"type": "String"
+			},
+			{
+				"name": "StartOfShip",
+				"type": "String"
+			},
+			{
+				"name": "FiscalYearofLaunch",
+				"type": "String"
+			},
+			{
+				"name": "FYGrossVol_Msc",
+				"type": "String"
+			},
+			{
+				"name": "FYIncrVol_Msc",
+				"type": "String"
+			},
+			{
+				"name": "VolumeLift_Pct",
+				"type": "String"
+			},
+			{
+				"name": "TFI_$M",
+				"type": "String"
+			},
+			{
+				"name": "Coupons_$M",
+				"type": "String"
+			},
+			{
+				"name": "Adv_SP_$M",
+				"type": "String"
+			},
+			{
+				"name": "LoadDate",
+				"type": "String"
+			}
+		]
+	}
+}

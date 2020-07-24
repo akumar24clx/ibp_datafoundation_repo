@@ -5,6 +5,11 @@
 			"referenceName": "AzureSQLDW",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Avengers Ext Datasets/Staging Tables"
 		},
@@ -82,7 +87,10 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "stg_newprod_customer"
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
 		}
 	}
 }

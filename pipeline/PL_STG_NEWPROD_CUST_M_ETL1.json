@@ -1,0 +1,328 @@
+{
+	"name": "PL_STG_NEWPROD_CUST_M_ETL1",
+	"properties": {
+		"activities": [
+			{
+				"name": "AT_CPY_ADLS_TO_STG_NEWPROD_CUST",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Activity_Start_Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.stg_newprod_customer;",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "SnapShotName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SnapShotName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectNumber",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectNumber",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectInputType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectInputType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Brand",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Brand",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SKU",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SKU",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TempSKU",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TempSKU",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "New Product Item",
+									"type": "String"
+								},
+								"sink": {
+									"name": "New Product Item",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH1 - Global Category",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH1 - Global Category",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH2 - Brand",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH2 - Brand",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH3 - Purpose",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH3 - Purpose",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH4 - Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH4 - Type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH5 - Size",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH5 - Size",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Customer",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ACV_Date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ACV_Date",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ACV_Pct_Value",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ACV_Pct_Value",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LoadDate",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LoadDate",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "L3_SKU_ACV_Detail",
+						"type": "DatasetReference",
+						"parameters": {
+							"sub_dir": {
+								"value": "@pipeline().parameters.subdir_name",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.file_name",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "STG_NEWPROD_CUSTOMER",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": {
+								"value": "@pipeline().parameters.staging_table_name",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Activity_Start_Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_start_time",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Audit_table52",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Activity_End_Date",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "AT_CPY_ADLS_TO_STG_NEWPROD_CUST",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_end_time",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Audit_table52",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"subdir_name": {
+				"type": "string",
+				"defaultValue": "Litter"
+			},
+			"file_name": {
+				"type": "string",
+				"defaultValue": "L3 - SKU ACV Detail.csv"
+			},
+			"staging_table_name": {
+				"type": "string",
+				"defaultValue": "stg_newprod_customer"
+			}
+		},
+		"folder": {
+			"name": "Avengers/New Product Repo"
+		},
+		"annotations": []
+	}
+}
