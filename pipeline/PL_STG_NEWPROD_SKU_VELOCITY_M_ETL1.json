@@ -1,0 +1,589 @@
+{
+	"name": "PL_STG_NEWPROD_SKU_VELOCITY_M_ETL1",
+	"properties": {
+		"activities": [
+			{
+				"name": "AT_CPY_ADLS_TO_STG_NEWPROD_SKU_VELOCITY",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Activity_Start_Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.stg_newprod_sku_velocity;",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "SnapShotName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SnapShotName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectNumber",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectNumber",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectInputType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectInputType",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Brand",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Brand",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SKU",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SKU",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TempSKU",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TempSKU",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "NewProductItem",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NewProductItem",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH1_Global_Category",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH1_Global_Category",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH2_Brand",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH2_Brand",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH3_Purpose",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH3_Purpose",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH4_Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH4_Type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PH5 _Size",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PH5 _Size",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CannibItem",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CannibItem",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cannib_Pct",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cannib_Pct",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Customer",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FYVelocity-UnitStoreWeek_Date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FYVelocity-UnitStoreWeek_Date",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Average of FYVelocity-UnitStoreWeek_Value",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Average of FYVelocity-UnitStoreWeek_Value",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LoadDate",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LoadDate",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "L3_SKU_FISCAL_VELOCITY_DETAIL",
+						"type": "DatasetReference",
+						"parameters": {
+							"sub_dir": {
+								"value": "@pipeline().parameters.subdir_name",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "@pipeline().parameters.file_name",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "STG_NEWPROD_SKU_VELOCITY",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": {
+								"value": "@pipeline().parameters.staging_table_name",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Audit_Log",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Activity_End_Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"additionalColumns": [
+							{
+								"name": "src_count",
+								"value": {
+									"value": "@activity('AT_CPY_ADLS_TO_STG_NEWPROD_SKU_VELOCITY').output.rowsRead",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "tgt_count",
+								"value": {
+									"value": "@activity('AT_CPY_ADLS_TO_STG_NEWPROD_SKU_VELOCITY').output.rowsCopied",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "src_name",
+								"value": "L3 - SKU Fiscal Velocity Detail.csv"
+							},
+							{
+								"name": "tgt_name",
+								"value": "stg_newprod_sku_velocity"
+							},
+							{
+								"name": "Total_time_taken",
+								"value": {
+									"value": "@activity('AT_CPY_ADLS_TO_STG_NEWPROD_SKU_VELOCITY').output.copyDuration",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "Pipeline_name",
+								"value": "PL_STG_NEWPROD_SKU_VELOCITY_M_ETL"
+							},
+							{
+								"name": "Datafactory_Name",
+								"value": "clxdev-adf-sandbox"
+							},
+							{
+								"name": "src_type",
+								"value": "file"
+							},
+							{
+								"name": "tgt_type",
+								"value": "table"
+							},
+							{
+								"name": "status",
+								"value": {
+									"value": "@activity('AT_CPY_ADLS_TO_STG_NEWPROD_SKU_VELOCITY').output.executionDetails[0].status\n",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "activity_name",
+								"value": "AT_CPY_ADLS_TO_STG_NEWPROD_SKU_VELOCITY"
+							},
+							{
+								"name": "activity_start_dt",
+								"value": {
+									"value": "@activity('Activity_Start_Date').output.firstrow.at_start_time\n",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "activity_end_dt",
+								"value": {
+									"value": "@activity('Activity_End_Date').output.firstrow.at_end_time\n",
+									"type": "Expression"
+								}
+							}
+						],
+						"sqlReaderQuery": "select isnull(max(batch_id),0)+1 as Batch_ID\nfrom dbo.etl_audit_log;",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"allowPolyBase": true,
+						"polyBaseSettings": {
+							"rejectValue": 0,
+							"rejectType": "value",
+							"useTypeDefault": true
+						}
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Batch_ID"
+								},
+								"sink": {
+									"name": "batch_id"
+								}
+							},
+							{
+								"source": {
+									"name": "Datafactory_Name",
+									"type": "varchar"
+								},
+								"sink": {
+									"name": "Datafactory_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "src_type"
+								},
+								"sink": {
+									"name": "Source_Type"
+								}
+							},
+							{
+								"source": {
+									"name": "tgt_type"
+								},
+								"sink": {
+									"name": "Destination_Type"
+								}
+							},
+							{
+								"source": {
+									"name": "src_count"
+								},
+								"sink": {
+									"name": "Source_Count"
+								}
+							},
+							{
+								"source": {
+									"name": "tgt_count"
+								},
+								"sink": {
+									"name": "Target_Count"
+								}
+							},
+							{
+								"source": {
+									"name": "src_name"
+								},
+								"sink": {
+									"name": "Source_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "tgt_name"
+								},
+								"sink": {
+									"name": "Target_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "Total_time_taken"
+								},
+								"sink": {
+									"name": "Total_time_taken_in_sec"
+								}
+							},
+							{
+								"source": {
+									"name": "status"
+								},
+								"sink": {
+									"name": "Status"
+								}
+							},
+							{
+								"source": {
+									"name": "Pipeline_name"
+								},
+								"sink": {
+									"name": "Pipeline_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "activity_name"
+								},
+								"sink": {
+									"name": "Activity_Name"
+								}
+							},
+							{
+								"source": {
+									"name": "activity_start_dt",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Activity_Start_Time"
+								}
+							},
+							{
+								"source": {
+									"name": "activity_end_dt"
+								},
+								"sink": {
+									"name": "Activity_End_Time",
+									"type": "DateTime"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Audit_table4",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Audit_table4",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Activity_Start_Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_start_time",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Audit_table4",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Activity_End_Date",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "AT_CPY_ADLS_TO_STG_NEWPROD_SKU_VELOCITY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_end_time",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "Audit_table4",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"subdir_name": {
+				"type": "string",
+				"defaultValue": "Litter"
+			},
+			"file_name": {
+				"type": "string",
+				"defaultValue": "L3 - SKU Fiscal Velocity Detail.csv"
+			},
+			"staging_table_name": {
+				"type": "string",
+				"defaultValue": "stg_newprod_sku_velocity"
+			}
+		},
+		"folder": {
+			"name": "Avengers/New Product Repo"
+		},
+		"annotations": []
+	}
+}

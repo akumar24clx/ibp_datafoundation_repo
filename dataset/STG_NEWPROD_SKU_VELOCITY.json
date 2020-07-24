@@ -1,0 +1,104 @@
+{
+	"name": "STG_NEWPROD_SKU_VELOCITY",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Avengers Ext Datasets/Staging Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "SnapShotName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProjectInputType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Brand",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SKU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TempSKU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NewProductItem",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH1_Global_Category",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH2_Brand",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH3_Purpose",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH4_Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PH5 _Size",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CannibItem",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cannib_Pct",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Customer",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FYVelocity-UnitStoreWeek_Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Average of FYVelocity-UnitStoreWeek_Value",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LoadDate",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	}
+}

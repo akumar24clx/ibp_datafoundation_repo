@@ -1,0 +1,118 @@
+{
+	"name": "L3_SKU_FISCAL_VELOCITY_DETAIL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sub_dir": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Avengers Ext Datasets/Source Files"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('New Product Data V2/',dataset().sub_dir)",
+					"type": "Expression"
+				},
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SnapShotName",
+				"type": "String"
+			},
+			{
+				"name": "ProjectNumber",
+				"type": "String"
+			},
+			{
+				"name": "ProjectName",
+				"type": "String"
+			},
+			{
+				"name": "ProjectInputType",
+				"type": "String"
+			},
+			{
+				"name": "Brand",
+				"type": "String"
+			},
+			{
+				"name": "SKU",
+				"type": "String"
+			},
+			{
+				"name": "TempSKU",
+				"type": "String"
+			},
+			{
+				"name": "NewProductItem",
+				"type": "String"
+			},
+			{
+				"name": "PH1_Global_Category",
+				"type": "String"
+			},
+			{
+				"name": "PH2_Brand",
+				"type": "String"
+			},
+			{
+				"name": "PH3_Purpose",
+				"type": "String"
+			},
+			{
+				"name": "PH4_Type",
+				"type": "String"
+			},
+			{
+				"name": "PH5 _Size",
+				"type": "String"
+			},
+			{
+				"name": "CannibItem",
+				"type": "String"
+			},
+			{
+				"name": "Cannib_Pct",
+				"type": "String"
+			},
+			{
+				"name": "Customer",
+				"type": "String"
+			},
+			{
+				"name": "FYVelocity-UnitStoreWeek_Date",
+				"type": "String"
+			},
+			{
+				"name": "Average of FYVelocity-UnitStoreWeek_Value",
+				"type": "String"
+			},
+			{
+				"name": "LoadDate",
+				"type": "String"
+			}
+		]
+	}
+}
