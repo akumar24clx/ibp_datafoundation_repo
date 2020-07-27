@@ -5,7 +5,14 @@
 			{
 				"name": "Job_Completion_Alert",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Project_details_merge",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -25,7 +32,7 @@
 						"Status": "Successful",
 						"Env": "Dev",
 						"PipelineName": "@{pipeline().Pipeline}",
-						"EmailTo": "abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com",
 						"MessageBody1": "Hi All,",
 						"MessageBody2": "This is an email notification generated from Azure Data Factory for newproduct_project_dim table ingestion.",
 						"MessageBody3": "Please find below the pipeline execution details:",
@@ -64,7 +71,7 @@
 						"Status": "Failed",
 						"Env": "Dev",
 						"PipelineName": "@{pipeline().Pipeline}",
-						"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com",
 						"MessageBody1": "Hi All,",
 						"MessageBody2": "This is an email notification generated from Azure Data Factory for  data ingestion in stg_newprod_project table.",
 						"MessageBody3": "Please find below the pipeline execution details:",
@@ -76,7 +83,14 @@
 			{
 				"name": "AT_WEB_Merge_Proj_Details_error",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Project_details_merge",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -96,7 +110,7 @@
 						"Status": "Failed",
 						"Env": "Dev",
 						"PipelineName": "@{pipeline().Pipeline}",
-						"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com",
 						"MessageBody1": "Hi All,",
 						"MessageBody2": "This is an email notification generated from Azure Data Factory for  newproduct_project_dim table ingestion..",
 						"MessageBody3": "Please find below the pipeline execution details:",
