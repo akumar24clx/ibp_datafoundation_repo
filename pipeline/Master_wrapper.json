@@ -1,0 +1,97 @@
+{
+	"name": "Master_wrapper",
+	"properties": {
+		"activities": [
+			{
+				"name": "PL_MERGE_PROJECT_DETAILS_M_ETL_audit",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_MERGE_PROJECT_DETAILS_M_ETL_audit",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PL_ADD_NEW_CUSTOMERS_M_ETL_audit",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PL_MERGE_PROJECT_DETAILS_M_ETL_audit",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ADD_NEW_CUSTOMERS_M_ETL_audit",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "PL_MERGE_UNIQUE_SKU_M_ETL",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PL_ADD_NEW_CUSTOMERS_M_ETL_audit",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_MERGE_UNIQUE_SKU_M_ETL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "New_Product_Fact_Ingestion",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "PL_MERGE_UNIQUE_SKU_M_ETL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[New_Product_Repo_fact_ingestion]",
+					"storedProcedureParameters": {
+						"start_date": {
+							"value": null,
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Avengers/New Product Repo"
+		},
+		"annotations": []
+	}
+}
