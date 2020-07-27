@@ -111,10 +111,6 @@
 										"Directory": {
 											"value": "@pipeline().parameters.DirectoryPath",
 											"type": "Expression"
-										},
-										"filename": {
-											"value": "@item().name",
-											"type": "Expression"
 										}
 									}
 								}
@@ -357,6 +353,12 @@
 											"type": "Expression"
 										},
 										"type": "String"
+									},
+									"src_sftp_file_size_in_kb": {
+										"value": null
+									},
+									"tgt_adls_file_size_in_kb": {
+										"value": null
 									}
 								}
 							},
@@ -390,14 +392,14 @@
 								"storedProcedureParameters": {
 									"src_file_size_in_kb": {
 										"value": {
-											"value": "activity('Push_to_ADLS').output.dataRead",
+											"value": "@activity('Push_to_ADLS').output.dataRead",
 											"type": "Expression"
 										},
 										"type": "Int64"
 									},
 									"tgt_file_size_in_kb": {
 										"value": {
-											"value": "activity('Push_to_ADLS').output.dataWritten",
+											"value": "@activity('Push_to_ADLS').output.dataWritten",
 											"type": "Expression"
 										},
 										"type": "Int64"
@@ -453,7 +455,7 @@
 									"Status": "Failed",
 									"Env": "Dev",
 									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
 									"MessageBody1": "Hi All,",
 									"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage.",
 									"MessageBody3": "Please find below the pipeline execution details:",
@@ -595,7 +597,7 @@
 						"PipelineName": "@{pipeline().Pipeline}",
 						"EmailTo": "abhijeet.kumar@bridgei2i.com",
 						"MessageBody1": "Hi All,",
-						"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage. Error Message : @{activity('Check_if_file_exists').Error.message}",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage. Error Message : @{activity('Iterate_to_copy_files_to_ADLS').Error.message}",
 						"MessageBody3": "Please find below the pipeline execution details:",
 						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
 						"MessageBody5": " - Thanks"
@@ -830,7 +832,7 @@
 						"PipelineName": "@{pipeline().Pipeline}",
 						"EmailTo": "abhijeet.kumar@bridgei2i.com",
 						"MessageBody1": "Hi All,",
-						"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage. Error Message : @{activity('Check_if_file_exists').Error.message}",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage. Error Message : @{activity('Read_from_SFTP_folder').Error.message}",
 						"MessageBody3": "Please find below the pipeline execution details:",
 						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
 						"MessageBody5": " - Thanks"
