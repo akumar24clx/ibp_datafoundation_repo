@@ -40,7 +40,7 @@
 						"referenceName": "Binary_src_test_ADLS",
 						"type": "DatasetReference",
 						"parameters": {
-							"src": "clx_product_master_2020-06-25_v4.csv"
+							"src": "clx_product_master_2020-06-25_v1.csv"
 						}
 					}
 				],
