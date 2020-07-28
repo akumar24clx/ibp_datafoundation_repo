@@ -6,7 +6,7 @@
 		"annotations": [],
 		"typeProperties": {
 			"connectionString": "DefaultEndpointsProtocol=https;AccountName=@{linkedService().AccountName};EndpointSuffix=core.windows.net;",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlYzFlYWJiNC0yNzM5LTQ2NTctYTI2My05M2NhMTM3NDY0MjIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0ZTY2ODRhMC1hODY0LTRhYmUtOTY2Ni1mYmEwNzBjNjM1MGUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"parameters": {
 			"AccountName": {
@@ -14,7 +14,7 @@
 			}
 		},
 		"connectVia": {
-			"referenceName": "clxdev-az-ir-linked",
+			"referenceName": "clxdev-onprem-ir-linked",
 			"type": "IntegrationRuntimeReference"
 		}
 	}
