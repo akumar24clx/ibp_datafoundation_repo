@@ -297,45 +297,6 @@
 							}
 						},
 						{
-							"name": "Send_error_Mail",
-							"type": "WebActivity",
-							"dependsOn": [
-								{
-									"activity": "Audit Fail",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-								"method": "POST",
-								"headers": {
-									"Content-Type": "application/json"
-								},
-								"body": {
-									"DataFactoryName": "@{pipeline().DataFactory}",
-									"Status": "Failed",
-									"Env": "Dev",
-									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"MessageBody1": "Hi All,",
-									"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage. Error Message : @{activity('Push_to_ADLS').Error.message}",
-									"MessageBody3": "Please find below the pipeline execution details:",
-									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-									"MessageBody5": " - Thanks"
-								}
-							}
-						},
-						{
 							"name": "Audit Start_filecheck",
 							"description": "",
 							"type": "SqlServerStoredProcedure",
