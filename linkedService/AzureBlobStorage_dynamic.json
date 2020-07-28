@@ -12,6 +12,10 @@
 			"AccountName": {
 				"type": "String"
 			}
+		},
+		"connectVia": {
+			"referenceName": "clxdev-az-ir-linked",
+			"type": "IntegrationRuntimeReference"
 		}
 	}
 }
