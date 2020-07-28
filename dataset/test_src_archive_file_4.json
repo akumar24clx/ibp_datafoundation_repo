@@ -2,14 +2,30 @@
 	"name": "test_src_archive_file_4",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "sa_dev_iri_sftp",
-			"type": "LinkedServiceReference"
+			"referenceName": "sa_dev_iri_sftp_dynamic",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"hostname": {
+					"value": "@dataset().hostname",
+					"type": "Expression"
+				},
+				"username": {
+					"value": "@dataset().username",
+					"type": "Expression"
+				}
+			}
 		},
 		"parameters": {
 			"Directory": {
 				"type": "string"
 			},
 			"filename": {
+				"type": "string"
+			},
+			"hostname": {
+				"type": "string"
+			},
+			"username": {
 				"type": "string"
 			}
 		},
