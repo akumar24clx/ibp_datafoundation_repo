@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "Delete files from sFTP",
 	"properties": {
 		"activities": [
 			{
@@ -72,6 +72,9 @@
 				"type": "string",
 				"defaultValue": "clx_product_master_2020-06-25_v2.csv"
 			}
+		},
+		"folder": {
+			"name": "IRI - POS"
 		},
 		"annotations": []
 	}
