@@ -2,14 +2,23 @@
 	"name": "Binary_sink_test_ADLS2",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage_OnPrem",
-			"type": "LinkedServiceReference"
+			"referenceName": "AzureBlobStorage_dynamic",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"AccountName": {
+					"value": "@dataset().AccountName",
+					"type": "Expression"
+				}
+			}
 		},
 		"parameters": {
 			"filename": {
 				"type": "string"
 			},
 			"tgt_dir_name": {
+				"type": "string"
+			},
+			"AccountName": {
 				"type": "string"
 			}
 		},
