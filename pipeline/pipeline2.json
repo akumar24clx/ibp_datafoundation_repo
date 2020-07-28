@@ -1,0 +1,78 @@
+{
+	"name": "pipeline2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Delete1",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "test_src_archive_file_4_copy1",
+						"type": "DatasetReference",
+						"parameters": {
+							"file": {
+								"value": "@pipeline().parameters.f1",
+								"type": "Expression"
+							}
+						}
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "SftpReadSettings",
+						"recursive": true
+					}
+				}
+			},
+			{
+				"name": "Delete1_copy1",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "test_src_archive_file_4_copy1",
+						"type": "DatasetReference",
+						"parameters": {
+							"file": {
+								"value": "@pipeline().parameters.f2",
+								"type": "Expression"
+							}
+						}
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "SftpReadSettings",
+						"recursive": false
+					}
+				}
+			}
+		],
+		"parameters": {
+			"f1": {
+				"type": "string",
+				"defaultValue": "clx_product_master_2020-06-25_v1.csv"
+			},
+			"f2": {
+				"type": "string",
+				"defaultValue": "clx_product_master_2020-06-25_v2.csv"
+			}
+		},
+		"annotations": []
+	}
+}
