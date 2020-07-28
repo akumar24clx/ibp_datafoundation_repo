@@ -1,0 +1,28 @@
+{
+	"name": "sa_dev_iri_sftp_dynamic",
+	"properties": {
+		"type": "Sftp",
+		"annotations": [],
+		"typeProperties": {
+			"host": "@{linkedService().hostname",
+			"port": 22,
+			"skipHostKeyValidation": true,
+			"authenticationType": "Basic",
+			"userName": "@{linkedService().username",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyZjdhZTllMi1iZWUxLTQzNmUtYTExNi1jODkzN2NlYmRkZjYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "clxdev-onprem-ir-linked",
+			"type": "IntegrationRuntimeReference"
+		},
+		"parameters": {
+			"hostname": {
+				"type": "String"
+			},
+			"username": {
+				"type": "String"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}
