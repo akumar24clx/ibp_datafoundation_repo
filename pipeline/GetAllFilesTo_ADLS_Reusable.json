@@ -1,5 +1,5 @@
 {
-	"name": "GetAllFilesTo_ADLS_v2",
+	"name": "GetAllFilesTo_ADLS_Reusable",
 	"properties": {
 		"activities": [
 			{
@@ -372,6 +372,13 @@
 											"type": "Expression"
 										},
 										"type": "Int64"
+									},
+									"filteredfilename": {
+										"value": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
+										"type": "String"
 									}
 								}
 							},
@@ -540,7 +547,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Iterate_to_copy_files_to_ADLS",
+						"activity": "Retry for failed files",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -715,7 +722,7 @@
 											"type": "Expression"
 										},
 										"filename": {
-											"value": "@activity('Lookup for failed files').output.value\n",
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
@@ -774,6 +781,13 @@
 											"type": "Expression"
 										},
 										"type": "Int64"
+									},
+									"filteredfilename": {
+										"value": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
+										"type": "String"
 									}
 								}
 							},
@@ -915,7 +929,7 @@
 					{
 						"activity": "Iterate_to_copy_files_to_ADLS",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -944,6 +958,12 @@
 				"name": "Flow Success",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
+					{
+						"activity": "Iterate_to_copy_files_to_ADLS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
 					{
 						"activity": "Retry for failed files",
 						"dependencyConditions": [
