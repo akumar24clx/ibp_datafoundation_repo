@@ -29,6 +29,14 @@
 							"Directory": {
 								"value": "@pipeline().parameters.Src_DirectoryPath",
 								"type": "Expression"
+							},
+							"hostname": {
+								"value": "@pipeline().parameters.sFTP_hostname",
+								"type": "Expression"
+							},
+							"username": {
+								"value": "@pipeline().parameters.sFTP_username",
+								"type": "Expression"
 							}
 						}
 					},
@@ -115,6 +123,14 @@
 										"filename": {
 											"value": "@item().name",
 											"type": "Expression"
+										},
+										"hostname": {
+											"value": "@pipeline().parameters.sFTP_hostname",
+											"type": "Expression"
+										},
+										"username": {
+											"value": "@pipeline().parameters.sFTP_username",
+											"type": "Expression"
 										}
 									}
 								}
@@ -130,6 +146,10 @@
 										},
 										"tgt_dir_name": {
 											"value": "@pipeline().parameters.Target_DirectoryPath",
+											"type": "Expression"
+										},
+										"AccountName": {
+											"value": "@pipeline().parameters.ADLS_accname",
 											"type": "Expression"
 										}
 									}
@@ -722,7 +742,15 @@
 											"type": "Expression"
 										},
 										"filename": {
-											"value": "@activity('Lookup for failed files').output.filteredfiles",
+											"value": "@item().filteredfiles",
+											"type": "Expression"
+										},
+										"hostname": {
+											"value": "@pipeline().parameters.sFTP_hostname",
+											"type": "Expression"
+										},
+										"username": {
+											"value": "@pipeline().parameters.sFTP_username",
 											"type": "Expression"
 										}
 									}
@@ -734,11 +762,15 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"filename": {
-											"value": "@concat(item().name,'_',utcnow())",
+											"value": "@concat(item().filteredfiles,'_',utcnow())",
 											"type": "Expression"
 										},
 										"tgt_dir_name": {
 											"value": "@pipeline().parameters.Target_DirectoryPath",
+											"type": "Expression"
+										},
+										"AccountName": {
+											"value": "@pipeline().parameters.ADLS_accname",
 											"type": "Expression"
 										}
 									}
@@ -784,7 +816,7 @@
 									},
 									"filteredfilename": {
 										"value": {
-											"value": "@item().name",
+											"value": "@item().filteredfiles",
 											"type": "Expression"
 										},
 										"type": "String"
@@ -821,17 +853,24 @@
 								"storedProcedureParameters": {
 									"src_file_size_in_kb": {
 										"value": {
-											"value": "activity('Push_to_ADLS').output.dataRead",
+											"value": "@activity('Push_to_ADLS- Retry').output.dataRead",
 											"type": "Expression"
 										},
 										"type": "Int64"
 									},
 									"tgt_file_size_in_kb": {
 										"value": {
-											"value": "activity('Push_to_ADLS').output.dataWritten",
+											"value": "@activity('Push_to_ADLS- Retry').output.dataWritten",
 											"type": "Expression"
 										},
 										"type": "Int64"
+									},
+									"filteredfilename": {
+										"value": {
+											"value": "@item().filteredfiles",
+											"type": "Expression"
+										},
+										"type": "String"
 									}
 								}
 							},
@@ -1140,6 +1179,18 @@
 			"Target_DirectoryPath": {
 				"type": "string",
 				"defaultValue": "Testing_Folder/test11"
+			},
+			"sFTP_hostname": {
+				"type": "string",
+				"defaultValue": "asftppl1.clorox.com"
+			},
+			"sFTP_username": {
+				"type": "string",
+				"defaultValue": "clx-iri-sftp-user"
+			},
+			"ADLS_accname": {
+				"type": "string",
+				"defaultValue": "clxdevdatalake"
 			}
 		},
 		"variables": {
