@@ -8,6 +8,9 @@
 		"parameters": {
 			"filename": {
 				"type": "string"
+			},
+			"tgt_dir_name": {
+				"type": "string"
 			}
 		},
 		"folder": {
@@ -22,7 +25,10 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"folderPath": "Testing_Folder/test11",
+				"folderPath": {
+					"value": "@dataset().tgt_dir_name",
+					"type": "Expression"
+				},
 				"container": "matrix-raw"
 			}
 		}
