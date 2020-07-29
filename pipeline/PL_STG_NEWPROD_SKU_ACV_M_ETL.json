@@ -34,7 +34,7 @@
 					},
 					"sink": {
 						"type": "SqlDWSink",
-						"preCopyScript": "TRUNCATE TABLE dbo.stg_newprod_customer;",
+						"preCopyScript": "TRUNCATE TABLE dbo.stg_newprod_sku_acv;",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": true,
