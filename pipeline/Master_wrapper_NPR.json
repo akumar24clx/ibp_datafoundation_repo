@@ -55,7 +55,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[New_Product_Repo_fact_ingestion]",
+					"storedProcedureName": {
+						"value": "@pipeline().parameters.SPRC_NEWPROD_FACT",
+						"type": "Expression"
+					},
 					"storedProcedureParameters": {
 						"start_date": {
 							"value": null,
@@ -88,7 +91,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[Newproduct_SKU_dim_merge]",
+					"storedProcedureName": {
+						"value": "@pipeline().parameters.SPRC_SKU_dim_merge",
+						"type": "Expression"
+					},
 					"storedProcedureParameters": {
 						"start_date": {
 							"value": null,
@@ -219,6 +225,16 @@
 				}
 			}
 		],
+		"parameters": {
+			"SPRC_SKU_dim_merge": {
+				"type": "string",
+				"defaultValue": "[dbo].[SPRC_newprodrep_SKU_dim_merge]"
+			},
+			"SPRC_NEWPROD_FACT": {
+				"type": "string",
+				"defaultValue": "[dbo].[SPRC_newprodrep_basenewprod_fact_ingestion]"
+			}
+		},
 		"folder": {
 			"name": "Avengers/New Product Repo"
 		},

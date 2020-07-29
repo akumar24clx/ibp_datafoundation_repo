@@ -192,7 +192,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[customer_name_insert]",
+					"storedProcedureName": {
+						"value": "@pipeline().parameters.SPRC_CUST_INSERT",
+						"type": "Expression"
+					},
 					"storedProcedureParameters": {
 						"start_date": {
 							"value": null,
@@ -206,6 +209,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"SPRC_CUST_INSERT": {
+				"type": "string",
+				"defaultValue": "[dbo].[SPRC_newprodrep_customer_name_dim_insert]"
+			}
+		},
 		"folder": {
 			"name": "Avengers/New Product Repo"
 		},

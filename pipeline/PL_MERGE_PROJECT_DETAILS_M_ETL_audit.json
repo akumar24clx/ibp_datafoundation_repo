@@ -127,7 +127,7 @@
 		"parameters": {
 			"SP_name": {
 				"type": "string",
-				"defaultValue": "[dbo].[Project_details_merge]"
+				"defaultValue": "[dbo].[SPRC_newprodrep_Project_details_dim_merge]"
 			}
 		},
 		"folder": {
