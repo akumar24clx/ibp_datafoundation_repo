@@ -1,5 +1,5 @@
 {
-	"name": "PL_ADD_NEW_CUSTOMERS_M_ETL_audit",
+	"name": "PL_ADD_NEW_SKU_M_ETL_audit",
 	"properties": {
 		"activities": [
 			{
