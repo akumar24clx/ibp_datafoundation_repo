@@ -700,6 +700,7 @@
 						"value": "@activity('Lookup for failed files').output.value",
 						"type": "Expression"
 					},
+					"batchCount": 15,
 					"activities": [
 						{
 							"name": "Push_to_ADLS- Retry",
@@ -826,96 +827,6 @@
 							"linkedServiceName": {
 								"referenceName": "AzureSQLDW",
 								"type": "LinkedServiceReference"
-							}
-						},
-						{
-							"name": "Audit Update_filecheck_copy1_copy1",
-							"description": "",
-							"type": "SqlServerStoredProcedure",
-							"dependsOn": [
-								{
-									"activity": "Push_to_ADLS- Retry",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"storedProcedureName": "[dbo].[Update_Auditfilecheck]",
-								"storedProcedureParameters": {
-									"src_file_size_in_kb": {
-										"value": {
-											"value": "@activity('Push_to_ADLS- Retry').output.dataRead",
-											"type": "Expression"
-										},
-										"type": "Int64"
-									},
-									"tgt_file_size_in_kb": {
-										"value": {
-											"value": "@activity('Push_to_ADLS- Retry').output.dataWritten",
-											"type": "Expression"
-										},
-										"type": "Int64"
-									},
-									"filteredfilename": {
-										"value": {
-											"value": "@item().filteredfiles",
-											"type": "Expression"
-										},
-										"type": "String"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "AzureSQLDW",
-								"type": "LinkedServiceReference"
-							}
-						},
-						{
-							"name": "SFTP_to_ADLS_retry_error",
-							"type": "WebActivity",
-							"dependsOn": [
-								{
-									"activity": "Audit Update_filecheck_copy1_copy1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-								"method": "POST",
-								"headers": {
-									"Content-Type": "application/json"
-								},
-								"body": {
-									"DataFactoryName": "@{pipeline().DataFactory}",
-									"Status": "Failed",
-									"Env": "Dev",
-									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"MessageBody1": "Hi All,",
-									"MessageBody2": "This is an email notification generated from Azure Data Factory. An error occured while copying the file from the SFTP server to Azure Data Lake Storage.",
-									"MessageBody3": "Please find below the pipeline execution details:",
-									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-									"MessageBody5": " - Thanks"
-								}
 							}
 						}
 					]
