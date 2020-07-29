@@ -1,9 +1,9 @@
 {
-	"name": "PL_STG_NEWPROD_CUST_M_ETL1",
+	"name": "PL_STG_NEWPROD_SKU_ACV_M_ETL",
 	"properties": {
 		"activities": [
 			{
-				"name": "AT_CPY_ADLS_TO_STG_NEWPROD_CUST",
+				"name": "AT_CPY_ADLS_TO_STG_NEWPROD_SKU_ACV",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -239,7 +239,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "STG_NEWPROD_CUSTOMER",
+						"referenceName": "STG_NEWPROD_SKU_ACV",
 						"type": "DatasetReference",
 						"parameters": {
 							"table_name": {
@@ -279,7 +279,7 @@
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "AT_CPY_ADLS_TO_STG_NEWPROD_CUST",
+						"activity": "AT_CPY_ADLS_TO_STG_NEWPROD_SKU_ACV",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -317,7 +317,7 @@
 			},
 			"staging_table_name": {
 				"type": "string",
-				"defaultValue": "stg_newprod_customer"
+				"defaultValue": "stg_newprod_sku_acv"
 			}
 		},
 		"folder": {
