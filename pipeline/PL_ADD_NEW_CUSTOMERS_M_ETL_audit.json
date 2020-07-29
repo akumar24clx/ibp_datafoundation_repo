@@ -46,7 +46,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Staging_Customer_data",
+						"activity": "Staging_SKU_ACV_data",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -192,7 +192,7 @@
 				}
 			},
 			{
-				"name": "Staging_Customer_data",
+				"name": "Staging_SKU_ACV_data",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -205,7 +205,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_STG_NEWPROD_CUST_M_ETL1",
+						"referenceName": "PL_STG_NEWPROD_SKU_ACV_M_ETL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -216,7 +216,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Staging_Customer_data",
+						"activity": "Staging_SKU_ACV_data",
 						"dependencyConditions": [
 							"Succeeded"
 						]
