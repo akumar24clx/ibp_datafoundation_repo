@@ -16,7 +16,7 @@
 				}
 			},
 			{
-				"name": "PL_ADD_NEW_CUSTOMERS_M_ETL_audit",
+				"name": "PL_ADD_NEW_SKU_M_ETL_audit",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -29,7 +29,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PL_ADD_NEW_CUSTOMERS_M_ETL_audit",
+						"referenceName": "PL_ADD_NEW_SKU_M_ETL_audit",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -40,7 +40,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "PL_ADD_NEW_CUSTOMERS_M_ETL_audit",
+						"activity": "PL_ADD_NEW_SKU_M_ETL_audit",
 						"dependencyConditions": [
 							"Succeeded"
 						]
