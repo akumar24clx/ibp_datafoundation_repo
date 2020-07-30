@@ -309,7 +309,7 @@
 		"parameters": {
 			"subdir_name": {
 				"type": "string",
-				"defaultValue": "Food"
+				"defaultValue": "Litter"
 			},
 			"file_name": {
 				"type": "string",
