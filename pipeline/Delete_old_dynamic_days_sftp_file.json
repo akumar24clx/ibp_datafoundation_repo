@@ -1,0 +1,261 @@
+{
+	"name": "Delete_old_dynamic_days_sftp_file",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "test_src_archive",
+						"type": "DatasetReference",
+						"parameters": {
+							"Directory": "/pos/syndicated/iri/archive",
+							"hostname": "asftppl1.clorox.com",
+							"username": "clx-iri-sftp-user"
+						}
+					},
+					"fieldList": [
+						"lastModified",
+						"childItems",
+						"itemName"
+					],
+					"storeSettings": {
+						"type": "SftpReadSettings"
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
+						"type": "Expression"
+					},
+					"batchCount": 20,
+					"activities": [
+						{
+							"name": "Get Metadata1_copy1",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "test_src_archive_file_4",
+									"type": "DatasetReference",
+									"parameters": {
+										"Directory": "/pos/syndicated/iri/archive",
+										"filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
+										"hostname": "asftppl1.clorox.com",
+										"username": "clx-iri-sftp-user"
+									}
+								},
+								"fieldList": [
+									"lastModified",
+									"itemName"
+								],
+								"storeSettings": {
+									"type": "SftpReadSettings"
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							}
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Get Metadata1_copy1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "d1",
+								"value": {
+									"value": "@string(ticks(activity('Get Metadata1_copy1').output.lastModified))",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable2",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "d2",
+								"value": {
+									"value": "@string(ticks(utcnow()))",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set variable3",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable2",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "datediff",
+								"value": {
+									"value": "@String(div(sub(int(variables('d2')),int(variables('d1'))),600000000))",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "If Condition1",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Set variable4",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@greater(int(variables('datediff')),2)",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Delete1",
+										"type": "Delete",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"dataset": {
+												"referenceName": "test_src_archive_file_4",
+												"type": "DatasetReference",
+												"parameters": {
+													"Directory": "/pos/syndicated/iri/archive",
+													"filename": {
+														"value": "@variables('file_to_delete')",
+														"type": "Expression"
+													},
+													"hostname": "asftppl1.clorox.com",
+													"username": "clx-iri-sftp-user"
+												}
+											},
+											"logStorageSettings": {
+												"linkedServiceName": {
+													"referenceName": "AzureBlobStorage_dynamic",
+													"type": "LinkedServiceReference",
+													"parameters": {
+														"AccountName": "clxdevdatalake"
+													}
+												},
+												"path": "matrix-raw/test"
+											},
+											"enableLogging": true,
+											"storeSettings": {
+												"type": "SftpReadSettings",
+												"recursive": false
+											}
+										}
+									}
+								]
+							}
+						},
+						{
+							"name": "Set variable4",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable3",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "file_to_delete",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"datediff": {
+				"type": "String"
+			},
+			"d1": {
+				"type": "String"
+			},
+			"d2": {
+				"type": "String"
+			},
+			"file_to_delete": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
