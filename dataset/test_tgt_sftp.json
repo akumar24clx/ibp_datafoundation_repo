@@ -13,7 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"folderPath": "/pos/syndicated/iri/landing"
+				"fileName": "testtt.csv",
+				"folderPath": "/pos/syndicated/iri/archive"
 			}
 		}
 	}
