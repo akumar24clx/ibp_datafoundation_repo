@@ -30,7 +30,8 @@
 						"itemName"
 					],
 					"storeSettings": {
-						"type": "SftpReadSettings"
+						"type": "SftpReadSettings",
+						"recursive": true
 					},
 					"formatSettings": {
 						"type": "BinaryReadSettings"
@@ -87,7 +88,8 @@
 									"itemName"
 								],
 								"storeSettings": {
-									"type": "SftpReadSettings"
+									"type": "SftpReadSettings",
+									"recursive": true
 								},
 								"formatSettings": {
 									"type": "BinaryReadSettings"
@@ -155,6 +157,26 @@
 							}
 						},
 						{
+							"name": "Set variable4",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Set variable3",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "file_to_delete",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
+						},
+						{
 							"name": "If Condition1",
 							"type": "IfCondition",
 							"dependsOn": [
@@ -168,13 +190,13 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@greater(int(variables('datediff')),2)",
+									"value": "@greater(int(variables('datediff')),44921)",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
 									{
-										"name": "Delete1",
-										"type": "Delete",
+										"name": "Get Metadata1_copy1_copy1",
+										"type": "GetMetadata",
 										"dependsOn": [],
 										"policy": {
 											"timeout": "7.00:00:00",
@@ -198,47 +220,67 @@
 													"username": "clx-iri-sftp-user"
 												}
 											},
-											"logStorageSettings": {
-												"linkedServiceName": {
-													"referenceName": "AzureBlobStorage_dynamic",
-													"type": "LinkedServiceReference",
-													"parameters": {
-														"AccountName": "clxdevdatalake"
-													}
-												},
-												"path": "matrix-raw/test"
-											},
-											"enableLogging": true,
+											"fieldList": [
+												"lastModified",
+												"itemName"
+											],
 											"storeSettings": {
 												"type": "SftpReadSettings",
-												"recursive": false
+												"recursive": true
+											},
+											"formatSettings": {
+												"type": "BinaryReadSettings"
 											}
 										}
 									}
 								]
 							}
-						},
-						{
-							"name": "Set variable4",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "Set variable3",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "file_to_delete",
-								"value": {
-									"value": "@item().name",
-									"type": "Expression"
-								}
-							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Delete1",
+				"description": "delete to substitute get meta",
+				"type": "Delete",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "test_src_archive_file_4",
+						"type": "DatasetReference",
+						"parameters": {
+							"Directory": "/pos/syndicated/iri/archive",
+							"filename": {
+								"value": "@variables('file_to_delete')",
+								"type": "Expression"
+							},
+							"hostname": "asftppl1.clorox.com",
+							"username": "clx-iri-sftp-user"
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage_dynamic",
+							"type": "LinkedServiceReference",
+							"parameters": {
+								"AccountName": "clxdevdatalake"
+							}
+						},
+						"path": "matrix-raw/test"
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "SftpReadSettings",
+						"recursive": false
+					}
 				}
 			}
 		],
@@ -255,6 +297,9 @@
 			"file_to_delete": {
 				"type": "String"
 			}
+		},
+		"folder": {
+			"name": "IRI - POS"
 		},
 		"annotations": []
 	}
