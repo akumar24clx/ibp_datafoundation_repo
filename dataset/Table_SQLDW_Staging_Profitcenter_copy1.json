@@ -1,0 +1,19 @@
+{
+	"name": "Table_SQLDW_Staging_Profitcenter_copy1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW_onprem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLDW - Staging Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stg_profit_center"
+		}
+	}
+}
