@@ -1,0 +1,19 @@
+{
+	"name": "Table_Oracle_IDR_BW_D_Material_UOM",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Oracle_IDR_dynamic",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Oracle - Tables"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "CLXBW",
+			"table": "APO_BW_D_MATERIAL_UOM"
+		}
+	}
+}
