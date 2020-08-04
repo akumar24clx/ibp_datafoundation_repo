@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "Staging_Internal_Dim",
 	"properties": {
 		"activities": [
 			{
@@ -57,7 +57,14 @@
 			{
 				"name": "Stg_material_uom",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Stg_Profitcenter",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -159,6 +166,744 @@
 				"outputs": [
 					{
 						"referenceName": "Table_SQLDW_Staging_Material_UOM",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Stg_Profitcenter",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Stg_Customer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage_OnPrem",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage/staging_area"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CTRL_AREA_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CTRL_AREA_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "VALID_FROM_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "VALID_FROM_NBR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "VALID_TO_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "VALID_TO_NBR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SHORT_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SHORT_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MEDIUM_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MEDIUM_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "MODIFIED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "MODIFIED_DATE",
+									"type": "DateTime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_BW_D_Profitcenter",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Staging_Profitcenter",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Stg_Customer",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Stg_Profitcenter_Custom",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage_OnPrem",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage/staging_area"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "CUSTOMER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_NAME_1",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_NAME_2",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_NAME_3",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PO_BOX",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PO_BOX",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "STREET",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STREET",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "REGION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "REGION_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "REGION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "REGION",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CITY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CITY",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ZIPCODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ZIPCODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "COUNTRY_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "COUNTRY_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "COUNTRY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "COUNTRY",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ACCT_GRP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ACCT_GRP_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CONSUMER_FLG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CONSUMER_FLG",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_ORG_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_ORG_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_GROUP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_GROUP_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_GROUP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_GROUP",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TRADE_SECTOR_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TRADE_SECTOR_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TRADE_SECTOR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TRADE_SECTOR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_GROUP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_GROUP_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_ORG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_ORG",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_CODE_LVL_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_CODE_LVL_1",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_CODE_LVL_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_CODE_LVL_2",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_CODE_LVL_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_CODE_LVL_3",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME1_LVL_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_NAME1_LVL_1",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME1_LVL_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_NAME1_LVL_2",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CUSTOMER_NAME1_LVL_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CUSTOMER_NAME1_LVL_3",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OMS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "OMS",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PLANNING_ACCT_GRP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PLANNING_ACCT_GRP_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "HIERARCHY_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "HIERARCHY_NBR",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "PRICE_GROUP_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PRICE_GROUP_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OVERRIDE_SHIPTO_FLG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "OVERRIDE_SHIPTO_FLG",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_DEPT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_DEPT_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_REGION_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_REGION_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_SECTOR_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_SECTOR_CODE",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_DEPT",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_DEPT",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_REGION",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_REGION",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_SECTOR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_SECTOR",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SALES_DELETE_FLG",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SALES_DELETE_FLG",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CREATED_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "MODIFIED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "MODIFIED_DATE",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_BW_D_Customer",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Staging_Customer",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Stg_Profitcenter_Custom",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage_OnPrem",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage/staging_area"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DOMESTICDOS_PROFIT_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DOMESTICDOS_PROFIT_CENTER_CODE",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_BW_M_Custom_profitcenter",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Staging_Customer",
 						"type": "DatasetReference"
 					}
 				]

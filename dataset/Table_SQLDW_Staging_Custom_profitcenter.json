@@ -1,5 +1,5 @@
 {
-	"name": "Table_SQLDW_Staging_Customer",
+	"name": "Table_SQLDW_Staging_Custom_profitcenter",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW_onprem",

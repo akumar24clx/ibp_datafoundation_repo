@@ -1,5 +1,5 @@
 {
-	"name": "Table_Oracle_IDR_BW_D_Custom_profitcenter",
+	"name": "Table_Oracle_IDR_BW_M_Custom_profitcenter",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Oracle_IDR_dynamic",
