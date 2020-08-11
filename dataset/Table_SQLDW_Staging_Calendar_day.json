@@ -1,0 +1,19 @@
+{
+	"name": "Table_SQLDW_Staging_Calendar_day",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW_onprem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLDW - Staging Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stg_calendar_day"
+		}
+	}
+}
