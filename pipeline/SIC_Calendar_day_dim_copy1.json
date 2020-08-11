@@ -1,0 +1,113 @@
+{
+	"name": "SIC_Calendar_day_dim_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "SPRC_SIC_Internal_Dim_Cust_Profitcenter",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Stg_Profitcenter_Custom",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SPRC_SIC_Internal_Dim_Cust_Profitcenter]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Stg_Profitcenter_Custom",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "truncate table dbo.stg_profitcenter_custom",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage_OnPrem",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage/staging_area"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DOMESTICDOS_PROFIT_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DOMESTICDOS_PROFIT_CENTER_CODE",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_BW_M_Custom_profitcenter",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Staging_Custom_profitcenter",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Clorox - Dimensions/SIC- Internal Dim"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,353 @@
+{
+	"name": "SIC_Calendar_mth_dim",
+	"properties": {
+		"activities": [
+			{
+				"name": "Stg_Calendar_mth",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "truncate table dbo.stg_calendar_mth",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage_OnPrem",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage/staging_area"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "CAL_MONTH",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MONTH",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MNTH_START_DT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MNTH_START_DT_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MNTH_END_DT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MNTH_END_DT_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MONTH_NO",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MONTH_NO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "YEAR_NO",
+									"type": "String"
+								},
+								"sink": {
+									"name": "YEAR_NO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_QTR_NO",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_QTR_NO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_QTR_NO",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_QTR_NO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_MNTH_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_MNTH_CD",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_DESC",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MNTH_STRT_DT",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "MNTH_STRT_DT",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "MNTH_END_DT",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "MNTH_END_DT",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "MNTH_TIMESPN",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "MNTH_TIMESPN",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_QTR_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_QTR_CD",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QTR_STRT_DT",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "QTR_STRT_DT",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "QTR_END_DT",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "QTR_END_DT",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_YR_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_YR_CD",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_YYYYMM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_YYYYMM",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_MMYYYY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_MMYYYY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_DESC1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_DESC1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_QTR_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_QTR_DESC",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_QTR_DESC_YYYYQQ",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_QTR_DESC_YYYYQQ",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_CAL_MONTH",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LYR_CAL_MONTH",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_LYR_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_LYR_CD",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_QTR_END_DT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_QTR_END_DT_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_YR_END_DT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_YR_END_DT_CODE",
+									"type": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_BW_D_Fiscal_mth",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Staging_Calendar_mth",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "SPRC_SIC_Internal_Dim_Calendar_mth",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Stg_Calendar_mth",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SPRC_SIC_Internal_Dim_Calendar_mth]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Clorox - Dimensions/SIC- Internal Dim"
+		},
+		"annotations": []
+	}
+}
