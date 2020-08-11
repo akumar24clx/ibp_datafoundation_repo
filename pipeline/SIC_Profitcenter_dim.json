@@ -1,0 +1,173 @@
+{
+	"name": "SIC_Profitcenter_dim",
+	"properties": {
+		"activities": [
+			{
+				"name": "SPRC_SIC_Internal_Dim_Profitcenter",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Stg_Profitcenter",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SPRC_SIC_Internal_Dim_Profitcenter]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Stg_Profitcenter",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "OracleSource",
+						"partitionOption": "None",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"preCopyScript": "truncate table dbo.stg_profit_center",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage_OnPrem",
+							"type": "LinkedServiceReference"
+						},
+						"path": "matrix-stage/staging_area"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PROFIT_CENTER_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CTRL_AREA_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CTRL_AREA_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "VALID_FROM_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "VALID_FROM_NBR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "VALID_TO_NBR",
+									"type": "String"
+								},
+								"sink": {
+									"name": "VALID_TO_NBR",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SHORT_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SHORT_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "MEDIUM_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MEDIUM_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CREATED_DATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "MODIFIED_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "MODIFIED_DATE",
+									"type": "DateTime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Table_Oracle_IDR_BW_D_Profitcenter",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Table_SQLDW_Staging_Profitcenter",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Clorox - Dimensions/SIC- Internal Dim"
+		},
+		"annotations": []
+	}
+}
