@@ -22,7 +22,8 @@
 					},
 					"sink": {
 						"type": "SqlDWSink",
-						"tableOption": "autoCreate"
+						"preCopyScript": "truncate table dbo.stg_material_mff",
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {
