@@ -1,0 +1,19 @@
+{
+	"name": "Table_Oracle_IDR_IRES_MV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Oracle_IDR_dynamic",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Oracle - Tables"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "CLXBW",
+			"table": "IRES_MV_ETL_PROD"
+		}
+	}
+}
