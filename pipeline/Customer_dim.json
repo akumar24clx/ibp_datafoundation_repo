@@ -1,9 +1,9 @@
 {
-	"name": "SIC_Customer_dim",
+	"name": "Customer_dim",
 	"properties": {
 		"activities": [
 			{
-				"name": "SPRC_SIC_Internal_Dim_Customer",
+				"name": "SPRC_Internal_Dim_Customer",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
