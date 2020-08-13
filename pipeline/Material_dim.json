@@ -22,7 +22,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[SPRC_Internal_Dim_Material]"
+					"storedProcedureName": "[dbo].[SPRC_Internal_Dim_Material]",
+					"storedProcedureParameters": {
+						"start_date": {
+							"value": null,
+							"type": "String"
+						}
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSQLDW_onprem",
