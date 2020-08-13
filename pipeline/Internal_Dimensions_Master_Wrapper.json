@@ -1,0 +1,104 @@
+{
+	"name": "Internal_Dimensions_Master_Wrapper",
+	"properties": {
+		"activities": [
+			{
+				"name": "Customer_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Customer_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Material_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Customer_dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Material_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Material_UOM_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Material_dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Material_UOM_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Profitcenter_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Material_UOM_dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Profitcenter_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Custom_Profitcenter_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Profitcenter_dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Custom_Profitcenter_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Clorox - Dimensions/Clorox Internal Dim"
+		},
+		"annotations": []
+	}
+}
