@@ -1,9 +1,9 @@
 {
-	"name": "SIC_Material_UOM_dim",
+	"name": "Material_UOM_dim",
 	"properties": {
 		"activities": [
 			{
-				"name": "SPRC_SIC_Internal_Dim_Material_UOM",
+				"name": "SPRC_Internal_Dim_Material_UOM",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{

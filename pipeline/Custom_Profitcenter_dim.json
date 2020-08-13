@@ -1,9 +1,9 @@
 {
-	"name": "Cust_Profitcenter_dim",
+	"name": "Custom_Profitcenter_dim",
 	"properties": {
 		"activities": [
 			{
-				"name": "SPRC_Internal_Dim_Cust_Profitcenter",
+				"name": "SPRC_Internal_Dim_Custom_Profitcenter",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
