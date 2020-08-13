@@ -1,0 +1,44 @@
+{
+	"name": "Calendar_Dimensions",
+	"properties": {
+		"activities": [
+			{
+				"name": "Calendar_day_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Calendar_day_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Calendar_mth_dim",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Calendar_day_dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Calendar_mth_dim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Clorox - Dimensions/Clorox Internal Dim"
+		},
+		"annotations": []
+	}
+}
