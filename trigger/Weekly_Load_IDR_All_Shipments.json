@@ -2,7 +2,7 @@
 	"name": "Weekly_Load_IDR_All_Shipments",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
