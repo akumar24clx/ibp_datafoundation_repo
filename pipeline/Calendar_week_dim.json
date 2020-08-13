@@ -1,9 +1,9 @@
 {
-	"name": "SIC_Calendar_week_dim",
+	"name": "Calendar_week_dim",
 	"properties": {
 		"activities": [
 			{
-				"name": "SPRC_SIC_Internal_Dim_Calendar_week",
+				"name": "SPRC_Internal_Dim_Calendar_week",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -366,7 +366,7 @@
 			}
 		],
 		"folder": {
-			"name": "Clorox - Dimensions/SIC- Internal Dim"
+			"name": "Clorox - Dimensions/Clorox Internal Dim"
 		},
 		"annotations": []
 	}

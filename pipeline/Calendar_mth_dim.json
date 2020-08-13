@@ -1,5 +1,5 @@
 {
-	"name": "SIC_Calendar_mth_dim",
+	"name": "Calendar_mth_dim",
 	"properties": {
 		"activities": [
 			{
@@ -318,7 +318,7 @@
 				]
 			},
 			{
-				"name": "SPRC_SIC_Internal_Dim_Calendar_mth",
+				"name": "SPRC_Internal_Dim_Calendar_mth",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -346,7 +346,7 @@
 			}
 		],
 		"folder": {
-			"name": "Clorox - Dimensions/SIC- Internal Dim"
+			"name": "Clorox - Dimensions/Clorox Internal Dim"
 		},
 		"annotations": []
 	}
