@@ -38,32 +38,35 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "CAL_MONTH",
-									"type": "String"
+									"name": "CAL_DATE",
+									"type": "DateTime"
 								},
 								"sink": {
-									"name": "CAL_MONTH",
-									"type": "String"
+									"name": "CAL_DATE",
+									"type": "DateTime",
+									"physicalType": "datetime2"
 								}
 							},
 							{
 								"source": {
-									"name": "MNTH_START_DT_CODE",
+									"name": "CAL_DATE_CODE",
 									"type": "String"
 								},
 								"sink": {
-									"name": "MNTH_START_DT_CODE",
-									"type": "String"
+									"name": "CAL_DATE_CODE",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
 								"source": {
-									"name": "MNTH_END_DT_CODE",
+									"name": "DAY_NO",
 									"type": "String"
 								},
 								"sink": {
-									"name": "MNTH_END_DT_CODE",
-									"type": "String"
+									"name": "DAY_NO",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -73,7 +76,19 @@
 								},
 								"sink": {
 									"name": "MONTH_NO",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WEEK_NO",
 									"type": "String"
+								},
+								"sink": {
+									"name": "WEEK_NO",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -83,7 +98,8 @@
 								},
 								"sink": {
 									"name": "YEAR_NO",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -93,7 +109,8 @@
 								},
 								"sink": {
 									"name": "FISCAL_QTR_NO",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -103,7 +120,52 @@
 								},
 								"sink": {
 									"name": "CAL_QTR_NO",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WK_CD",
 									"type": "String"
+								},
+								"sink": {
+									"name": "WK_CD",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WK_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "WK_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "WK_STRT_DT",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "WK_STRT_DT",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "WK_END_DT",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "WK_END_DT",
+									"type": "DateTime",
+									"physicalType": "datetime2"
 								}
 							},
 							{
@@ -113,7 +175,8 @@
 								},
 								"sink": {
 									"name": "FISCAL_MNTH_CD",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -123,7 +186,8 @@
 								},
 								"sink": {
 									"name": "CAL_MNTH_DESC",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -133,7 +197,8 @@
 								},
 								"sink": {
 									"name": "MNTH_STRT_DT",
-									"type": "DateTime"
+									"type": "DateTime",
+									"physicalType": "datetime2"
 								}
 							},
 							{
@@ -143,7 +208,8 @@
 								},
 								"sink": {
 									"name": "MNTH_END_DT",
-									"type": "DateTime"
+									"type": "DateTime",
+									"physicalType": "datetime2"
 								}
 							},
 							{
@@ -153,127 +219,393 @@
 								},
 								"sink": {
 									"name": "MNTH_TIMESPN",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_QTR_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_QTR_CD",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "QTR_STRT_DT",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "QTR_STRT_DT",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "QTR_END_DT",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "QTR_END_DT",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_YR_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_YR_CD",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_DATE_YYYYMMDD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_DATE_YYYYMMDD",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_DATE_MMDDYYYY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_DATE_MMDDYYYY",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_YYYYMM",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_YYYYMM",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_MMYYYY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_MMYYYY",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WK_STRT_DT_MMDDYYYY",
+									"type": "String"
+								},
+								"sink": {
+									"name": "WK_STRT_DT_MMDDYYYY",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WK_END_DT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "WK_END_DT_CODE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_NAME",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MNTH_DESC1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MNTH_DESC1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "MNTH_END_DT_CODE",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MNTH_END_DT_CODE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_MONTH",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_MONTH",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_QTR_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_QTR_DESC",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FISCAL_QTR_DESC_YYYYQQ",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FISCAL_QTR_DESC_YYYYQQ",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WEEK_DESC",
+									"type": "String"
+								},
+								"sink": {
+									"name": "WEEK_DESC",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_CAL_MONTH",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LYR_CAL_MONTH",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_FISCAL_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LYR_FISCAL_CD",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_DATE_NBR",
 									"type": "Double"
+								},
+								"sink": {
+									"name": "CAL_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "FISCAL_QTR_CD",
-									"type": "String"
+									"name": "PREV_DAY_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "FISCAL_QTR_CD",
-									"type": "String"
+									"name": "PREV_DAY_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "QTR_STRT_DT",
-									"type": "DateTime"
+									"name": "MNTH_STRT_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "QTR_STRT_DT",
-									"type": "DateTime"
+									"name": "MNTH_STRT_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "QTR_END_DT",
-									"type": "DateTime"
+									"name": "FISCAL_YR_STRT_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "QTR_END_DT",
-									"type": "DateTime"
+									"name": "FISCAL_YR_STRT_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "FISCAL_YR_CD",
-									"type": "String"
+									"name": "LYR_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "FISCAL_YR_CD",
-									"type": "String"
+									"name": "LYR_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "CAL_MNTH_YYYYMM",
-									"type": "String"
+									"name": "LYR_FISCAL_YR_STRT_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "CAL_MNTH_YYYYMM",
-									"type": "String"
+									"name": "LYR_FISCAL_YR_STRT_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "CAL_MNTH_MMYYYY",
-									"type": "String"
+									"name": "LYR_FISCAL_YR_END_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "CAL_MNTH_MMYYYY",
-									"type": "String"
+									"name": "LYR_FISCAL_YR_END_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "CAL_MNTH_NAME",
-									"type": "String"
+									"name": "LYR_MNTH_STRT_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "CAL_MNTH_NAME",
-									"type": "String"
+									"name": "LYR_MNTH_STRT_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "CAL_MNTH_DESC1",
-									"type": "String"
+									"name": "LYR_MNTH_END_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "CAL_MNTH_DESC1",
-									"type": "String"
+									"name": "LYR_MNTH_END_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "FISCAL_QTR_DESC",
-									"type": "String"
+									"name": "PRIOR_52WK_BEGIN_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "FISCAL_QTR_DESC",
-									"type": "String"
+									"name": "PRIOR_52WK_BEGIN_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "FISCAL_QTR_DESC_YYYYQQ",
-									"type": "String"
+									"name": "PRIOR_3MTH_BEGIN_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "FISCAL_QTR_DESC_YYYYQQ",
-									"type": "String"
+									"name": "PRIOR_3MTH_BEGIN_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "LYR_CAL_MONTH",
-									"type": "String"
+									"name": "PRIOR_12MTH_BEGIN_DATE_NBR",
+									"type": "Double"
 								},
 								"sink": {
-									"name": "LYR_CAL_MONTH",
-									"type": "String"
+									"name": "PRIOR_12MTH_BEGIN_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "FISCAL_LYR_CD",
+									"name": "LYR_PRIOR_52WK_BEGIN_DATE_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LYR_PRIOR_52WK_BEGIN_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_PRIOR_3MTH_BEGIN_DATE_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LYR_PRIOR_3MTH_BEGIN_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_PRIOR_12MTH_BEGIN_DATE_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LYR_PRIOR_12MTH_BEGIN_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "NXTYR_MNTH_END_DT_CODE",
 									"type": "String"
 								},
 								"sink": {
-									"name": "FISCAL_LYR_CD",
-									"type": "String"
+									"name": "NXTYR_MNTH_END_DT_CODE",
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -283,7 +615,8 @@
 								},
 								"sink": {
 									"name": "FISCAL_QTR_END_DT_CODE",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -293,7 +626,118 @@
 								},
 								"sink": {
 									"name": "FISCAL_YR_END_DT_CODE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CAL_WEEK",
 									"type": "String"
+								},
+								"sink": {
+									"name": "CAL_WEEK",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "QTR_STRT_DT_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "QTR_STRT_DT_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "QTR_END_DT_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "QTR_END_DT_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_QTR_STRT_DT_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LYR_QTR_STRT_DT_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_QTR_END_DT_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LYR_QTR_END_DT_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "DAY_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DAY_NAME",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PRIOR_WK_END_DATE_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "PRIOR_WK_END_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "PRIOR_MNTH_END_DATE_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "PRIOR_MNTH_END_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_PRIOR_WK_END_DATE_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LYR_PRIOR_WK_END_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "LYR_PRIOR_MNTH_END_DATE_NBR",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LYR_PRIOR_MNTH_END_DATE_NBR",
+									"type": "Single",
+									"physicalType": "float"
 								}
 							}
 						],
