@@ -337,7 +337,13 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[SPRC_Internal_Dim_Calendar_mth]"
+					"storedProcedureName": "[dbo].[SPRC_Internal_Dim_Calendar_mth]",
+					"storedProcedureParameters": {
+						"start_date": {
+							"value": null,
+							"type": "Datetime"
+						}
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSQLDW_onprem",
