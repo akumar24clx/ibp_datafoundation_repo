@@ -22,7 +22,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[SPRC_SIC_Internal_Dim_Profitcenter]"
+					"storedProcedureName": "[dbo].[SPRC_Internal_Dim_Profitcenter]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSQLDW_onprem",
