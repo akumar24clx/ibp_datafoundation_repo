@@ -116,6 +116,12 @@
 					"storedProcedureName": {
 						"value": "@pipeline().parameters.SP_name",
 						"type": "Expression"
+					},
+					"storedProcedureParameters": {
+						"start_date": {
+							"value": null,
+							"type": "Datetime"
+						}
 					}
 				},
 				"linkedServiceName": {
