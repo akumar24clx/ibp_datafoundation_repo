@@ -259,7 +259,8 @@
 					"source": {
 						"type": "SqlDWSource",
 						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_start_time",
-						"queryTimeout": "02:00:00"
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"dataset": {
 						"referenceName": "Audit_table51",
@@ -290,7 +291,8 @@
 					"source": {
 						"type": "SqlDWSource",
 						"sqlReaderQuery": "SELECT CONVERT(varchar, GETDATE(),20) as at_end_time",
-						"queryTimeout": "02:00:00"
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"dataset": {
 						"referenceName": "Audit_table51",
@@ -302,7 +304,7 @@
 		"parameters": {
 			"subdir_name": {
 				"type": "string",
-				"defaultValue": "Litter"
+				"defaultValue": "Food"
 			},
 			"file_name": {
 				"type": "string",
