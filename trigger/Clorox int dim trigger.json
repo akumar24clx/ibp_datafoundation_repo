@@ -1,0 +1,35 @@
+{
+	"name": "Clorox int dim trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Internal_Dimensions_Master_Wrapper",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Week",
+				"interval": 1,
+				"startTime": "2020-08-19T19:08:00.000Z",
+				"timeZone": "UTC",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						18
+					],
+					"weekDays": [
+						"Wednesday"
+					]
+				}
+			}
+		}
+	}
+}
