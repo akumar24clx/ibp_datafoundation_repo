@@ -218,7 +218,7 @@
 									"Status": "Failed",
 									"Env": "Dev",
 									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
 									"MessageBody1": "Hi All,",
 									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Material_UOM dim (dbo.material_uom_dim) table.",
 									"MessageBody3": "Please find below the pipeline execution details:",
