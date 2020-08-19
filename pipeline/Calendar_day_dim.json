@@ -762,7 +762,7 @@
 				]
 			},
 			{
-				"name": "SPRC_Internal_Dim_Calendar_mth",
+				"name": "SPRC_Internal_Dim_Calendar_day",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -799,7 +799,7 @@
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "SPRC_Internal_Dim_Calendar_mth",
+						"activity": "SPRC_Internal_Dim_Calendar_day",
 						"dependencyConditions": [
 							"Succeeded"
 						]
