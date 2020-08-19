@@ -784,7 +784,7 @@
 					"storedProcedureName": "[dbo].[SPRC_Internal_Dim_Calendar_day]",
 					"storedProcedureParameters": {
 						"start_date": {
-							"value": "",
+							"value": null,
 							"type": "Datetime"
 						}
 					}
