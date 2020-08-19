@@ -1,0 +1,21 @@
+{
+	"name": "FtpServer2_cpcetlp",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FtpServer",
+		"typeProperties": {
+			"host": "cpcetlp",
+			"port": 21,
+			"enableSsl": false,
+			"enableServerCertificateValidation": false,
+			"authenticationType": "Basic",
+			"userName": "akumar24",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwYjc4NjZkNi1iYmRkLTQwNjktYTUwZi0yZmNjMzNkOWM2MzAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "clxdev-onprem-ir-linked",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
