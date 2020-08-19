@@ -14,11 +14,65 @@
 		"AzureSQLDW_connectionString": {
 			"value": ""
 		},
+		"HttpServer1_password": {
+			"value": ""
+		},
 		"KP_Oracle_IDR_connectionString": {
+			"value": ""
+		},
+		"Oracle1_connectionString": {
 			"value": ""
 		},
 		"Oracle_IDR_Dev_connectionString": {
 			"value": ""
+		},
+		"RestService1_password": {
+			"value": ""
+		},
+		"SAPBW_MDX_Dev_password": {
+			"value": ""
+		},
+		"SAPBW_MDX_QA_password": {
+			"value": ""
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://clorox.app.box.com/file/644655264100"
+		},
+		"HttpServer1_properties_typeProperties_userName": {
+			"value": "kpernapa"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "https://clorox.app.box.com/folder/113322817638"
+		},
+		"RestService1_properties_typeProperties_userName": {
+			"value": "kpernapa"
+		},
+		"SAPBW_MDX_Dev_properties_typeProperties_server": {
+			"value": "Sbwdvl01"
+		},
+		"SAPBW_MDX_Dev_properties_typeProperties_systemNumber": {
+			"value": "00"
+		},
+		"SAPBW_MDX_Dev_properties_typeProperties_clientId": {
+			"value": "300"
+		},
+		"SAPBW_MDX_Dev_properties_typeProperties_userName": {
+			"value": "kpernapa"
+		},
+		"SAPBW_MDX_QA_properties_typeProperties_server": {
+			"value": "sbwqvl01"
+		},
+		"SAPBW_MDX_QA_properties_typeProperties_systemNumber": {
+			"value": "00"
+		},
+		"SAPBW_MDX_QA_properties_typeProperties_clientId": {
+			"value": "300"
+		},
+		"SAPBW_MDX_QA_properties_typeProperties_userName": {
+			"value": "kpernapa"
+		},
+		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
+			"value": "20200404"
 		},
 		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
 			"value": "20200404"
@@ -28,9 +82,6 @@
 		},
 		"clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
 			"value": "/subscriptions/681c9400-3073-469f-b0ec-57006f831469/resourcegroups/CLX_MATRIX_POC_RG/providers/Microsoft.DataFactory/factories/clxdev-adf-sandbox/integrationruntimes/clxdev-onprem-ir"
-		},
-		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
-			"value": "20200404"
 		},
 		"containerUri": {
 			"value": ""

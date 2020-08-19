@@ -19,13 +19,85 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW'"
 		},
+		"HttpServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'HttpServer1'"
+		},
 		"KP_Oracle_IDR_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'KP_Oracle_IDR'"
 		},
+		"Oracle1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Oracle1'"
+		},
 		"Oracle_IDR_Dev_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_Dev'"
+		},
+		"RestService1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'RestService1'"
+		},
+		"SAPBW_MDX_Dev_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SAPBW_MDX_Dev'"
+		},
+		"SAPBW_MDX_QA_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SAPBW_MDX_QA'"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://clorox.app.box.com/file/644655264100"
+		},
+		"HttpServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "kpernapa"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://clorox.app.box.com/folder/113322817638"
+		},
+		"RestService1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "kpernapa"
+		},
+		"SAPBW_MDX_Dev_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "Sbwdvl01"
+		},
+		"SAPBW_MDX_Dev_properties_typeProperties_systemNumber": {
+			"type": "string",
+			"defaultValue": "00"
+		},
+		"SAPBW_MDX_Dev_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "300"
+		},
+		"SAPBW_MDX_Dev_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "kpernapa"
+		},
+		"SAPBW_MDX_QA_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sbwqvl01"
+		},
+		"SAPBW_MDX_QA_properties_typeProperties_systemNumber": {
+			"type": "string",
+			"defaultValue": "00"
+		},
+		"SAPBW_MDX_QA_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "300"
+		},
+		"SAPBW_MDX_QA_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "kpernapa"
+		},
+		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
+			"type": "string",
+			"defaultValue": "20200404"
 		},
 		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
 			"type": "string",
@@ -38,10 +110,6 @@
 		"clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/681c9400-3073-469f-b0ec-57006f831469/resourcegroups/CLX_MATRIX_POC_RG/providers/Microsoft.DataFactory/factories/clxdev-adf-sandbox/integrationruntimes/clxdev-onprem-ir"
-		},
-		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
-			"type": "string",
-			"defaultValue": "20200404"
 		},
 		"containerUri": {
 			"type": "string",
@@ -57,7 +125,7 @@
 	},
 	"resources": [
 		{
-			"name": "ArmTemplate_0",
+			"name": "clxdev-adf-matrix_ArmTemplate_0",
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2018-02-01",
 			"properties": {
@@ -70,33 +138,84 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureSQLDW_connectionString": {
+						"value": "[parameters('AzureSQLDW_connectionString')]"
+					},
+					"HttpServer1_password": {
+						"value": "[parameters('HttpServer1_password')]"
+					},
+					"RestService1_password": {
+						"value": "[parameters('RestService1_password')]"
+					},
 					"AzureBlobStorage1_connectionString": {
 						"value": "[parameters('AzureBlobStorage1_connectionString')]"
 					},
 					"AzureBlobStorage_OnPrem_connectionString": {
 						"value": "[parameters('AzureBlobStorage_OnPrem_connectionString')]"
 					},
-					"AzureSQLDW_connectionString": {
-						"value": "[parameters('AzureSQLDW_connectionString')]"
-					},
 					"KP_Oracle_IDR_connectionString": {
 						"value": "[parameters('KP_Oracle_IDR_connectionString')]"
 					},
+					"Oracle1_connectionString": {
+						"value": "[parameters('Oracle1_connectionString')]"
+					},
 					"Oracle_IDR_Dev_connectionString": {
 						"value": "[parameters('Oracle_IDR_Dev_connectionString')]"
+					},
+					"SAPBW_MDX_Dev_password": {
+						"value": "[parameters('SAPBW_MDX_Dev_password')]"
+					},
+					"SAPBW_MDX_QA_password": {
+						"value": "[parameters('SAPBW_MDX_QA_password')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					},
+					"HttpServer1_properties_typeProperties_userName": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_userName')]"
+					},
+					"RestService1_properties_typeProperties_url": {
+						"value": "[parameters('RestService1_properties_typeProperties_url')]"
+					},
+					"RestService1_properties_typeProperties_userName": {
+						"value": "[parameters('RestService1_properties_typeProperties_userName')]"
 					},
 					"clxdev-az-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
 						"value": "[parameters('clxdev-az-ir-linked_properties_typeProperties_linkedInfo_resourceId')]"
 					},
 					"clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
 						"value": "[parameters('clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId')]"
+					},
+					"SAPBW_MDX_Dev_properties_typeProperties_server": {
+						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_server')]"
+					},
+					"SAPBW_MDX_Dev_properties_typeProperties_systemNumber": {
+						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_systemNumber')]"
+					},
+					"SAPBW_MDX_Dev_properties_typeProperties_clientId": {
+						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_clientId')]"
+					},
+					"SAPBW_MDX_Dev_properties_typeProperties_userName": {
+						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_userName')]"
+					},
+					"SAPBW_MDX_QA_properties_typeProperties_server": {
+						"value": "[parameters('SAPBW_MDX_QA_properties_typeProperties_server')]"
+					},
+					"SAPBW_MDX_QA_properties_typeProperties_systemNumber": {
+						"value": "[parameters('SAPBW_MDX_QA_properties_typeProperties_systemNumber')]"
+					},
+					"SAPBW_MDX_QA_properties_typeProperties_clientId": {
+						"value": "[parameters('SAPBW_MDX_QA_properties_typeProperties_clientId')]"
+					},
+					"SAPBW_MDX_QA_properties_typeProperties_userName": {
+						"value": "[parameters('SAPBW_MDX_QA_properties_typeProperties_userName')]"
 					}
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "ArmTemplate_1",
+			"name": "clxdev-adf-matrix_ArmTemplate_1",
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2018-02-01",
 			"properties": {
@@ -109,16 +228,16 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
-						"value": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date')]"
-					},
 					"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
 						"value": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
+					},
+					"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
+						"value": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date')]"
 					}
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'clxdev-adf-matrix_ArmTemplate_0')]"
 			]
 		}
 	]
