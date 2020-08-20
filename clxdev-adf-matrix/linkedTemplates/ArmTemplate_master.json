@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW'"
 		},
+		"AzureSQLDW_onprem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW_onprem'"
+		},
 		"HttpServer1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'HttpServer1'"
@@ -35,6 +39,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_Dev'"
 		},
+		"Oracle_IDR_dynamic_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_dynamic'"
+		},
 		"RestService1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'RestService1'"
@@ -46,14 +54,6 @@
 		"SAPBW_MDX_QA_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SAPBW_MDX_QA'"
-		},
-		"AzureSQLDW_onprem_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW_onprem'"
-		},
-		"Oracle_IDR_dynamic_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_dynamic'"
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
@@ -161,6 +161,9 @@
 					"AzureBlobStorage_OnPrem_connectionString": {
 						"value": "[parameters('AzureBlobStorage_OnPrem_connectionString')]"
 					},
+					"AzureSQLDW_onprem_connectionString": {
+						"value": "[parameters('AzureSQLDW_onprem_connectionString')]"
+					},
 					"KP_Oracle_IDR_connectionString": {
 						"value": "[parameters('KP_Oracle_IDR_connectionString')]"
 					},
@@ -170,14 +173,14 @@
 					"Oracle_IDR_Dev_connectionString": {
 						"value": "[parameters('Oracle_IDR_Dev_connectionString')]"
 					},
+					"Oracle_IDR_dynamic_connectionString": {
+						"value": "[parameters('Oracle_IDR_dynamic_connectionString')]"
+					},
 					"SAPBW_MDX_Dev_password": {
 						"value": "[parameters('SAPBW_MDX_Dev_password')]"
 					},
 					"SAPBW_MDX_QA_password": {
 						"value": "[parameters('SAPBW_MDX_QA_password')]"
-					},
-					"AzureSQLDW_onprem_connectionString": {
-						"value": "[parameters('AzureSQLDW_onprem_connectionString')]"
 					},
 					"HttpServer1_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
@@ -238,9 +241,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"Oracle_IDR_dynamic_connectionString": {
-						"value": "[parameters('Oracle_IDR_dynamic_connectionString')]"
 					}
 				}
 			},

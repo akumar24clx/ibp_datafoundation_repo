@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW'"
 		},
+		"AzureSQLDW_onprem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW_onprem'"
+		},
 		"HttpServer1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'HttpServer1'"
@@ -35,6 +39,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_Dev'"
 		},
+		"Oracle_IDR_dynamic_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_dynamic'"
+		},
 		"RestService1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'RestService1'"
@@ -46,14 +54,6 @@
 		"SAPBW_MDX_QA_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SAPBW_MDX_QA'"
-		},
-		"AzureSQLDW_onprem_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW_onprem'"
-		},
-		"Oracle_IDR_dynamic_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_dynamic'"
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
@@ -124,6 +124,2393 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Calendar_day_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Stg_Calendar_day",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_calendar_day",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage_OnPrem",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage/staging_area"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CAL_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CAL_DATE",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_DATE_CODE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DAY_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DAY_NO",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MONTH_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MONTH_NO",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WEEK_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WEEK_NO",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "YEAR_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "YEAR_NO",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_NO",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_QTR_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_QTR_NO",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WK_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WK_CD",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WK_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "WK_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "WK_STRT_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "WK_STRT_DT",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "WK_END_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "WK_END_DT",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_MNTH_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_MNTH_CD",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_DESC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_DESC",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_STRT_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MNTH_STRT_DT",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_END_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MNTH_END_DT",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_TIMESPN",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "MNTH_TIMESPN",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_CD",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QTR_STRT_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "QTR_STRT_DT",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "QTR_END_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "QTR_END_DT",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_YR_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_YR_CD",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_DATE_YYYYMMDD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_DATE_YYYYMMDD",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_DATE_MMDDYYYY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_DATE_MMDDYYYY",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_YYYYMM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_YYYYMM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_MMYYYY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_MMYYYY",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WK_STRT_DT_MMDDYYYY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WK_STRT_DT_MMDDYYYY",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WK_END_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WK_END_DT_CODE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_NAME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_NAME",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_DESC1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_DESC1",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_END_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MNTH_END_DT_CODE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MONTH",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MONTH",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_DESC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_DESC",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_DESC_YYYYQQ",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_DESC_YYYYQQ",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WEEK_DESC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WEEK_DESC",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_CAL_MONTH",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LYR_CAL_MONTH",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_FISCAL_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LYR_FISCAL_CD",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "CAL_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "PREV_DAY_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "PREV_DAY_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_STRT_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "MNTH_STRT_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_YR_STRT_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "FISCAL_YR_STRT_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_FISCAL_YR_STRT_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_FISCAL_YR_STRT_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_FISCAL_YR_END_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_FISCAL_YR_END_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_MNTH_STRT_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_MNTH_STRT_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_MNTH_END_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_MNTH_END_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "PRIOR_52WK_BEGIN_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "PRIOR_52WK_BEGIN_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "PRIOR_3MTH_BEGIN_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "PRIOR_3MTH_BEGIN_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "PRIOR_12MTH_BEGIN_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "PRIOR_12MTH_BEGIN_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_PRIOR_52WK_BEGIN_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_PRIOR_52WK_BEGIN_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_PRIOR_3MTH_BEGIN_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_PRIOR_3MTH_BEGIN_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_PRIOR_12MTH_BEGIN_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_PRIOR_12MTH_BEGIN_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "NXTYR_MNTH_END_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "NXTYR_MNTH_END_DT_CODE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_END_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_END_DT_CODE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_YR_END_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_YR_END_DT_CODE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_WEEK",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_WEEK",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QTR_STRT_DT_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "QTR_STRT_DT_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "QTR_END_DT_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "QTR_END_DT_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_QTR_STRT_DT_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_QTR_STRT_DT_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_QTR_END_DT_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_QTR_END_DT_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "DAY_NAME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DAY_NAME",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PRIOR_WK_END_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "PRIOR_WK_END_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "PRIOR_MNTH_END_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "PRIOR_MNTH_END_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_PRIOR_WK_END_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_PRIOR_WK_END_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_PRIOR_MNTH_END_DATE_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "LYR_PRIOR_MNTH_END_DATE_NBR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_D_Fiscal_cal",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Calendar_day",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SPRC_Internal_Dim_Calendar_day",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_Calendar_day",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Calendar_day]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Calendar_day",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Calendar_day'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_ProfitCenter_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Calendar Day dim (dbo.calendar_day_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Fiscal_cal')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Calendar_day')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log1')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Calendar_mth_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Stg_Calendar_mth",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_calendar_mth",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage_OnPrem",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage/staging_area"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CAL_MONTH",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MONTH",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_START_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MNTH_START_DT_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_END_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MNTH_END_DT_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MONTH_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MONTH_NO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "YEAR_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "YEAR_NO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_NO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_QTR_NO",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_QTR_NO",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_MNTH_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_MNTH_CD",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_DESC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_DESC",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_STRT_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MNTH_STRT_DT",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_END_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MNTH_END_DT",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "MNTH_TIMESPN",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "MNTH_TIMESPN",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_CD",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "QTR_STRT_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "QTR_STRT_DT",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "QTR_END_DT",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "QTR_END_DT",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_YR_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_YR_CD",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_YYYYMM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_YYYYMM",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_MMYYYY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_MMYYYY",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_NAME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_NAME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CAL_MNTH_DESC1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CAL_MNTH_DESC1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_DESC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_DESC",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_DESC_YYYYQQ",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_DESC_YYYYQQ",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LYR_CAL_MONTH",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LYR_CAL_MONTH",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_LYR_CD",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_LYR_CD",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_QTR_END_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_QTR_END_DT_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_YR_END_DT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "FISCAL_YR_END_DT_CODE",
+											"type": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_D_Fiscal_mth",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Calendar_mth",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "SPRC_Internal_Dim_Calendar_mth",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_Calendar_mth",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Calendar_mth]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Calendar_mth",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Calendar_mth'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_ProfitCenter_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Calendar Month dim (dbocalendar_mth_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Fiscal_mth')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Calendar_mth')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log1')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Custom_Profitcenter_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SPRC_Internal_Dim_Custom_Profitcenter",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_Profitcenter_Custom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Custom_Profitcenter]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Stg_Profitcenter_Custom",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_profitcenter_custom",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage_OnPrem",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage/staging_area"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PROFIT_CENTER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PROFIT_CENTER_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DOMESTICDOS_PROFIT_CENTER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DOMESTICDOS_PROFIT_CENTER_CODE",
+											"type": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_M_Custom_profitcenter",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Custom_profitcenter",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Custom_Profitcenter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Custom_Profitcenter'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_Custom_ProfitCenter_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Custom Profit Center dim (dbo.profitcenter_custom_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
+				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_M_Custom_profitcenter')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Custom_profitcenter')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Customer_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SPRC_Internal_Dim_Customer",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_Customer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Customer]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Stg_Customer",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_customer",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage_OnPrem",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage/staging_area"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CUSTOMER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_NAME_1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_NAME_1",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_NAME_2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_NAME_2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_NAME_3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_NAME_3",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PO_BOX",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PO_BOX",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "STREET",
+											"type": "String"
+										},
+										"sink": {
+											"name": "STREET",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "REGION_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "REGION_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "REGION",
+											"type": "String"
+										},
+										"sink": {
+											"name": "REGION",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CITY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CITY",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ZIPCODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ZIPCODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "COUNTRY_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "COUNTRY_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "COUNTRY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "COUNTRY",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ACCT_GRP_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ACCT_GRP_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CONSUMER_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CONSUMER_FLG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_ORG_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_ORG_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_GROUP_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_GROUP_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_GROUP",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_GROUP",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "TRADE_SECTOR_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TRADE_SECTOR_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "TRADE_SECTOR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TRADE_SECTOR",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_GROUP_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_GROUP_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_ORG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_ORG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_CODE_LVL_1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_CODE_LVL_1",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_CODE_LVL_2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_CODE_LVL_2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_CODE_LVL_3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_CODE_LVL_3",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_NAME1_LVL_1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_NAME1_LVL_1",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_NAME1_LVL_2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_NAME1_LVL_2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_NAME1_LVL_3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CUSTOMER_NAME1_LVL_3",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OMS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "OMS",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PLANNING_ACCT_GRP_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PLANNING_ACCT_GRP_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "HIERARCHY_NBR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "HIERARCHY_NBR",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "PRICE_GROUP_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PRICE_GROUP_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OVERRIDE_SHIPTO_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "OVERRIDE_SHIPTO_FLG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_DEPT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_DEPT_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_REGION_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_REGION_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_SECTOR_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_SECTOR_CODE",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_DEPT",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_DEPT",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_REGION",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_REGION",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_SECTOR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_SECTOR",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_DELETE_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SALES_DELETE_FLG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CREATED_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CREATED_DATE",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "MODIFIED_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MODIFIED_DATE",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_D_Customer",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Customer",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Customer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Customer'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_Customer_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Customer dim (dbo.customer_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
+				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Customer')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Customer')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Internal_Dimensions_Master_Wrapper')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Customer_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Customer_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Material_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Customer_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Material_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Material_UOM_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Material_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Material_UOM_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Profitcenter_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Material_UOM_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Profitcenter_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Custom_Profitcenter_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Profitcenter_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Custom_Profitcenter_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Job_Completion_Alert",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Custom_Profitcenter_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"DataFactoryName": "@{pipeline().DataFactory}",
+								"Status": "Successful",
+								"Env": "Dev",
+								"PipelineName": "@{pipeline().Pipeline}",
+								"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+								"MessageBody1": "Hi All,",
+								"MessageBody2": "This is an email notification generated from Azure Data Factory for Clorox Internal Dimension ingestion.",
+								"MessageBody3": "Please find below the pipeline execution details:",
+								"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+								"MessageBody5": " - Thanks"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Customer_dim')]",
+				"[concat(variables('factoryId'), '/pipelines/Material_dim')]",
+				"[concat(variables('factoryId'), '/pipelines/Material_UOM_dim')]",
+				"[concat(variables('factoryId'), '/pipelines/Profitcenter_dim')]",
+				"[concat(variables('factoryId'), '/pipelines/Custom_Profitcenter_dim')]"
+			]
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Load IDR Orders')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -6135,6 +8522,810 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Master_Calendar_Dimensions')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Calendar_day_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Calendar_day_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Calendar_mth_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Calendar_day_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Calendar_mth_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Job_Completion_Alert",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Calendar_mth_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"DataFactoryName": "@{pipeline().DataFactory}",
+								"Status": "Successful",
+								"Env": "Dev",
+								"PipelineName": "@{pipeline().Pipeline}",
+								"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+								"MessageBody1": "Hi All,",
+								"MessageBody2": "This is an email notification generated from Azure Data Factory for Clorox Internal Calendar Dimension ingestion.",
+								"MessageBody3": "Please find below the pipeline execution details:",
+								"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+								"MessageBody5": " - Thanks"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Calendar_day_dim')]",
+				"[concat(variables('factoryId'), '/pipelines/Calendar_mth_dim')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Material_UOM_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SPRC_Internal_Dim_Material_UOM",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_material_UOM",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Material_UOM]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Stg_material_UOM",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_material_uom_dim",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage_OnPrem",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage/staging_area"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "MATERIAL_NUM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MATERIAL_NUM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UOM",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CONV_FACTOR",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "CONV_FACTOR",
+											"type": "Single",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "CREATED_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CREATED_DATE",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "MODIFIED_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MODIFIED_DATE",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_D_Material_UOM",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Material_UOM",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Material_UOM",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Material_UOM'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_Material_UOM_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Material_UOM dim (dbo.material_uom_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
+				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Material_UOM')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Material_UOM')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Material_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SPRC_Internal_Dim_Material",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_Material",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Material]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Stg_Material",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_material_dim",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_D_Material",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Material",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Material",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Material'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_Material_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Material dim (dbo.material_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
+				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Material')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Material')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Profitcenter_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SPRC_Internal_Dim_Profitcenter",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_Profitcenter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Profitcenter]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Stg_Profitcenter",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_profit_center",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage_OnPrem",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage/staging_area"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PROFIT_CENTER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PROFIT_CENTER_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CTRL_AREA_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CTRL_AREA_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "VALID_FROM_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "VALID_FROM_NBR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "VALID_TO_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "VALID_TO_NBR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SHORT_NAME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SHORT_NAME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MEDIUM_NAME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MEDIUM_NAME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CREATED_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CREATED_DATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "MODIFIED_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MODIFIED_DATE",
+											"type": "DateTime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_D_Profitcenter",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Profitcenter",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Profitcenter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Profitcenter'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_ProfitCenter_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Profit Center dim (dbo.profit_center_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
+				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Profitcenter')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Profitcenter')]",
+				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Send email on failure')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -8127,6 +11318,174 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Customer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_CUSTOMER"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Fiscal_cal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_FISCAL_CAL"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Fiscal_mth')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_FISCAL_MTH"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Material')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_MATERIAL"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Material_UOM')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_MATERIAL_UOM"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Profitcenter')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_PROFITCENTER"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_M_Custom_profitcenter')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_M_PROFITCENTER_CUSTOM"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_Orders')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -9629,6 +12988,272 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Calendar_day')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQLDW - Staging Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "stg_calendar_day"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Calendar_mth')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQLDW - Staging Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "stg_calendar_mth"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Custom_profitcenter')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQLDW - Staging Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "stg_profitcenter_custom"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Customer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQLDW - Staging Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "CUSTOMER_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_NAME_1",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_NAME_2",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_NAME_3",
+						"type": "varchar"
+					},
+					{
+						"name": "PO_BOX",
+						"type": "varchar"
+					},
+					{
+						"name": "STREET",
+						"type": "varchar"
+					},
+					{
+						"name": "REGION_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "REGION",
+						"type": "varchar"
+					},
+					{
+						"name": "CITY",
+						"type": "varchar"
+					},
+					{
+						"name": "ZIPCODE",
+						"type": "varchar"
+					},
+					{
+						"name": "COUNTRY_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "COUNTRY",
+						"type": "varchar"
+					},
+					{
+						"name": "ACCT_GRP_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "CONSUMER_FLG",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_GROUP_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_GROUP",
+						"type": "varchar"
+					},
+					{
+						"name": "TRADE_SECTOR_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "TRADE_SECTOR",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_GROUP_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_ORG",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_CODE_LVL_1",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_CODE_LVL_2",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_CODE_LVL_3",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_NAME1_LVL_1",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_NAME1_LVL_2",
+						"type": "varchar"
+					},
+					{
+						"name": "CUSTOMER_NAME1_LVL_3",
+						"type": "varchar"
+					},
+					{
+						"name": "OMS",
+						"type": "varchar"
+					},
+					{
+						"name": "PLANNING_ACCT_GRP_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "HIERARCHY_NBR",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PRICE_GROUP_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "OVERRIDE_SHIPTO_FLG",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_DEPT_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_REGION_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_SECTOR_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_DEPT",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_REGION",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_SECTOR",
+						"type": "varchar"
+					},
+					{
+						"name": "SALES_DELETE_FLG",
+						"type": "varchar"
+					},
+					{
+						"name": "CREATED_DATE",
+						"type": "date"
+					},
+					{
+						"name": "MODIFIED_DATE",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "stg_customer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Litter_Orders')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -11091,749 +14716,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-az-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-az-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage_OnPrem')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage_OnPrem_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSQLDW')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDW",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSQLDW_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Basic",
-					"userName": "[parameters('HttpServer1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('HttpServer1_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/KP_Oracle_IDR')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('KP_Oracle_IDR_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('Oracle1_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle_IDR_Dev')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('Oracle_IDR_Dev_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestService1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('RestService1_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Basic",
-					"userName": "[parameters('RestService1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('RestService1_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SAPBW_MDX_Dev')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SapBw",
-				"typeProperties": {
-					"server": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_server')]",
-					"systemNumber": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_systemNumber')]",
-					"clientId": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_clientId')]",
-					"userName": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SAPBW_MDX_Dev_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SAPBW_MDX_QA')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SapBw",
-				"typeProperties": {
-					"server": "[parameters('SAPBW_MDX_QA_properties_typeProperties_server')]",
-					"systemNumber": "[parameters('SAPBW_MDX_QA_properties_typeProperties_systemNumber')]",
-					"clientId": "[parameters('SAPBW_MDX_QA_properties_typeProperties_clientId')]",
-					"userName": "[parameters('SAPBW_MDX_QA_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SAPBW_MDX_QA_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Clorox Internal Dimension Trigger')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Internal_Dimensions_Master_Wrapper",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2020-08-20T07:37:00.000Z",
-						"timeZone": "UTC",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								18
-							],
-							"weekDays": [
-								"Wednesday"
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Internal_Dimensions_Master_Wrapper')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Load_IDR_Orders_Weekly_Schedule')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Load IDR Orders",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"IDR_Load_Date": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2020-04-08T19:00:00Z",
-						"timeZone": "UTC",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								7
-							],
-							"weekDays": [
-								"Wednesday"
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Load IDR Orders')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Load_IDR_Shipments_Weekly_Schedule')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Load IDR Shipments",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"IDR_Load_Date": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2020-04-08T18:00:00Z",
-						"timeZone": "UTC",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								6
-							],
-							"weekDays": [
-								"Wednesday"
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Load IDR Shipments')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/clxdev-az-ir-linked')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {
-					"linkedInfo": {
-						"resourceId": "[parameters('clxdev-az-ir-linked_properties_typeProperties_linkedInfo_resourceId')]",
-						"authorizationType": "Rbac"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/clxdev-onprem-ir-linked')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {
-					"linkedInfo": {
-						"resourceId": "[parameters('clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId')]",
-						"authorizationType": "Rbac"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSQLDW_onprem')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDW",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSQLDW_onprem_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle_IDR_dynamic')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('Oracle_IDR_dynamic_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Internal_Dimensions_Master_Wrapper')]",
-			"type": "Microsoft.DataFactory/factories/templates",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Customer')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Oracle_IDR_dynamic",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Oracle - Tables"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CLXBW",
-					"table": "APO_BW_D_CUSTOMER"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Customer')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSQLDW_onprem",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "SQLDW - Staging Tables"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "CUSTOMER_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_NAME_1",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_NAME_2",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_NAME_3",
-						"type": "varchar"
-					},
-					{
-						"name": "PO_BOX",
-						"type": "varchar"
-					},
-					{
-						"name": "STREET",
-						"type": "varchar"
-					},
-					{
-						"name": "REGION_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "REGION",
-						"type": "varchar"
-					},
-					{
-						"name": "CITY",
-						"type": "varchar"
-					},
-					{
-						"name": "ZIPCODE",
-						"type": "varchar"
-					},
-					{
-						"name": "COUNTRY_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "COUNTRY",
-						"type": "varchar"
-					},
-					{
-						"name": "ACCT_GRP_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "CONSUMER_FLG",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_ORG_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_GROUP_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_GROUP",
-						"type": "varchar"
-					},
-					{
-						"name": "TRADE_SECTOR_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "TRADE_SECTOR",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_GROUP_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_ORG",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_CODE_LVL_1",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_CODE_LVL_2",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_CODE_LVL_3",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_NAME1_LVL_1",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_NAME1_LVL_2",
-						"type": "varchar"
-					},
-					{
-						"name": "CUSTOMER_NAME1_LVL_3",
-						"type": "varchar"
-					},
-					{
-						"name": "OMS",
-						"type": "varchar"
-					},
-					{
-						"name": "PLANNING_ACCT_GRP_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "HIERARCHY_NBR",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "PRICE_GROUP_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "OVERRIDE_SHIPTO_FLG",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_DEPT_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_REGION_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_SECTOR_CODE",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_DEPT",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_REGION",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_SECTOR",
-						"type": "varchar"
-					},
-					{
-						"name": "SALES_DELETE_FLG",
-						"type": "varchar"
-					},
-					{
-						"name": "CREATED_DATE",
-						"type": "date"
-					},
-					{
-						"name": "MODIFIED_DATE",
-						"type": "date"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "stg_customer"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_etl_audit_log')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSQLDW_onprem",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "SQLDW - Base Tables"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [
-					{
-						"name": "batch_id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Datafactory_Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Pipeline_Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Activity_Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Source_Type",
-						"type": "varchar"
-					},
-					{
-						"name": "Destination_Type",
-						"type": "varchar"
-					},
-					{
-						"name": "Source_Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Target_Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Source_Count",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Target_Count",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status",
-						"type": "varchar"
-					},
-					{
-						"name": "Activity_Start_Time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Activity_End_Time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Total_time_taken_in_sec",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "rows_inserted",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "rows_updated",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "etl_audit_log"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Material')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Oracle_IDR_dynamic",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Oracle - Tables"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CLXBW",
-					"table": "APO_BW_D_MATERIAL"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Material')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -12282,30 +15164,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Material_UOM')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Oracle_IDR_dynamic",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Oracle - Tables"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CLXBW",
-					"table": "APO_BW_D_MATERIAL_UOM"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
 			]
 		},
 		{
@@ -12760,30 +15618,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Profitcenter')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Oracle_IDR_dynamic",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Oracle - Tables"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CLXBW",
-					"table": "APO_BW_D_PROFITCENTER"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Profitcenter')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -12808,31 +15642,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_M_Custom_profitcenter')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Oracle_IDR_dynamic",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Oracle - Tables"
-				},
-				"annotations": [],
-				"type": "OracleTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "CLXBW",
-					"table": "APO_BW_M_PROFITCENTER_CUSTOM"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_Staging_Custom_profitcenter')]",
+			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_etl_audit_log')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -12841,14 +15651,89 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "SQLDW - Staging Tables"
+					"name": "SQLDW - Base Tables"
 				},
 				"annotations": [],
 				"type": "AzureSqlDWTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "batch_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Datafactory_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Pipeline_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Activity_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Destination_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Target_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_Count",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Target_Count",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Activity_Start_Time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Activity_End_Time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Total_time_taken_in_sec",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rows_inserted",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rows_updated",
+						"type": "int",
+						"precision": 10
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "stg_profitcenter_custom"
+					"table": "etl_audit_log"
 				}
 			},
 			"dependsOn": [
@@ -12856,1748 +15741,498 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Internal_Dimensions_Master_Wrapper')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Table_SQLDW_etl_audit_log1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "SQLDW - Base Tables"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
 					{
-						"name": "Customer_dim",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Customer_dim",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
+						"name": "batch_id",
+						"type": "int",
+						"precision": 10
 					},
 					{
-						"name": "Material_dim",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Customer_dim",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Material_dim",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
+						"name": "Datafactory_Name",
+						"type": "varchar"
 					},
 					{
-						"name": "Material_UOM_dim",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Material_dim",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Material_UOM_dim",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
+						"name": "Pipeline_Name",
+						"type": "varchar"
 					},
 					{
-						"name": "Profitcenter_dim",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Material_UOM_dim",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Profitcenter_dim",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
+						"name": "Activity_Name",
+						"type": "varchar"
 					},
 					{
-						"name": "Custom_Profitcenter_dim",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Profitcenter_dim",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Custom_Profitcenter_dim",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
+						"name": "Source_Type",
+						"type": "varchar"
 					},
 					{
-						"name": "Job_Completion_Alert",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "Custom_Profitcenter_dim",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/json"
-							},
-							"body": {
-								"DataFactoryName": "@{pipeline().DataFactory}",
-								"Status": "Successful",
-								"Env": "Dev",
-								"PipelineName": "@{pipeline().Pipeline}",
-								"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
-								"MessageBody1": "Hi All,",
-								"MessageBody2": "This is an email notification generated from Azure Data Factory for Clorox Internal Dimension ingestion.",
-								"MessageBody3": "Please find below the pipeline execution details:",
-								"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-								"MessageBody5": " - Thanks"
-							}
-						}
+						"name": "Destination_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Target_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Source_Count",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Target_Count",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Activity_Start_Time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Activity_End_Time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Total_time_taken_in_sec",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rows_inserted",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rows_updated",
+						"type": "int",
+						"precision": 10
 					}
 				],
-				"folder": {
-					"name": "Clorox - Dimensions/Clorox Internal Dim"
-				},
-				"annotations": []
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "etl_audit_log"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Customer_dim')]",
-				"[concat(variables('factoryId'), '/pipelines/Material_dim')]",
-				"[concat(variables('factoryId'), '/pipelines/Material_UOM_dim')]",
-				"[concat(variables('factoryId'), '/pipelines/Profitcenter_dim')]",
-				"[concat(variables('factoryId'), '/pipelines/Custom_Profitcenter_dim')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Customer_dim')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "SPRC_Internal_Dim_Customer",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Stg_Customer",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Customer]",
-							"storedProcedureParameters": {
-								"start_date": {
-									"value": null,
-									"type": "Datetime"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSQLDW_onprem",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Stg_Customer",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"preCopyScript": "truncate table dbo.stg_customer",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureBlobStorage_OnPrem",
-									"type": "LinkedServiceReference"
-								},
-								"path": "matrix-stage/staging_area"
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "CUSTOMER_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_NAME_1",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_NAME_1",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_NAME_2",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_NAME_2",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_NAME_3",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_NAME_3",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PO_BOX",
-											"type": "String"
-										},
-										"sink": {
-											"name": "PO_BOX",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "STREET",
-											"type": "String"
-										},
-										"sink": {
-											"name": "STREET",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "REGION_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "REGION_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "REGION",
-											"type": "String"
-										},
-										"sink": {
-											"name": "REGION",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CITY",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CITY",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "ZIPCODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ZIPCODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "COUNTRY_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "COUNTRY_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "COUNTRY",
-											"type": "String"
-										},
-										"sink": {
-											"name": "COUNTRY",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "ACCT_GRP_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ACCT_GRP_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CONSUMER_FLG",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CONSUMER_FLG",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_ORG_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_ORG_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_GROUP_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_GROUP_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_GROUP",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_GROUP",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "TRADE_SECTOR_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "TRADE_SECTOR_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "TRADE_SECTOR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "TRADE_SECTOR",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_GROUP_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_GROUP_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_ORG",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_ORG",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_CODE_LVL_1",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_CODE_LVL_1",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_CODE_LVL_2",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_CODE_LVL_2",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_CODE_LVL_3",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_CODE_LVL_3",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_NAME1_LVL_1",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_NAME1_LVL_1",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_NAME1_LVL_2",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_NAME1_LVL_2",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CUSTOMER_NAME1_LVL_3",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CUSTOMER_NAME1_LVL_3",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OMS",
-											"type": "String"
-										},
-										"sink": {
-											"name": "OMS",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PLANNING_ACCT_GRP_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "PLANNING_ACCT_GRP_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "HIERARCHY_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "HIERARCHY_NBR",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "PRICE_GROUP_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "PRICE_GROUP_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OVERRIDE_SHIPTO_FLG",
-											"type": "String"
-										},
-										"sink": {
-											"name": "OVERRIDE_SHIPTO_FLG",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_DEPT_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_DEPT_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_REGION_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_REGION_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_SECTOR_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_SECTOR_CODE",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_DEPT",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_DEPT",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_REGION",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_REGION",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_SECTOR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_SECTOR",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "SALES_DELETE_FLG",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SALES_DELETE_FLG",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CREATED_DATE",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "CREATED_DATE",
-											"type": "DateTime",
-											"physicalType": "date"
-										}
-									},
-									{
-										"source": {
-											"name": "MODIFIED_DATE",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "MODIFIED_DATE",
-											"type": "DateTime",
-											"physicalType": "date"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Table_Oracle_IDR_BW_D_Customer",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Table_SQLDW_Staging_Customer",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Src_to_Target_Lookup",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "SPRC_Internal_Dim_Customer",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Customer'",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "Table_SQLDW_etl_audit_log",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Check for Src to Tgt match",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Src_to_Target_Lookup",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "AT_WEB_Customer_Dim_Load_Error",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-										"method": "POST",
-										"headers": {
-											"Content-Type": "application/json"
-										},
-										"body": {
-											"DataFactoryName": "@{pipeline().DataFactory}",
-											"Status": "Failed",
-											"Env": "Dev",
-											"PipelineName": "@{pipeline().Pipeline}",
-											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
-											"MessageBody1": "Hi All,",
-											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Customer dim (dbo.customer_dim) table.",
-											"MessageBody3": "Please find below the pipeline execution details:",
-											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-											"MessageBody5": " - Thanks"
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
 				},
-				"annotations": []
+				"connectVia": {
+					"referenceName": "clxdev-az-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
-				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Customer')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Customer')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-az-ir-linked')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Material_dim')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage_OnPrem')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "SPRC_Internal_Dim_Material",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Stg_Material",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Material]",
-							"storedProcedureParameters": {
-								"start_date": {
-									"value": null,
-									"type": "Datetime"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSQLDW_onprem",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Stg_Material",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"preCopyScript": "truncate table dbo.stg_material_dim",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Table_Oracle_IDR_BW_D_Material",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Table_SQLDW_Staging_Material",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Src_to_Target_Lookup",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "SPRC_Internal_Dim_Material",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Material'",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "Table_SQLDW_etl_audit_log",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Check for Src to Tgt match",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Src_to_Target_Lookup",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "AT_WEB_Material_Dim_Load_Error",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-										"method": "POST",
-										"headers": {
-											"Content-Type": "application/json"
-										},
-										"body": {
-											"DataFactoryName": "@{pipeline().DataFactory}",
-											"Status": "Failed",
-											"Env": "Dev",
-											"PipelineName": "@{pipeline().Pipeline}",
-											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
-											"MessageBody1": "Hi All,",
-											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Material dim (dbo.material_dim) table.",
-											"MessageBody3": "Please find below the pipeline execution details:",
-											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-											"MessageBody5": " - Thanks"
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage_OnPrem_connectionString')]"
 				},
-				"annotations": []
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
-				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Material')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Material')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Material_UOM_dim')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/AzureSQLDW')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "SPRC_Internal_Dim_Material_UOM",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Stg_material_UOM",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Material_UOM]",
-							"storedProcedureParameters": {
-								"start_date": {
-									"value": null,
-									"type": "Datetime"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSQLDW_onprem",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Stg_material_UOM",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"preCopyScript": "truncate table dbo.stg_material_uom_dim",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureBlobStorage_OnPrem",
-									"type": "LinkedServiceReference"
-								},
-								"path": "matrix-stage/staging_area"
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "MATERIAL_NUM",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MATERIAL_NUM",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "UOM",
-											"type": "String"
-										},
-										"sink": {
-											"name": "UOM",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CONV_FACTOR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "CONV_FACTOR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "CREATED_DATE",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "CREATED_DATE",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "MODIFIED_DATE",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "MODIFIED_DATE",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Table_Oracle_IDR_BW_D_Material_UOM",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Table_SQLDW_Staging_Material_UOM",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Src_to_Target_Lookup",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "SPRC_Internal_Dim_Material_UOM",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Material_UOM'",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "Table_SQLDW_etl_audit_log",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Check for Src to Tgt match",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Src_to_Target_Lookup",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "AT_WEB_Material_UOM_Dim_Load_Error",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-										"method": "POST",
-										"headers": {
-											"Content-Type": "application/json"
-										},
-										"body": {
-											"DataFactoryName": "@{pipeline().DataFactory}",
-											"Status": "Failed",
-											"Env": "Dev",
-											"PipelineName": "@{pipeline().Pipeline}",
-											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
-											"MessageBody1": "Hi All,",
-											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Material_UOM dim (dbo.material_uom_dim) table.",
-											"MessageBody3": "Please find below the pipeline execution details:",
-											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-											"MessageBody5": " - Thanks"
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSQLDW_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQLDW_onprem')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSQLDW_onprem_connectionString')]"
 				},
-				"annotations": []
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
-				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Material_UOM')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Material_UOM')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Profitcenter_dim')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "SPRC_Internal_Dim_Profitcenter",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Stg_Profitcenter",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Profitcenter]",
-							"storedProcedureParameters": {
-								"start_date": {
-									"value": null,
-									"type": "Datetime"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSQLDW_onprem",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Stg_Profitcenter",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"preCopyScript": "truncate table dbo.stg_profit_center",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureBlobStorage_OnPrem",
-									"type": "LinkedServiceReference"
-								},
-								"path": "matrix-stage/staging_area"
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "PROFIT_CENTER_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "PROFIT_CENTER_CODE",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CTRL_AREA_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CTRL_AREA_CODE",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "VALID_FROM_NBR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "VALID_FROM_NBR",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "VALID_TO_NBR",
-											"type": "String"
-										},
-										"sink": {
-											"name": "VALID_TO_NBR",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "SHORT_NAME",
-											"type": "String"
-										},
-										"sink": {
-											"name": "SHORT_NAME",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "MEDIUM_NAME",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MEDIUM_NAME",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "CREATED_DATE",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "CREATED_DATE",
-											"type": "DateTime"
-										}
-									},
-									{
-										"source": {
-											"name": "MODIFIED_DATE",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "MODIFIED_DATE",
-											"type": "DateTime"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Table_Oracle_IDR_BW_D_Profitcenter",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Table_SQLDW_Staging_Profitcenter",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Src_to_Target_Lookup",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "SPRC_Internal_Dim_Profitcenter",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Profitcenter'",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "Table_SQLDW_etl_audit_log",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Check for Src to Tgt match",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Src_to_Target_Lookup",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "AT_WEB_ProfitCenter_Dim_Load_Error",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-										"method": "POST",
-										"headers": {
-											"Content-Type": "application/json"
-										},
-										"body": {
-											"DataFactoryName": "@{pipeline().DataFactory}",
-											"Status": "Failed",
-											"Env": "Dev",
-											"PipelineName": "@{pipeline().Pipeline}",
-											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
-											"MessageBody1": "Hi All,",
-											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Profit Center dim (dbo.profit_center_dim) table.",
-											"MessageBody3": "Please find below the pipeline execution details:",
-											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-											"MessageBody5": " - Thanks"
-										}
-									}
-								}
-							]
-						}
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Basic",
+					"userName": "[parameters('HttpServer1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('HttpServer1_password')]"
 					}
-				],
-				"folder": {
-					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/KP_Oracle_IDR')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('KP_Oracle_IDR_connectionString')]"
 				},
-				"annotations": []
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
-				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_D_Profitcenter')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Profitcenter')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Custom_Profitcenter_dim')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Oracle1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('Oracle1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_IDR_Dev')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('Oracle_IDR_Dev_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_IDR_dynamic')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('Oracle_IDR_dynamic_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestService1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestService1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Basic",
+					"userName": "[parameters('RestService1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('RestService1_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SAPBW_MDX_Dev')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SapBw",
+				"typeProperties": {
+					"server": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_server')]",
+					"systemNumber": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_systemNumber')]",
+					"clientId": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_clientId')]",
+					"userName": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SAPBW_MDX_Dev_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SAPBW_MDX_QA')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SapBw",
+				"typeProperties": {
+					"server": "[parameters('SAPBW_MDX_QA_properties_typeProperties_server')]",
+					"systemNumber": "[parameters('SAPBW_MDX_QA_properties_typeProperties_systemNumber')]",
+					"clientId": "[parameters('SAPBW_MDX_QA_properties_typeProperties_clientId')]",
+					"userName": "[parameters('SAPBW_MDX_QA_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SAPBW_MDX_QA_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Clorox Internal Dimension Trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
 					{
-						"name": "SPRC_Internal_Dim_Custom_Profitcenter",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Stg_Profitcenter_Custom",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						"pipelineReference": {
+							"referenceName": "Internal_Dimensions_Master_Wrapper",
+							"type": "PipelineReference"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Custom_Profitcenter]",
-							"storedProcedureParameters": {
-								"start_date": {
-									"value": null,
-									"type": "Datetime"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSQLDW_onprem",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Stg_Profitcenter_Custom",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"preCopyScript": "truncate table dbo.stg_profitcenter_custom",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureBlobStorage_OnPrem",
-									"type": "LinkedServiceReference"
-								},
-								"path": "matrix-stage/staging_area"
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "PROFIT_CENTER_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "PROFIT_CENTER_CODE",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "DOMESTICDOS_PROFIT_CENTER_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DOMESTICDOS_PROFIT_CENTER_CODE",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Table_Oracle_IDR_BW_M_Custom_profitcenter",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Table_SQLDW_Staging_Custom_profitcenter",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Src_to_Target_Lookup",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "SPRC_Internal_Dim_Custom_Profitcenter",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Custom_Profitcenter'",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "Table_SQLDW_etl_audit_log",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Check for Src to Tgt match",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Src_to_Target_Lookup",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "AT_WEB_Custom_ProfitCenter_Dim_Load_Error",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-										"method": "POST",
-										"headers": {
-											"Content-Type": "application/json"
-										},
-										"body": {
-											"DataFactoryName": "@{pipeline().DataFactory}",
-											"Status": "Failed",
-											"Env": "Dev",
-											"PipelineName": "@{pipeline().Pipeline}",
-											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
-											"MessageBody1": "Hi All,",
-											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Custom Profit Center dim (dbo.profitcenter_custom_dim) table.",
-											"MessageBody3": "Please find below the pipeline execution details:",
-											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-											"MessageBody5": " - Thanks"
-										}
-									}
-								}
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2020-08-20T07:37:00.000Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								18
+							],
+							"weekDays": [
+								"Wednesday"
 							]
 						}
 					}
-				],
-				"folder": {
-					"name": "Clorox - Dimensions/Clorox Internal Dim"
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]",
-				"[concat(variables('factoryId'), '/datasets/Table_Oracle_IDR_BW_M_Custom_profitcenter')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_Staging_Custom_profitcenter')]",
-				"[concat(variables('factoryId'), '/datasets/Table_SQLDW_etl_audit_log')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
+				"[concat(variables('factoryId'), '/pipelines/Internal_Dimensions_Master_Wrapper')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_IDR_Orders_Weekly_Schedule')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load IDR Orders",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"IDR_Load_Date": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2020-04-08T19:00:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								7
+							],
+							"weekDays": [
+								"Wednesday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load IDR Orders')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_IDR_Shipments_Weekly_Schedule')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load IDR Shipments",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"IDR_Load_Date": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2020-04-08T18:00:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								6
+							],
+							"weekDays": [
+								"Wednesday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load IDR Shipments')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/clxdev-az-ir-linked')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {
+					"linkedInfo": {
+						"resourceId": "[parameters('clxdev-az-ir-linked_properties_typeProperties_linkedInfo_resourceId')]",
+						"authorizationType": "Rbac"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/clxdev-onprem-ir-linked')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {
+					"linkedInfo": {
+						"resourceId": "[parameters('clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId')]",
+						"authorizationType": "Rbac"
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

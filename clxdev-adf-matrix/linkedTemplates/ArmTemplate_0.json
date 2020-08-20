@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_OnPrem'"
 		},
+		"AzureSQLDW_onprem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW_onprem'"
+		},
 		"KP_Oracle_IDR_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'KP_Oracle_IDR'"
@@ -39,6 +43,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_Dev'"
 		},
+		"Oracle_IDR_dynamic_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_dynamic'"
+		},
 		"SAPBW_MDX_Dev_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SAPBW_MDX_Dev'"
@@ -46,10 +54,6 @@
 		"SAPBW_MDX_QA_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SAPBW_MDX_QA'"
-		},
-		"AzureSQLDW_onprem_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW_onprem'"
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
@@ -317,13 +321,6 @@
 					}
 				}
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Internal_Dimensions_Master_Wrapper')]",
-			"type": "Microsoft.DataFactory/factories/templates",
-			"apiVersion": "2018-06-01",
-			"properties": {},
 			"dependsOn": []
 		},
 		{
@@ -3293,6 +3290,25 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQLDW_onprem')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSQLDW_onprem_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/KP_Oracle_IDR')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -3350,6 +3366,25 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Oracle_IDR_dynamic')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Oracle",
+				"typeProperties": {
+					"connectionString": "[parameters('Oracle_IDR_dynamic_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "clxdev-onprem-ir-linked",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SAPBW_MDX_Dev')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -3391,25 +3426,6 @@
 						"type": "SecureString",
 						"value": "[parameters('SAPBW_MDX_QA_password')]"
 					}
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSQLDW_onprem')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDW",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSQLDW_onprem_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "clxdev-onprem-ir-linked",
