@@ -47,6 +47,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SAPBW_MDX_QA'"
 		},
+		"AzureSQLDW_onprem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW_onprem'"
+		},
+		"Oracle_IDR_dynamic_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_dynamic'"
+		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://clorox.app.box.com/file/644655264100"
@@ -168,6 +176,9 @@
 					"SAPBW_MDX_QA_password": {
 						"value": "[parameters('SAPBW_MDX_QA_password')]"
 					},
+					"AzureSQLDW_onprem_connectionString": {
+						"value": "[parameters('AzureSQLDW_onprem_connectionString')]"
+					},
 					"HttpServer1_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					},
@@ -228,6 +239,29 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"Oracle_IDR_dynamic_connectionString": {
+						"value": "[parameters('Oracle_IDR_dynamic_connectionString')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'clxdev-adf-matrix_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "clxdev-adf-matrix_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
 					"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
 						"value": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
 					},
@@ -237,7 +271,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'clxdev-adf-matrix_ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'clxdev-adf-matrix_ArmTemplate_1')]"
 			]
 		}
 	]

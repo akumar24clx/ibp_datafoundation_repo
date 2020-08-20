@@ -35,6 +35,12 @@
 		"SAPBW_MDX_QA_password": {
 			"value": ""
 		},
+		"AzureSQLDW_onprem_connectionString": {
+			"value": ""
+		},
+		"Oracle_IDR_dynamic_connectionString": {
+			"value": ""
+		},
 		"HttpServer1_properties_typeProperties_url": {
 			"value": "https://clorox.app.box.com/file/644655264100"
 		},
