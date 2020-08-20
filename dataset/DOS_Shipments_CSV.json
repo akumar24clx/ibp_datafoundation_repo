@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "test_0702.csv",
+				"fileName": "test_0819.csv",
 				"folderPath": "/pos/syndicated/iri/archive"
 			},
 			"columnDelimiter": ",",
