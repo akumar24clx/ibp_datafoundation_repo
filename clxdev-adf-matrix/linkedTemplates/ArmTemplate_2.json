@@ -5888,13 +5888,13 @@
 						"timeZone": "UTC",
 						"schedule": {
 							"minutes": [
-								38
+								0
 							],
 							"hours": [
-								7
+								18
 							],
 							"weekDays": [
-								"Thursday"
+								"Wednesday"
 							]
 						}
 					}
