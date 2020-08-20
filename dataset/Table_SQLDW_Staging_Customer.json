@@ -1,0 +1,189 @@
+{
+	"name": "Table_SQLDW_Staging_Customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW_onprem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLDW - Staging Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "CUSTOMER_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_NAME_1",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_NAME_2",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_NAME_3",
+				"type": "varchar"
+			},
+			{
+				"name": "PO_BOX",
+				"type": "varchar"
+			},
+			{
+				"name": "STREET",
+				"type": "varchar"
+			},
+			{
+				"name": "REGION_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "REGION",
+				"type": "varchar"
+			},
+			{
+				"name": "CITY",
+				"type": "varchar"
+			},
+			{
+				"name": "ZIPCODE",
+				"type": "varchar"
+			},
+			{
+				"name": "COUNTRY_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "COUNTRY",
+				"type": "varchar"
+			},
+			{
+				"name": "ACCT_GRP_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "CONSUMER_FLG",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_ORG_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_GROUP_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_GROUP",
+				"type": "varchar"
+			},
+			{
+				"name": "TRADE_SECTOR_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "TRADE_SECTOR",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_GROUP_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_ORG",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_CODE_LVL_1",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_CODE_LVL_2",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_CODE_LVL_3",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_NAME1_LVL_1",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_NAME1_LVL_2",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTOMER_NAME1_LVL_3",
+				"type": "varchar"
+			},
+			{
+				"name": "OMS",
+				"type": "varchar"
+			},
+			{
+				"name": "PLANNING_ACCT_GRP_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "HIERARCHY_NBR",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PRICE_GROUP_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "OVERRIDE_DISTRIB_CHANNEL_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "OVERRIDE_SHIPTO_FLG",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_DEPT_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_REGION_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_SECTOR_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_DEPT",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_REGION",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_SECTOR",
+				"type": "varchar"
+			},
+			{
+				"name": "SALES_DELETE_FLG",
+				"type": "varchar"
+			},
+			{
+				"name": "CREATED_DATE",
+				"type": "date"
+			},
+			{
+				"name": "MODIFIED_DATE",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stg_customer"
+		}
+	}
+}

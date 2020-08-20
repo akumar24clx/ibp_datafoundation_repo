@@ -2,14 +2,21 @@
 	"name": "Clorox Internal Dimension Trigger",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
-		"pipelines": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Internal_Dimensions_Master_Wrapper",
+					"type": "PipelineReference"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Week",
 				"interval": 1,
-				"startTime": "2020-08-19T19:01:00.000Z",
+				"startTime": "2020-08-20T07:19:00.000Z",
 				"timeZone": "UTC",
 				"schedule": {
 					"minutes": [
