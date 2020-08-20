@@ -20,13 +20,13 @@
 				"timeZone": "UTC",
 				"schedule": {
 					"minutes": [
-						0
+						38
 					],
 					"hours": [
-						18
+						7
 					],
 					"weekDays": [
-						"Wednesday"
+						"Thursday"
 					]
 				}
 			}
