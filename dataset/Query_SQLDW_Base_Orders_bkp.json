@@ -1,5 +1,5 @@
 {
-	"name": "Query_SQLDW_Base_Orders",
+	"name": "Query_SQLDW_Base_Orders_bkp",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSQLDW",
@@ -10,6 +10,10 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlDWTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "base_orders_bkp"
+		}
 	}
 }

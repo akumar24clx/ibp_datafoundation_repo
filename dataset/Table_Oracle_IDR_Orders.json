@@ -1,6 +1,10 @@
 {
 	"name": "Table_Oracle_IDR_Orders",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Oracle_IDR_dynamic",
+			"type": "LinkedServiceReference"
+		},
 		"folder": {
 			"name": "Oracle - Tables"
 		},
