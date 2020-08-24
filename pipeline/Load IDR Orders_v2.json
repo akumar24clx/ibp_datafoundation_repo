@@ -2047,7 +2047,7 @@
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"EmailTo": "abhijeet.kumar@brdigei2i.com",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com",
 						"Subject": "Azure DF error",
 						"DataFactoryName": "clxdev-adf-matrix",
 						"PipelineName": {
@@ -2092,7 +2092,7 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@brdgei2i.com",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
 									"Subject": "Azure DF error",
 									"DataFactoryName": "DF",
 									"PipelineName": "Load IDR Shipments",
@@ -2115,7 +2115,7 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@brdgei2i.com",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
 									"Subject": "ADF pipeline Load IDR Litter Shipments finished successfully",
 									"DataFactoryName": "ADF",
 									"PipelineName": "Load IDR Litter Shipments",
