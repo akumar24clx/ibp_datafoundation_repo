@@ -2038,7 +2038,7 @@
 									"PipelineName": "Load IDR Shipments",
 									"Activity": "Load SQLDW Target",
 									"ErrorMessage": {
-										"value": "@activity('Load SQLDW Target').Error.Message",
+										"value": "@activity('Load Shipments Target Table').Error.Message",
 										"type": "Expression"
 									}
 								}
