@@ -9,7 +9,7 @@
 			"skipHostKeyValidation": true,
 			"authenticationType": "Basic",
 			"userName": "@{linkedService().username}",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyZjdhZTllMi1iZWUxLTQzNmUtYTExNi1jODkzN2NlYmRkZjYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "@{linkedService().password}"
 		},
 		"connectVia": {
 			"referenceName": "clxdev-onprem-ir-linked",
@@ -21,8 +21,10 @@
 			},
 			"username": {
 				"type": "String"
+			},
+			"password": {
+				"type": "String"
 			}
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }
