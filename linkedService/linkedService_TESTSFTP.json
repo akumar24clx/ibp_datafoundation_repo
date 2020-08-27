@@ -1,0 +1,22 @@
+{
+	"name": "linkedService_TESTSFTP",
+	"properties": {
+		"annotations": [],
+		"type": "Sftp",
+		"typeProperties": {
+			"host": "asftppl1.clorox.com",
+			"port": 22,
+			"skipHostKeyValidation": true,
+			"authenticationType": "Basic",
+			"userName": "clx-iri-sftp-user",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "SFTP-password"
+			}
+		}
+	}
+}
