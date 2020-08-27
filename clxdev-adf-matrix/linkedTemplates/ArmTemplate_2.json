@@ -1058,7 +1058,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Calendar_day'",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Calendar_day') ",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -1510,7 +1510,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Calendar_mth'",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Calendar_mth')",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -1722,7 +1722,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Custom_Profitcenter'",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Custom_Profitcenter')",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -2376,7 +2376,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Customer'",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Customer' )",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -8609,7 +8609,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Material_UOM'",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Material_UOM')",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -8792,7 +8792,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Material'",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Material')",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -9064,7 +9064,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log) and Activity_Name = 'SPRC_Internal_Dim_Profitcenter'",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Profitcenter')",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
