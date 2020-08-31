@@ -639,7 +639,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": {
-						"value": "@pipeline().parameters.SP_name",
+						"value": "@pipeline().parameters.SPRC_PROJ_MERGE",
 						"type": "Expression"
 					},
 					"storedProcedureParameters": {
@@ -741,6 +741,14 @@
 			"SPRC_NEWPROD_FACT": {
 				"type": "string",
 				"defaultValue": "[dbo].[SPRC_newprodrep_basenewprod_fact_ingestion]"
+			},
+			"SPRC_PROJ_MERGE": {
+				"type": "string",
+				"defaultValue": "[dbo].[SPRC_newprodrep_Project_details_dim_merge]"
+			},
+			"SPRC_CUST_INSERT": {
+				"type": "string",
+				"defaultValue": "[dbo].[SPRC_newprodrep_customer_name_dim_insert]"
 			}
 		},
 		"folder": {
