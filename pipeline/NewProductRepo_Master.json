@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data Lookup ",
+				"name": "Data Lookup",
 				"type": "Lookup",
 				"dependsOn": [
 					{
@@ -35,11 +35,11 @@
 				}
 			},
 			{
-				"name": "Quality Check ",
+				"name": "Quality Check",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Data Lookup ",
+						"activity": "Data Lookup",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -427,7 +427,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Quality Check ",
+						"activity": "Quality Check",
 						"dependencyConditions": [
 							"Succeeded"
 						]
