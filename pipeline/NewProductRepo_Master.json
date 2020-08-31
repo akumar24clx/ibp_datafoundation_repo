@@ -3,11 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Project_Details_Src_to_Target_Lookup",
+				"name": "Data Lookup - Project",
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "Project_details_merge",
+						"activity": "Data Merge - Project",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -35,11 +35,11 @@
 				}
 			},
 			{
-				"name": "Check for Project Src to Tgt match",
+				"name": "Quality Check - Project",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Project_Details_Src_to_Target_Lookup",
+						"activity": "Data Lookup - Project",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -296,11 +296,11 @@
 				}
 			},
 			{
-				"name": "Customer_Src_to_Target_Lookup",
+				"name": "Data Lookup - Customer",
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "Check for Project Src to Tgt match",
+						"activity": "Quality Check - Project",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -328,11 +328,11 @@
 				}
 			},
 			{
-				"name": "Check for Customer Src to Tgt match",
+				"name": "Quality Check - Customer",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Customer_Src_to_Target_Lookup",
+						"activity": "Data Lookup - Customer",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -412,11 +412,11 @@
 				}
 			},
 			{
-				"name": "SKU_Src_to_Target_Lookup",
+				"name": "Data Lookup - SKU",
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "Check for Customer Src to Tgt match",
+						"activity": "Quality Check - Customer",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -444,11 +444,11 @@
 				}
 			},
 			{
-				"name": "Check for SKU Src to Tgt match",
+				"name": "Quality Check - SKU",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "SKU_Src_to_Target_Lookup",
+						"activity": "Data Lookup - SKU",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -619,7 +619,7 @@
 				}
 			},
 			{
-				"name": "Project_details_merge",
+				"name": "Data Merge - Project",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -655,7 +655,7 @@
 				}
 			},
 			{
-				"name": "AT_WEB_Staging_Proj_details_error",
+				"name": "Failure Alert 1",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
@@ -694,11 +694,11 @@
 				}
 			},
 			{
-				"name": "AT_WEB_Merge_Proj_Details_error",
+				"name": "Failure Alert 2",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Project_details_merge",
+						"activity": "Data Merge - Project",
 						"dependencyConditions": [
 							"Failed"
 						]
