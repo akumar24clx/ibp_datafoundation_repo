@@ -1,0 +1,751 @@
+{
+	"name": "NewProductRepo_Master",
+	"properties": {
+		"activities": [
+			{
+				"name": "Project_Details_Src_to_Target_Lookup",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Project_details_merge",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "select Source_count as Source_Count, Target_Count\n from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'Project_details_merge')",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Table_SQLDW_etl_audit_log",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Check for Project Src to Tgt match",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Project_Details_Src_to_Target_Lookup",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Project_Details_Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Project_Details_Src_to_Target_Lookup').output.firstRow.Target_Count)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "AT_WEB_ProjDetails_Dim_Load_Error",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Project Details dim (dbo.newproduct_project_dim) table.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "AT_WEB_Staging_Cust_details_error",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "Staging_SKU_ACV_data",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for  data ingestion in stg_newprod_customer table.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						},
+						{
+							"name": "Staging_SKU_VELOCITY_data",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Staging_SKU_GV_data",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_STG_NEWPROD_SKU_VELOCITY_M_ETL1",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						},
+						{
+							"name": "Staging_SKU_GV_data",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Staging_SKU_ACV_data",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_STG_NEWPROD_SKU_GROSS_VOL_M_ETL",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						},
+						{
+							"name": "AT_WEB_Staging_SKU_velocity_load_error",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "Staging_SKU_VELOCITY_data",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in stg_newprod_sku_velocity table.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						},
+						{
+							"name": "AT_WEB_StagingSKU_GV_load_error",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "Staging_SKU_GV_data",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in stg_newprod_sku_gross_volume table.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						},
+						{
+							"name": "Staging_SKU_ACV_data",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_STG_NEWPROD_SKU_ACV_M_ETL",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						},
+						{
+							"name": "Newproduct_Cutomer_dim_insert",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Staging_SKU_VELOCITY_data",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": {
+									"value": "@pipeline().parameters.SPRC_CUST_INSERT",
+									"type": "Expression"
+								},
+								"storedProcedureParameters": {
+									"start_date": {
+										"value": null,
+										"type": "Datetime"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSQLDW",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Customer_Src_to_Target_Lookup",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Check for Project Src to Tgt match",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "select Source_count as Source_Count, Target_Count\n from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'Cust_name_dim table insert')",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Table_SQLDW_etl_audit_log",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Check for Customer Src to Tgt match",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Customer_Src_to_Target_Lookup",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Customer_Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Customer_Src_to_Target_Lookup').output.firstRow.Target_Count)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "AT_WEB_Customer_Load_Error",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Customer dim (dbo.newproduct_sku_acv_dim) table.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Newproduct_SKU_dim_merge",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": {
+									"value": "@pipeline().parameters.SPRC_SKU_dim_merge",
+									"type": "Expression"
+								},
+								"storedProcedureParameters": {
+									"start_date": {
+										"value": null,
+										"type": "Datetime"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSQLDW",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "SKU_Src_to_Target_Lookup",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Check for Customer Src to Tgt match",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "select Source_count as Source_Count, Target_Count\n from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'Merge_Unique_SKU')",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Table_SQLDW_etl_audit_log",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Check for SKU Src to Tgt match",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "SKU_Src_to_Target_Lookup",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('SKU_Src_to_Target_Lookup').output.firstRow.Source_Count,activity('SKU_Src_to_Target_Lookup').output.firstRow.Target_Count)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "AT_WEB_SKU_Load_Error",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in SKU dim (dbo.newproduct_sku_dim) table.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "New_Product_Fact_Ingestion",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": {
+									"value": "@pipeline().parameters.SPRC_NEWPROD_FACT",
+									"type": "Expression"
+								},
+								"storedProcedureParameters": {
+									"start_date": {
+										"value": null,
+										"type": "Datetime"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSQLDW",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Job_Completion_Alert",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "New_Product_Fact_Ingestion",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Successful",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for New Product reposatory Tables ingestion ingestion.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						},
+						{
+							"name": "AT_WEB_Merge_FACT_INGESTION_ERROR",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "New_Product_Fact_Ingestion",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for New_Product_Repo_fact_ingestion SP.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Staging_NEWPROD_PROJ_data",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_STG_NEWPROD_PROJ_M_ETL",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Project_details_merge",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Staging_NEWPROD_PROJ_data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": {
+						"value": "@pipeline().parameters.SP_name",
+						"type": "Expression"
+					},
+					"storedProcedureParameters": {
+						"start_date": {
+							"value": null,
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "AT_WEB_Staging_Proj_details_error",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Staging_NEWPROD_PROJ_data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"Status": "Failed",
+						"Env": "Dev",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com",
+						"MessageBody1": "Hi All,",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory for  data ingestion in stg_newprod_project table.",
+						"MessageBody3": "Please find below the pipeline execution details:",
+						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+						"MessageBody5": " - Thanks"
+					}
+				}
+			},
+			{
+				"name": "AT_WEB_Merge_Proj_Details_error",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Project_details_merge",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"Status": "Failed",
+						"Env": "Dev",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com",
+						"MessageBody1": "Hi All,",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory for  newproduct_project_dim table ingestion..",
+						"MessageBody3": "Please find below the pipeline execution details:",
+						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+						"MessageBody5": " - Thanks"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"SPRC_SKU_dim_merge": {
+				"type": "string",
+				"defaultValue": "[dbo].[SPRC_newprodrep_SKU_dim_merge]"
+			},
+			"SPRC_NEWPROD_FACT": {
+				"type": "string",
+				"defaultValue": "[dbo].[SPRC_newprodrep_basenewprod_fact_ingestion]"
+			}
+		},
+		"folder": {
+			"name": "Avengers/New Product Repo"
+		},
+		"annotations": []
+	}
+}
