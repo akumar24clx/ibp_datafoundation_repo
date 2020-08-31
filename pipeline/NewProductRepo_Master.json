@@ -606,7 +606,7 @@
 				}
 			},
 			{
-				"name": "Staging_NEWPROD_PROJ_data",
+				"name": "Flow Start",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
@@ -623,7 +623,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Staging_NEWPROD_PROJ_data",
+						"activity": "Flow Start",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -659,7 +659,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Staging_NEWPROD_PROJ_data",
+						"activity": "Flow Start",
 						"dependencyConditions": [
 							"Failed"
 						]
