@@ -48,7 +48,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('Project_Details_Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Project_Details_Src_to_Target_Lookup').output.firstRow.Target_Count)",
+						"value": "@equals(activity('Data Lookup').output.firstRow.Source_Count,activity('Data Lookup').output.firstRow.Target_Count)",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
