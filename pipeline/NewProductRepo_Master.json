@@ -3,11 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data Lookup - Project",
+				"name": "Data Lookup ",
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "Data Merge - Project",
+						"activity": "Data Merge",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -35,11 +35,11 @@
 				}
 			},
 			{
-				"name": "Quality Check - Project",
+				"name": "Quality Check ",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Data Lookup - Project",
+						"activity": "Data Lookup ",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -296,316 +296,6 @@
 				}
 			},
 			{
-				"name": "Data Lookup - Customer",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "Quality Check - Project",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlDWSource",
-						"sqlReaderQuery": "select Source_count as Source_Count, Target_Count\n from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'Cust_name_dim table insert')",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "Table_SQLDW_etl_audit_log",
-						"type": "DatasetReference"
-					}
-				}
-			},
-			{
-				"name": "Quality Check - Customer",
-				"type": "IfCondition",
-				"dependsOn": [
-					{
-						"activity": "Data Lookup - Customer",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"expression": {
-						"value": "@equals(activity('Customer_Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Customer_Src_to_Target_Lookup').output.firstRow.Target_Count)",
-						"type": "Expression"
-					},
-					"ifFalseActivities": [
-						{
-							"name": "AT_WEB_Customer_Load_Error",
-							"type": "WebActivity",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-								"method": "POST",
-								"headers": {
-									"Content-Type": "application/json"
-								},
-								"body": {
-									"DataFactoryName": "@{pipeline().DataFactory}",
-									"Status": "Failed",
-									"Env": "Dev",
-									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"MessageBody1": "Hi All,",
-									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Customer dim (dbo.newproduct_sku_acv_dim) table.",
-									"MessageBody3": "Please find below the pipeline execution details:",
-									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-									"MessageBody5": " - Thanks"
-								}
-							}
-						}
-					],
-					"ifTrueActivities": [
-						{
-							"name": "Newproduct_SKU_dim_merge",
-							"type": "SqlServerStoredProcedure",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"storedProcedureName": {
-									"value": "@pipeline().parameters.SPRC_SKU_dim_merge",
-									"type": "Expression"
-								},
-								"storedProcedureParameters": {
-									"start_date": {
-										"value": null,
-										"type": "Datetime"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "AzureSQLDW",
-								"type": "LinkedServiceReference"
-							}
-						}
-					]
-				}
-			},
-			{
-				"name": "Data Lookup - SKU",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "Quality Check - Customer",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SqlDWSource",
-						"sqlReaderQuery": "select Source_count as Source_Count, Target_Count\n from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'Merge_Unique_SKU')",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "Table_SQLDW_etl_audit_log",
-						"type": "DatasetReference"
-					}
-				}
-			},
-			{
-				"name": "Quality Check - SKU",
-				"type": "IfCondition",
-				"dependsOn": [
-					{
-						"activity": "Data Lookup - SKU",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"expression": {
-						"value": "@equals(activity('SKU_Src_to_Target_Lookup').output.firstRow.Source_Count,activity('SKU_Src_to_Target_Lookup').output.firstRow.Target_Count)",
-						"type": "Expression"
-					},
-					"ifFalseActivities": [
-						{
-							"name": "AT_WEB_SKU_Load_Error",
-							"type": "WebActivity",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-								"method": "POST",
-								"headers": {
-									"Content-Type": "application/json"
-								},
-								"body": {
-									"DataFactoryName": "@{pipeline().DataFactory}",
-									"Status": "Failed",
-									"Env": "Dev",
-									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"MessageBody1": "Hi All,",
-									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in SKU dim (dbo.newproduct_sku_dim) table.",
-									"MessageBody3": "Please find below the pipeline execution details:",
-									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-									"MessageBody5": " - Thanks"
-								}
-							}
-						}
-					],
-					"ifTrueActivities": [
-						{
-							"name": "New_Product_Fact_Ingestion",
-							"type": "SqlServerStoredProcedure",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"storedProcedureName": {
-									"value": "@pipeline().parameters.SPRC_NEWPROD_FACT",
-									"type": "Expression"
-								},
-								"storedProcedureParameters": {
-									"start_date": {
-										"value": null,
-										"type": "Datetime"
-									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "AzureSQLDW",
-								"type": "LinkedServiceReference"
-							}
-						},
-						{
-							"name": "Job_Completion_Alert",
-							"type": "WebActivity",
-							"dependsOn": [
-								{
-									"activity": "New_Product_Fact_Ingestion",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-								"method": "POST",
-								"headers": {
-									"Content-Type": "application/json"
-								},
-								"body": {
-									"DataFactoryName": "@{pipeline().DataFactory}",
-									"Status": "Successful",
-									"Env": "Dev",
-									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"MessageBody1": "Hi All,",
-									"MessageBody2": "This is an email notification generated from Azure Data Factory for New Product reposatory Tables ingestion ingestion.",
-									"MessageBody3": "Please find below the pipeline execution details:",
-									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-									"MessageBody5": " - Thanks"
-								}
-							}
-						},
-						{
-							"name": "AT_WEB_Merge_FACT_INGESTION_ERROR",
-							"type": "WebActivity",
-							"dependsOn": [
-								{
-									"activity": "New_Product_Fact_Ingestion",
-									"dependencyConditions": [
-										"Failed"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-								"method": "POST",
-								"headers": {
-									"Content-Type": "application/json"
-								},
-								"body": {
-									"DataFactoryName": "@{pipeline().DataFactory}",
-									"Status": "Failed",
-									"Env": "Dev",
-									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"MessageBody1": "Hi All,",
-									"MessageBody2": "This is an email notification generated from Azure Data Factory for New_Product_Repo_fact_ingestion SP.",
-									"MessageBody3": "Please find below the pipeline execution details:",
-									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-									"MessageBody5": " - Thanks"
-								}
-							}
-						}
-					]
-				}
-			},
-			{
 				"name": "Flow Start",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
@@ -619,7 +309,7 @@
 				}
 			},
 			{
-				"name": "Data Merge - Project",
+				"name": "Data Merge",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -698,7 +388,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Data Merge - Project",
+						"activity": "Data Merge",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -726,6 +416,45 @@
 						"EmailTo": "abhijeet.kumar@bridgei2i.com",
 						"MessageBody1": "Hi All,",
 						"MessageBody2": "This is an email notification generated from Azure Data Factory for  newproduct_project_dim table ingestion..",
+						"MessageBody3": "Please find below the pipeline execution details:",
+						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+						"MessageBody5": " - Thanks"
+					}
+				}
+			},
+			{
+				"name": "Job Success Notification",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Quality Check ",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"DataFactoryName": "@{pipeline().DataFactory}",
+						"Status": "Successful",
+						"Env": "Dev",
+						"PipelineName": "@{pipeline().Pipeline}",
+						"EmailTo": "abhijeet.kumar@bridgei2i.com",
+						"MessageBody1": "Hi All,",
+						"MessageBody2": "This is an email notification generated from Azure Data Factory for New Product reposatory Tables ingestion ingestion.",
 						"MessageBody3": "Please find below the pipeline execution details:",
 						"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
 						"MessageBody5": " - Thanks"
