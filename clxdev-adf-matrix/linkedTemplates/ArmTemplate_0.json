@@ -51,10 +51,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SAPBW_MDX_Dev'"
 		},
-		"SAPBW_MDX_QA_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SAPBW_MDX_QA'"
-		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://clorox.app.box.com/file/644655264100"
@@ -92,22 +88,6 @@
 			"defaultValue": "300"
 		},
 		"SAPBW_MDX_Dev_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "kpernapa"
-		},
-		"SAPBW_MDX_QA_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "sbwqvl01"
-		},
-		"SAPBW_MDX_QA_properties_typeProperties_systemNumber": {
-			"type": "string",
-			"defaultValue": "00"
-		},
-		"SAPBW_MDX_QA_properties_typeProperties_clientId": {
-			"type": "string",
-			"defaultValue": "300"
-		},
-		"SAPBW_MDX_QA_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "kpernapa"
 		}
@@ -320,6 +300,73 @@
 						"authorizationType": "Rbac"
 					}
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Cancel Pipeline run')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Generate Token",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://login.microsoftonline.com/9c272a06-9f0a-43f5-8e40-214a24c5098b/oauth2/v2.0/token",
+							"method": "POST",
+							"headers": {
+								"Content-Type": " application/x-www-form-urlencoded"
+							},
+							"body": "grant_type=client_credentials&client_id=66e38878-9b3b-49be-9e7d-42691350f84a&client_secret=Fp2f0s-3z8d~1nxBq7t9l.RW0QVE~dq1mT&scope=https://management.azure.com/.default"
+						}
+					},
+					{
+						"name": "Cancel Pipeline Run",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Generate Token",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@concat('https://management.azure.com/subscriptions/681c9400-3073-469f-b0ec-57006f831469/resourceGroups/CLX_MATRIX_POC_RG/providers/Microsoft.DataFactory/factories/clxdev-adf-matrix/pipelineruns/',pipeline().RunId,'/cancel?api-version=2018-06-01')",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json",
+								"Authorization": {
+									"value": "@concat('Bearer ', activity('Generate Token').output.access_token)",
+									"type": "Expression"
+								}
+							},
+							"body": "NA"
+						}
+					}
+				],
+				"annotations": []
 			},
 			"dependsOn": []
 		},
@@ -3399,32 +3446,6 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('SAPBW_MDX_Dev_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SAPBW_MDX_QA')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SapBw",
-				"typeProperties": {
-					"server": "[parameters('SAPBW_MDX_QA_properties_typeProperties_server')]",
-					"systemNumber": "[parameters('SAPBW_MDX_QA_properties_typeProperties_systemNumber')]",
-					"clientId": "[parameters('SAPBW_MDX_QA_properties_typeProperties_clientId')]",
-					"userName": "[parameters('SAPBW_MDX_QA_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SAPBW_MDX_QA_password')]"
 					}
 				},
 				"connectVia": {
