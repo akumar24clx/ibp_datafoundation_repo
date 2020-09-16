@@ -20,8 +20,6 @@
 						"storeSettings": {
 							"type": "FtpReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "/test/datastaging/bw/in/DPFINC11",
-							"wildcardFileName": "rrdp*.csv",
 							"useBinaryTransfer": true
 						},
 						"formatSettings": {
