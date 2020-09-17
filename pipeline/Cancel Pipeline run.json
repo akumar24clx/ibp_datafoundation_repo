@@ -57,8 +57,31 @@
 					},
 					"body": "NA"
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Cancel Pipeline Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "f",
+					"value": "15"
+				}
 			}
 		],
+		"variables": {
+			"f": {
+				"type": "String",
+				"defaultValue": "14"
+			}
+		},
 		"annotations": []
 	}
 }
