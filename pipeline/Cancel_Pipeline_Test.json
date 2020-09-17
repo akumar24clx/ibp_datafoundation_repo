@@ -1,0 +1,52 @@
+{
+	"name": "Cancel_Pipeline_Test",
+	"properties": {
+		"activities": [
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://login.microsoftonline.com/9c272a06-9f0a-43f5-8e40-214a24c5098b/oauth2/v2.0/token",
+					"method": "POST",
+					"headers": {
+						"Content-Type": " application/x-www-form-urlencoded"
+					},
+					"body": "grant_type=client_credentials&client_id=66e38878-9b3b-49be-9e7d-42691350f84a&client_secret=Fp2f0s-3z8d~1nxBq7t9l.RW0QVE~dq1mT&scope=https://management.azure.com/.default"
+				}
+			},
+			{
+				"name": "Web2",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Web1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			}
+		],
+		"folder": {
+			"name": "Testing"
+		},
+		"annotations": []
+	}
+}
