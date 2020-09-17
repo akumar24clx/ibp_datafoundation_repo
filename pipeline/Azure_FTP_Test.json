@@ -20,6 +20,8 @@
 						"storeSettings": {
 							"type": "FtpReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "/test/datastaging/bw/in/DPFINC11/",
+							"wildcardFileName": "rrdp_c11_finance_feed.csv",
 							"useBinaryTransfer": true
 						},
 						"formatSettings": {
@@ -29,8 +31,7 @@
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "MergeFiles"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",

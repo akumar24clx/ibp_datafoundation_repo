@@ -10,8 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "rapid_sample.csv",
-				"folderPath": "dimensions",
+				"folderPath": "test",
 				"fileSystem": "matrix-raw"
 			},
 			"columnDelimiter": ",",
