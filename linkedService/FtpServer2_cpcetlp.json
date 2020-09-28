@@ -1,15 +1,15 @@
 {
 	"name": "FtpServer2_cpcetlp",
 	"properties": {
-		"annotations": [],
 		"type": "FtpServer",
+		"annotations": [],
 		"typeProperties": {
-			"host": "cpcetlp",
+			"host": "@{linkedService().hostname}",
 			"port": 21,
 			"enableSsl": false,
 			"enableServerCertificateValidation": false,
 			"authenticationType": "Basic",
-			"userName": "akumar24",
+			"userName": "@{linkedService().username}",
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
@@ -22,6 +22,14 @@
 		"connectVia": {
 			"referenceName": "clxdev-onprem-ir-linked",
 			"type": "IntegrationRuntimeReference"
+		},
+		"parameters": {
+			"hostname": {
+				"type": "String"
+			},
+			"username": {
+				"type": "String"
+			}
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/linkedservices"
