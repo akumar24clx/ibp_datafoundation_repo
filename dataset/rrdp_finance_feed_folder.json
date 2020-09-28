@@ -1,0 +1,42 @@
+{
+	"name": "rrdp_finance_feed_folder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FtpServer2_cpcetlp",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"hostname": {
+					"value": "@dataset().hostname",
+					"type": "Expression"
+				},
+				"username": {
+					"value": "@dataset().username",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"hostname": {
+				"type": "string"
+			},
+			"username": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Rapid Response Sets"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FtpServerLocation",
+				"folderPath": "/prod/datastaging/bw/in/DPFINC11/"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

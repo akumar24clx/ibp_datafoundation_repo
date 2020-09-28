@@ -1,0 +1,45 @@
+{
+	"name": "Binary_sink_ADLS_RR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_dynamic",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"AccountName": {
+					"value": "@dataset().AccountName",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			},
+			"tgt_dir_name": {
+				"type": "string"
+			},
+			"AccountName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Rapid Response Sets"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().tgt_dir_name",
+					"type": "Expression"
+				},
+				"container": "matrix-raw"
+			}
+		}
+	}
+}
