@@ -107,9 +107,9 @@
 			"type": "string",
 			"defaultValue": "20200404"
 		},
-		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
+		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to": {
 			"type": "string",
-			"defaultValue": "20200404"
+			"defaultValue": "Kalyani.Pernapati@clorox.com;abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com"
 		},
 		"clxdev-az-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
 			"type": "string",
@@ -170,15 +170,6 @@
 					"Oracle1_connectionString": {
 						"value": "[parameters('Oracle1_connectionString')]"
 					},
-					"Oracle_IDR_Dev_connectionString": {
-						"value": "[parameters('Oracle_IDR_Dev_connectionString')]"
-					},
-					"Oracle_IDR_dynamic_connectionString": {
-						"value": "[parameters('Oracle_IDR_dynamic_connectionString')]"
-					},
-					"SAPBW_MDX_Dev_password": {
-						"value": "[parameters('SAPBW_MDX_Dev_password')]"
-					},
 					"HttpServer1_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					},
@@ -196,18 +187,6 @@
 					},
 					"clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
 						"value": "[parameters('clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId')]"
-					},
-					"SAPBW_MDX_Dev_properties_typeProperties_server": {
-						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_server')]"
-					},
-					"SAPBW_MDX_Dev_properties_typeProperties_systemNumber": {
-						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_systemNumber')]"
-					},
-					"SAPBW_MDX_Dev_properties_typeProperties_clientId": {
-						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_clientId')]"
-					},
-					"SAPBW_MDX_Dev_properties_typeProperties_userName": {
-						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -227,8 +206,29 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"Oracle_IDR_Dev_connectionString": {
+						"value": "[parameters('Oracle_IDR_Dev_connectionString')]"
+					},
+					"Oracle_IDR_dynamic_connectionString": {
+						"value": "[parameters('Oracle_IDR_dynamic_connectionString')]"
+					},
+					"SAPBW_MDX_Dev_password": {
+						"value": "[parameters('SAPBW_MDX_Dev_password')]"
+					},
 					"SAPBW_MDX_QA_password": {
 						"value": "[parameters('SAPBW_MDX_QA_password')]"
+					},
+					"SAPBW_MDX_Dev_properties_typeProperties_server": {
+						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_server')]"
+					},
+					"SAPBW_MDX_Dev_properties_typeProperties_systemNumber": {
+						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_systemNumber')]"
+					},
+					"SAPBW_MDX_Dev_properties_typeProperties_clientId": {
+						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_clientId')]"
+					},
+					"SAPBW_MDX_Dev_properties_typeProperties_userName": {
+						"value": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_userName')]"
 					},
 					"SAPBW_MDX_QA_properties_typeProperties_server": {
 						"value": "[parameters('SAPBW_MDX_QA_properties_typeProperties_server')]"
@@ -261,17 +261,37 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
-						"value": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
-					},
-					"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date": {
-						"value": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_IDR_Load_Date')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'clxdev-adf-matrix_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "clxdev-adf-matrix_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
+						"value": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
+					},
+					"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to": {
+						"value": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'clxdev-adf-matrix_ArmTemplate_2')]"
 			]
 		}
 	]

@@ -39,18 +39,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Oracle1'"
 		},
-		"Oracle_IDR_Dev_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_Dev'"
-		},
-		"Oracle_IDR_dynamic_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Oracle_IDR_dynamic'"
-		},
-		"SAPBW_MDX_Dev_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SAPBW_MDX_Dev'"
-		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://clorox.app.box.com/file/644655264100"
@@ -74,22 +62,6 @@
 		"clxdev-onprem-ir-linked_properties_typeProperties_linkedInfo_resourceId": {
 			"type": "string",
 			"defaultValue": "/subscriptions/681c9400-3073-469f-b0ec-57006f831469/resourcegroups/CLX_MATRIX_POC_RG/providers/Microsoft.DataFactory/factories/clxdev-adf-sandbox/integrationruntimes/clxdev-onprem-ir"
-		},
-		"SAPBW_MDX_Dev_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "Sbwdvl01"
-		},
-		"SAPBW_MDX_Dev_properties_typeProperties_systemNumber": {
-			"type": "string",
-			"defaultValue": "00"
-		},
-		"SAPBW_MDX_Dev_properties_typeProperties_clientId": {
-			"type": "string",
-			"defaultValue": "300"
-		},
-		"SAPBW_MDX_Dev_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "kpernapa"
 		}
 	},
 	"variables": {
@@ -391,6 +363,143 @@
 					}
 				}
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Send email on failure1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Reusable pipeline to send email notification on activity failure",
+				"activities": [
+					{
+						"name": "Send email on failure",
+						"description": "Reusable pipeline to send email on activity failure",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-52.eastus.logic.azure.com:443/workflows/340940b212b443148e8f64f1bc8c4629/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FLanyeRqsShkOLVdFi9xNIApJ4fUZa8myiKoAnvDJo0",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"value": "{\"EmailTo\":\"@{pipeline().parameters.EmailTo}\",\n\"Subject\":\"An error has occured in the ADF pipeline\",\n\"DataFactoryName\":\"@{pipeline().parameters.DataFactoryName}\",\n\"PipelineName\":\"@{pipeline().Pipeline}\",\n\"Activity\":\"@{pipeline().parameters.Activity}\",\n\"ErrorMessage\":\"@{pipeline().parameters.ErrorMessage}\" }",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"parameters": {
+					"EmailTo": {
+						"type": "string",
+						"defaultValue": "kalyani.pernapati@clorox.com"
+					},
+					"Subject": {
+						"type": "string",
+						"defaultValue": "Azure DF error"
+					},
+					"DataFactoryName": {
+						"type": "string",
+						"defaultValue": "DF"
+					},
+					"PipelineName": {
+						"type": "string",
+						"defaultValue": "Send email on Failure"
+					},
+					"Activity": {
+						"type": "string",
+						"defaultValue": "Test"
+					},
+					"ErrorMessage": {
+						"type": "string",
+						"defaultValue": "Test Failed"
+					}
+				},
+				"folder": {
+					"name": "Notifications-Alerts"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Send email on success1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Success notification",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": " https://prod-52.eastus.logic.azure.com:443/workflows/340940b212b443148e8f64f1bc8c4629/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FLanyeRqsShkOLVdFi9xNIApJ4fUZa8myiKoAnvDJo0",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"value": "{\"EmailTo\":\"@{pipeline().parameters.EmailTo}\",\n\"Subject\":\" ADF pipeline finished successfully\",\n\"DataFactoryName\":\"@{pipeline().parameters.DataFactoryName}\",\n\"PipelineName\":\"@{pipeline().Pipeline}\",\n\"Activity\":\"@{pipeline().parameters.Activity}\",\n\"ErrorMessage\":\"@{pipeline().parameters.ErrorMessage}\" }",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"parameters": {
+					"EmailTo": {
+						"type": "string",
+						"defaultValue": "kalyani.pernapati@clorox.com"
+					},
+					"Subject": {
+						"type": "string",
+						"defaultValue": "ADF pipeline finished successfully"
+					},
+					"DataFactoryName": {
+						"type": "string",
+						"defaultValue": "ADF"
+					},
+					"PipelineName": {
+						"type": "string",
+						"defaultValue": "Send email on success"
+					},
+					"Activity": {
+						"type": "string",
+						"defaultValue": "Success notification"
+					},
+					"ErrorMessage": {
+						"type": "string",
+						"defaultValue": "ADF pipeline finished successfully"
+					}
+				},
+				"folder": {
+					"name": "Notifications-Alerts"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load IDR Shipments1')]",
+			"type": "Microsoft.DataFactory/factories/templates",
+			"apiVersion": "2018-06-01",
+			"properties": {},
 			"dependsOn": []
 		},
 		{
@@ -3406,70 +3515,6 @@
 				"type": "Oracle",
 				"typeProperties": {
 					"connectionString": "[parameters('Oracle1_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle_IDR_Dev')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('Oracle_IDR_Dev_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Oracle_IDR_dynamic')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Oracle",
-				"typeProperties": {
-					"connectionString": "[parameters('Oracle_IDR_dynamic_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/clxdev-onprem-ir-linked')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SAPBW_MDX_Dev')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SapBw",
-				"typeProperties": {
-					"server": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_server')]",
-					"systemNumber": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_systemNumber')]",
-					"clientId": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_clientId')]",
-					"userName": "[parameters('SAPBW_MDX_Dev_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SAPBW_MDX_Dev_password')]"
-					}
 				},
 				"connectVia": {
 					"referenceName": "clxdev-onprem-ir-linked",

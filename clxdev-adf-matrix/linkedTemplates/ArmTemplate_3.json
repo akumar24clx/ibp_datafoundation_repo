@@ -1,0 +1,3126 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "clxdev-adf-matrix"
+		},
+		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
+			"type": "string",
+			"defaultValue": "20200404"
+		},
+		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to": {
+			"type": "string",
+			"defaultValue": "Kalyani.Pernapati@clorox.com;abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Material_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SPRC_Internal_Dim_Material",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_Material",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Material]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Stg_Material",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_material_dim",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_D_Material",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Material",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Material",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Material')",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_Material_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Material dim (dbo.material_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Profitcenter_dim')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SPRC_Internal_Dim_Profitcenter",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Stg_Profitcenter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Profitcenter]",
+							"storedProcedureParameters": {
+								"start_date": {
+									"value": null,
+									"type": "Datetime"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSQLDW_onprem",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Stg_Profitcenter",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_profit_center",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage_OnPrem",
+									"type": "LinkedServiceReference"
+								},
+								"path": "matrix-stage/staging_area"
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "PROFIT_CENTER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PROFIT_CENTER_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CTRL_AREA_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CTRL_AREA_CODE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "VALID_FROM_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "VALID_FROM_NBR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "VALID_TO_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "VALID_TO_NBR",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SHORT_NAME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SHORT_NAME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MEDIUM_NAME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MEDIUM_NAME",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CREATED_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CREATED_DATE",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"name": "MODIFIED_DATE",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "MODIFIED_DATE",
+											"type": "DateTime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_BW_D_Profitcenter",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Profitcenter",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Src_to_Target_Lookup",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "SPRC_Internal_Dim_Profitcenter",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Profitcenter')",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Table_SQLDW_etl_audit_log",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Check for Src to Tgt match",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Src_to_Target_Lookup",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "AT_WEB_ProfitCenter_Dim_Load_Error",
+									"type": "WebActivity",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Failed",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Profit Center dim (dbo.profit_center_dim) table.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load IDR Shipments')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Last Load Date",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlDWSource",
+								"sqlReaderQuery": {
+									"value": "select CONVERT(VARCHAR(10), max(idr_load_date), 112)  as max_idr_load_date from base_shipments",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "Query_SQLDW_Base_Shipments",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Get IDR Record Count",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Get Last Load Date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": {
+									"value": "select count(*) as idr_record_count\nfrom clxbw.apo_bw_b_billing ship join clxbw.apo_bw_d_material mat on ship.material_num=mat.material_num\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}",
+									"type": "Expression"
+								},
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"dataset": {
+								"referenceName": "Table_Oracle_IDR_Shipments1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Copy IDR To Storage",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Get Last Load Date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": {
+									"value": "select *\nfrom clxbw.apo_bw_b_billing ship join clxbw.apo_bw_d_material mat on ship.material_num=mat.material_num\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}",
+									"type": "Expression"
+								},
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_Shipments1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CSV_Incremental_IDR_Shipments",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "QC Check - Source to Storage",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Get IDR Record Count",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Copy IDR To Storage",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Get IDR Record Count').output.firstRow.idr_record_count,activity('Copy IDR To Storage').output.rowsCopied)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "QC Check - Failure Alert 1",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "Send email on failure1",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"EmailTo": {
+												"value": "@pipeline().parameters.Email_to",
+												"type": "Expression"
+											},
+											"Subject": "Shipments Ingestion Error",
+											"DataFactoryName": {
+												"value": "@pipeline().DataFactory",
+												"type": "Expression"
+											},
+											"PipelineName": {
+												"value": "@pipeline().Pipeline",
+												"type": "Expression"
+											},
+											"Activity": "QC Check - Copy IDR To Storage",
+											"ErrorMessage": "Record counts between IDR and storage file didn't match, please check the ADF pipeline"
+										}
+									}
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "Load SQLDW Staging",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": false,
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "SqlDWSink",
+											"preCopyScript": "truncate table dbo.stg_shipments",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 1
+													},
+													"sink": {
+														"name": "billing_doc_nbr",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 2
+													},
+													"sink": {
+														"name": "billing_line_item_nbr",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 3
+													},
+													"sink": {
+														"name": "billing_created_date_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 4
+													},
+													"sink": {
+														"name": "billing_date_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 5
+													},
+													"sink": {
+														"name": "material_num",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 6
+													},
+													"sink": {
+														"name": "sap_upc_num",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 7
+													},
+													"sink": {
+														"name": "shippingpoint_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 8
+													},
+													"sink": {
+														"name": "soldto_customer_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 9
+													},
+													"sink": {
+														"name": "payer_customer_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 10
+													},
+													"sink": {
+														"name": "billto_customer_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 11
+													},
+													"sink": {
+														"name": "shipto_customer_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 12
+													},
+													"sink": {
+														"name": "broker_customer_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 13
+													},
+													"sink": {
+														"name": "so_doc_nbr",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 14
+													},
+													"sink": {
+														"name": "po_doc_nbr",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 15
+													},
+													"sink": {
+														"name": "profit_center_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 16
+													},
+													"sink": {
+														"name": "distrib_channel_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 17
+													},
+													"sink": {
+														"name": "oms",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 18
+													},
+													"sink": {
+														"name": "ship_from_plant_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 19
+													},
+													"sink": {
+														"name": "planned_pgi_date_yyyymm",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 20
+													},
+													"sink": {
+														"name": "dos_planned_pgi_date",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 21
+													},
+													"sink": {
+														"name": "doc_class_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 22
+													},
+													"sink": {
+														"name": "clx_po_type",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 23
+													},
+													"sink": {
+														"name": "ctrl_area_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 24
+													},
+													"sink": {
+														"name": "fiscal_yr_variant_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 25
+													},
+													"sink": {
+														"name": "cost_center_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 26
+													},
+													"sink": {
+														"name": "billing_type_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 27
+													},
+													"sink": {
+														"name": "billing_category_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 28
+													},
+													"sink": {
+														"name": "sd_doc_category_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 29
+													},
+													"sink": {
+														"name": "item_type_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 30
+													},
+													"sink": {
+														"name": "item_category_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 31
+													},
+													"sink": {
+														"name": "unsaleable_ind",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 32
+													},
+													"sink": {
+														"name": "order_item_nbr",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 33
+													},
+													"sink": {
+														"name": "company_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 34
+													},
+													"sink": {
+														"name": "division_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 35
+													},
+													"sink": {
+														"name": "sales_group_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 36
+													},
+													"sink": {
+														"name": "so_doc_type",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 37
+													},
+													"sink": {
+														"name": "billed_qty_baseuom",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 38
+													},
+													"sink": {
+														"name": "billed_qty_sc",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 39
+													},
+													"sink": {
+														"name": "billed_qty_slsuom",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 40
+													},
+													"sink": {
+														"name": "billed_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 41
+													},
+													"sink": {
+														"name": "exchange_rate",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 42
+													},
+													"sink": {
+														"name": "tax_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 43
+													},
+													"sink": {
+														"name": "discount_base_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 44
+													},
+													"sink": {
+														"name": "scale_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 45
+													},
+													"sink": {
+														"name": "denominator",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 46
+													},
+													"sink": {
+														"name": "numerator",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 47
+													},
+													"sink": {
+														"name": "delivered_vol_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 48
+													},
+													"sink": {
+														"name": "cost_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 49
+													},
+													"sink": {
+														"name": "net_ship_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 50
+													},
+													"sink": {
+														"name": "exchange_rate_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 51
+													},
+													"sink": {
+														"name": "gross_ship_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 52
+													},
+													"sink": {
+														"name": "cost_amt_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 53
+													},
+													"sink": {
+														"name": "open_billing_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 54
+													},
+													"sink": {
+														"name": "exchange_rate_acct",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 55
+													},
+													"sink": {
+														"name": "net_ship_amt_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 56
+													},
+													"sink": {
+														"name": "rebate_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 57
+													},
+													"sink": {
+														"name": "gross_weight",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 58
+													},
+													"sink": {
+														"name": "required_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 59
+													},
+													"sink": {
+														"name": "net_weight",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 60
+													},
+													"sink": {
+														"name": "netprc_exoffinvdisc_amt_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 61
+													},
+													"sink": {
+														"name": "offinvdisc_amt_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 62
+													},
+													"sink": {
+														"name": "netval_discsurchrg_amt_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 63
+													},
+													"sink": {
+														"name": "unsaleable_amt_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 64
+													},
+													"sink": {
+														"name": "customer_expected_price_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 65
+													},
+													"sink": {
+														"name": "broker_comm_amt_stcurr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 66
+													},
+													"sink": {
+														"name": "netprc_exoffinvdisc_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 67
+													},
+													"sink": {
+														"name": "offinvdisc_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 68
+													},
+													"sink": {
+														"name": "netval_discsurchrg_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 69
+													},
+													"sink": {
+														"name": "unsaleable_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 70
+													},
+													"sink": {
+														"name": "customer_expected_price",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 71
+													},
+													"sink": {
+														"name": "broker_comm_amt",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 72
+													},
+													"sink": {
+														"name": "sku_bill_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 73
+													},
+													"sink": {
+														"name": "dos_qty_sc",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 74
+													},
+													"sink": {
+														"name": "dos_ng_liquid_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 75
+													},
+													"sink": {
+														"name": "number_of_billeditem",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 76
+													},
+													"sink": {
+														"name": "sales_office",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 77
+													},
+													"sink": {
+														"name": "order_reason",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 78
+													},
+													"sink": {
+														"name": "rejection_reason",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 79
+													},
+													"sink": {
+														"name": "sales_deal",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 80
+													},
+													"sink": {
+														"name": "shipping_condition_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 81
+													},
+													"sink": {
+														"name": "update_mode",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 82
+													},
+													"sink": {
+														"name": "inv_date_nbr",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 83
+													},
+													"sink": {
+														"name": "stcurr",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 84
+													},
+													"sink": {
+														"name": "doccurr",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 85
+													},
+													"sink": {
+														"name": "uom_weight",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 86
+													},
+													"sink": {
+														"name": "uom_sales",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 87
+													},
+													"sink": {
+														"name": "uom_base",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 88
+													},
+													"sink": {
+														"name": "uom_volume",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 89
+													},
+													"sink": {
+														"name": "uom",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 90
+													},
+													"sink": {
+														"name": "changed_date_nbr",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 91
+													},
+													"sink": {
+														"name": "batch_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 92
+													},
+													"sink": {
+														"name": "serv_rendered_date_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 93
+													},
+													"sink": {
+														"name": "proc_status",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 94
+													},
+													"sink": {
+														"name": "rebate_arrangement",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 95
+													},
+													"sink": {
+														"name": "uom_lay",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 96
+													},
+													"sink": {
+														"name": "uom_pal",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 97
+													},
+													"sink": {
+														"name": "uom_sc",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 98
+													},
+													"sink": {
+														"name": "shipping_type_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 99
+													},
+													"sink": {
+														"name": "acct_assignment_grp_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 100
+													},
+													"sink": {
+														"name": "customer_group_code_1",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 101
+													},
+													"sink": {
+														"name": "customer_group_code_2",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 102
+													},
+													"sink": {
+														"name": "customer_group_code_3",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 103
+													},
+													"sink": {
+														"name": "customer_group_code_4",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 104
+													},
+													"sink": {
+														"name": "storage_location_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 105
+													},
+													"sink": {
+														"name": "material_group_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 106
+													},
+													"sink": {
+														"name": "material_num_entered",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 107
+													},
+													"sink": {
+														"name": "material_group_code_1",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 108
+													},
+													"sink": {
+														"name": "material_group_code_2",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 109
+													},
+													"sink": {
+														"name": "material_group_code_3",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 110
+													},
+													"sink": {
+														"name": "material_group_code_4",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 111
+													},
+													"sink": {
+														"name": "material_group_code_5",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 112
+													},
+													"sink": {
+														"name": "dest_country_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 113
+													},
+													"sink": {
+														"name": "pricing_date_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 114
+													},
+													"sink": {
+														"name": "sales_region_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 115
+													},
+													"sink": {
+														"name": "bom_high_level_item",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 116
+													},
+													"sink": {
+														"name": "ref_doc_num",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 117
+													},
+													"sink": {
+														"name": "ref_item_num",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 118
+													},
+													"sink": {
+														"name": "delivery_type_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 119
+													},
+													"sink": {
+														"name": "qty_eaches",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 120
+													},
+													"sink": {
+														"name": "doc_count",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 121
+													},
+													"sink": {
+														"name": "posting_stat_bill_doc_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 122
+													},
+													"sink": {
+														"name": "billing_status_order",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 123
+													},
+													"sink": {
+														"name": "billing_status",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 124
+													},
+													"sink": {
+														"name": "so_customer_group",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 125
+													},
+													"sink": {
+														"name": "condition_group_2",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 126
+													},
+													"sink": {
+														"name": "condition_group_3",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 127
+													},
+													"sink": {
+														"name": "condition_group_4",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 128
+													},
+													"sink": {
+														"name": "condition_group_5",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 129
+													},
+													"sink": {
+														"name": "so_price_group",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 130
+													},
+													"sink": {
+														"name": "translation_date_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 131
+													},
+													"sink": {
+														"name": "src_country_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 132
+													},
+													"sink": {
+														"name": "dest_city_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 133
+													},
+													"sink": {
+														"name": "soldto_customer_code_1",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 134
+													},
+													"sink": {
+														"name": "posting_period_type",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 135
+													},
+													"sink": {
+														"name": "item",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 136
+													},
+													"sink": {
+														"name": "so_region_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 137
+													},
+													"sink": {
+														"name": "transfer_acct_status_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 138
+													},
+													"sink": {
+														"name": "so_sales_org_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 139
+													},
+													"sink": {
+														"name": "so_distrib_channel_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 140
+													},
+													"sink": {
+														"name": "material_plant_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 141
+													},
+													"sink": {
+														"name": "sales_division_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 142
+													},
+													"sink": {
+														"name": "dos_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 143
+													},
+													"sink": {
+														"name": "billed_qty_purchase_uom",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 144
+													},
+													"sink": {
+														"name": "number_of_doc",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 145
+													},
+													"sink": {
+														"name": "number_of_doc_items",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 146
+													},
+													"sink": {
+														"name": "gross_weight_kg",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 147
+													},
+													"sink": {
+														"name": "net_weight_kg",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 148
+													},
+													"sink": {
+														"name": "volume_cubic_dec",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 149
+													},
+													"sink": {
+														"name": "version_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 150
+													},
+													"sink": {
+														"name": "value_type_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 151
+													},
+													"sink": {
+														"name": "credit_debit_flg",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 152
+													},
+													"sink": {
+														"name": "sales_district_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 153
+													},
+													"sink": {
+														"name": "sales_emp_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 154
+													},
+													"sink": {
+														"name": "posting_period",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 155
+													},
+													"sink": {
+														"name": "military_product_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 156
+													},
+													"sink": {
+														"name": "edi_customer_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 157
+													},
+													"sink": {
+														"name": "soldto_country_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 158
+													},
+													"sink": {
+														"name": "billto_country_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 159
+													},
+													"sink": {
+														"name": "payer_country_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 160
+													},
+													"sink": {
+														"name": "carrier_country_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 161
+													},
+													"sink": {
+														"name": "representative_country_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 162
+													},
+													"sink": {
+														"name": "conversion_date_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 163
+													},
+													"sink": {
+														"name": "stats_date_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 164
+													},
+													"sink": {
+														"name": "stats_update_date_code",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 165
+													},
+													"sink": {
+														"name": "forwarding_agent",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 166
+													},
+													"sink": {
+														"name": "bw_tran_key",
+														"type": "String"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 167
+													},
+													"sink": {
+														"name": "idr_load_date",
+														"type": "DateTime"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 168
+													},
+													"sink": {
+														"name": "invoiced_qty",
+														"type": "Single"
+													}
+												},
+												{
+													"source": {
+														"type": "String",
+														"ordinal": 169
+													},
+													"sink": {
+														"name": "invoiced_net_amt",
+														"type": "Single"
+													}
+												}
+											]
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "CSV_Incremental_IDR_Shipments_AZ",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Table_SQLDW_Staging_Shipments",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								},
+								{
+									"name": "Get Staging Record Count",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "Load SQLDW Staging",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "SqlDWSource",
+											"sqlReaderQuery": "select count(*) as staging_record_count from stg_shipments",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "Table_SQLDW_Staging_Shipments",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									}
+								},
+								{
+									"name": "Failure Alert - 2",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "Load SQLDW Staging",
+											"dependencyConditions": [
+												"Failed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "Send email on failure1",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"EmailTo": {
+												"value": "@pipeline().parameters.Email_to",
+												"type": "Expression"
+											},
+											"Subject": "Shipments Ingestion Error",
+											"DataFactoryName": {
+												"value": "@pipeline().DataFactory",
+												"type": "Expression"
+											},
+											"PipelineName": {
+												"value": "@pipeline().Pipeline",
+												"type": "Expression"
+											},
+											"Activity": "Load SQLDW Staging",
+											"ErrorMessage": {
+												"value": "@activity('Load SQLDW Staging').Error.Message",
+												"type": "Expression"
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "QC Check - Storage to Staging",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "QC Check - Source to Storage",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Copy IDR To Storage').output.rowsCopied,activity('Get Staging Record Count').output.firstRow.staging_record_count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "QC Check - Failure Alert 2",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "Send email on failure1",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"EmailTo": {
+												"value": "@pipeline().parameters.Email_to",
+												"type": "Expression"
+											},
+											"Subject": "Shipments Ingestion Error",
+											"DataFactoryName": {
+												"value": "@pipeline().DataFactory",
+												"type": "Expression"
+											},
+											"PipelineName": {
+												"value": "@pipeline().Pipeline",
+												"type": "Expression"
+											},
+											"Activity": "QC Check - Storage to SQLDW Staging",
+											"ErrorMessage": "Record counts between incremental data file and SQLDW \nstaging did not match, please check the ADF pipeline"
+										}
+									}
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "Failure Alert - 3",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "Load to target",
+											"dependencyConditions": [
+												"Failed"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "Send email on failure1",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"EmailTo": {
+												"value": "@pipeline().parameters.Email_to",
+												"type": "Expression"
+											},
+											"Subject": "Shipments Ingestion Error",
+											"DataFactoryName": {
+												"value": "@pipeline().DataFactory",
+												"type": "Expression"
+											},
+											"PipelineName": {
+												"value": "@pipeline().Pipeline",
+												"type": "Expression"
+											},
+											"Activity": "Load SQLDW Target",
+											"ErrorMessage": {
+												"value": "@activity('Load to target').Error.Message",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								{
+									"name": "Get Target Record Count",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "Load to target",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "SqlDWSource",
+											"sqlReaderQuery": {
+												"value": "select count(*) as target_record_count\nfrom dbo.base_shipments \nwhere CONVERT(varchar, idr_load_date, 112) > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "Table_SQLDW_Base_Shipments",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									}
+								},
+								{
+									"name": "Load to target",
+									"type": "SqlServerStoredProcedure",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"storedProcedureName": "[[dbo].[SPRC_IDR_shipments_insert]"
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureSQLDW",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "Failure Alert - 1",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Copy IDR To Storage",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Send email on failure1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"EmailTo": {
+									"value": "@pipeline().parameters.Email_to",
+									"type": "Expression"
+								},
+								"Subject": "Shipments Ingestion Error",
+								"DataFactoryName": {
+									"value": "@pipeline().DataFactory",
+									"type": "Expression"
+								},
+								"PipelineName": {
+									"value": "@pipeline().Pipeline",
+									"type": "Expression"
+								},
+								"Activity": "Copy IDR to Storage",
+								"ErrorMessage": {
+									"value": "@activity('Copy IDR To Storage').Error.Message",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "QC Check - Staging to Target",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "QC Check - Storage to Staging",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(activity('Get Staging Record Count').output.firstRow.staging_record_count,activity('Get Target Record Count').output.firstRow.target_record_count)",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "QC Check - Failure Alert 3",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "Send email on failure1",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"EmailTo": {
+												"value": "@pipeline().parameters.Email_to",
+												"type": "Expression"
+											},
+											"Subject": "Shipments Ingestion Error",
+											"DataFactoryName": {
+												"value": "@pipeline().DataFactory",
+												"type": "Expression"
+											},
+											"PipelineName": "Load IDR Shipments",
+											"Activity": "QC Check - Load Staging to Target",
+											"ErrorMessage": "Record counts between SQLDW staging and Target\ndoesn't match, please check the ADF pipeline."
+										}
+									}
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "Pipeline Success Notification",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "Send email on success1",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"EmailTo": {
+												"value": "@pipeline().parameters.Email_to",
+												"type": "Expression"
+											},
+											"Subject": "ADF pipeline Load IDR Shipments finished successfully",
+											"DataFactoryName": {
+												"value": "@pipeline().DataFactory",
+												"type": "Expression"
+											},
+											"PipelineName": {
+												"value": "@pipeline().Pipeline",
+												"type": "Expression"
+											},
+											"Activity": "Load IDR Litter Shipments",
+											"ErrorMessage": "No errors"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"Email_to": {
+						"type": "string",
+						"defaultValue": "Kalyani.Pernapati@clorox.com;abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com"
+					}
+				},
+				"folder": {
+					"name": "Shipments"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Internal_Dimensions_Master_Wrapper')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Customer_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Customer_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Material_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Customer_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Material_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Material_UOM_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Material_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Material_UOM_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Profitcenter_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Material_UOM_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Profitcenter_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Custom_Profitcenter_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Profitcenter_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Custom_Profitcenter_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Job_Completion_Alert",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Custom_Profitcenter_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"DataFactoryName": "@{pipeline().DataFactory}",
+								"Status": "Successful",
+								"Env": "Dev",
+								"PipelineName": "@{pipeline().Pipeline}",
+								"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+								"MessageBody1": "Hi All,",
+								"MessageBody2": "This is an email notification generated from Azure Data Factory for Clorox Internal Dimension ingestion.",
+								"MessageBody3": "Please find below the pipeline execution details:",
+								"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+								"MessageBody5": " - Thanks"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Material_dim')]",
+				"[concat(variables('factoryId'), '/pipelines/Profitcenter_dim')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Master_Calendar_Dimensions')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Calendar_day_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Calendar_day_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Calendar_mth_dim",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Calendar_day_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Calendar_mth_dim",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Job_Completion_Alert",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Calendar_mth_dim",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"DataFactoryName": "@{pipeline().DataFactory}",
+								"Status": "Successful",
+								"Env": "Dev",
+								"PipelineName": "@{pipeline().Pipeline}",
+								"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+								"MessageBody1": "Hi All,",
+								"MessageBody2": "This is an email notification generated from Azure Data Factory for Clorox Internal Calendar Dimension ingestion.",
+								"MessageBody3": "Please find below the pipeline execution details:",
+								"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+								"MessageBody5": " - Thanks"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "Clorox - Dimensions/Clorox Internal Dim"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_IDR_Orders_Weekly_Schedule')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load IDR Orders",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"IDR_Load_Date": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2020-04-08T19:00:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								7
+							],
+							"weekDays": [
+								"Wednesday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_IDR_Shipments_Weekly_Schedule')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load IDR Shipments",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Email_to": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2020-04-08T18:00:00.000Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								45
+							],
+							"hours": [
+								18
+							],
+							"weekDays": [
+								"Wednesday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load IDR Shipments')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Clorox Internal Dimension Trigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Internal_Dimensions_Master_Wrapper",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2020-08-20T07:37:00.000Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								18
+							],
+							"weekDays": [
+								"Wednesday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Internal_Dimensions_Master_Wrapper')]"
+			]
+		}
+	]
+}
