@@ -1,0 +1,27 @@
+{
+	"name": "CSV_Incremental_IDR_Shipments",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_OnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Blob Storage - Files"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "incremental_idr_shipments.csv",
+				"folderPath": "shipments",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

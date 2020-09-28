@@ -1,0 +1,15 @@
+{
+	"name": "Query_SQLDW_Base_Shipments",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQLDW - Query"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": []
+	}
+}
