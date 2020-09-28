@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://ClxIRISFTPKeyVault.vault.azure.net/"
+			"baseUrl": "https://clx-FTP-cpcetlp.vault.azure.net/"
 		}
 	}
 }
