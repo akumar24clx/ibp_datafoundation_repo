@@ -1,0 +1,19 @@
+{
+	"name": "SapBw1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SapBw",
+		"typeProperties": {
+			"server": "sbwpvl01",
+			"systemNumber": "00",
+			"clientId": "300",
+			"userName": "kpernapa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwMzczMDA0ZS1iNGExLTRlZDYtYThjMy02ZmQzNzc0MTI4MDIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "clxdev-onprem-ir-linked",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
