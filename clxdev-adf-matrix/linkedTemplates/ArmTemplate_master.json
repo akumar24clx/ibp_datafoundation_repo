@@ -164,12 +164,6 @@
 					"AzureSQLDW_onprem_connectionString": {
 						"value": "[parameters('AzureSQLDW_onprem_connectionString')]"
 					},
-					"KP_Oracle_IDR_connectionString": {
-						"value": "[parameters('KP_Oracle_IDR_connectionString')]"
-					},
-					"Oracle1_connectionString": {
-						"value": "[parameters('Oracle1_connectionString')]"
-					},
 					"HttpServer1_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					},
@@ -205,6 +199,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"KP_Oracle_IDR_connectionString": {
+						"value": "[parameters('KP_Oracle_IDR_connectionString')]"
+					},
+					"Oracle1_connectionString": {
+						"value": "[parameters('Oracle1_connectionString')]"
 					},
 					"Oracle_IDR_Dev_connectionString": {
 						"value": "[parameters('Oracle_IDR_Dev_connectionString')]"
