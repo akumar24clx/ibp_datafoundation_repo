@@ -18,7 +18,7 @@
 					"source": {
 						"type": "OracleSource",
 						"oracleReaderQuery": {
-							"value": "select *\nfrom clxbw.apo_bw_b_billing ship join clxbw.apo_bw_d_material mat on ship.material_num=mat.material_num\nwhere to_char(load_date,'yyyymmdd') > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}\nand (mat.division_name like '%Litter%' or mat.division_name like '%Charcoal%' or mat.division_name like '%Food Products%')",
+							"value": "select *\nfrom clxbw.apo_bw_b_billing ship join clxbw.apo_bw_d_material mat on ship.material_num=mat.material_num\nwhere ship.billing_created_date_code = 20200826",
 							"type": "Expression"
 						},
 						"partitionOption": "None",
@@ -45,7 +45,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "CSV_Incremental_IDR_Shipments",
+						"referenceName": "CSV_IDR_Shipments_extract",
 						"type": "DatasetReference"
 					}
 				]

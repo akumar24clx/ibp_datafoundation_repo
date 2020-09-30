@@ -1,0 +1,27 @@
+{
+	"name": "CSV_IDR_Shipments_extract",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_OnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Blob Storage - Files"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "idr_shipments_billing_dt_20200826.csv",
+				"folderPath": "shipments/Shipments_Manual_Extracts",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
