@@ -2092,13 +2092,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"storedProcedureName": "[dbo].[SPRC_IDR_shipments_insert]",
-								"storedProcedureParameters": {
-									"start_date": {
-										"value": null,
-										"type": "Datetime"
-									}
-								}
+								"storedProcedureName": "[dbo].[SPRC_IDR_shipments_insert]"
 							},
 							"linkedServiceName": {
 								"referenceName": "AzureSQLDW_onprem",
@@ -2195,7 +2189,7 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"EmailTo": "Kalyani.Pernapati@clorox.com;abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com",
 									"Subject": "ADF pipeline Load IDR Litter Shipments finished successfully",
 									"DataFactoryName": "ADF",
 									"PipelineName": "Load IDR Litter Shipments",
