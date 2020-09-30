@@ -156,12 +156,18 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"Subject": "Azure DF error",
-									"DataFactoryName": "DF",
+									"EmailTo": {
+										"value": "@pipeline().parameters.Email_to",
+										"type": "Expression"
+									},
+									"Subject": "IDR Orders Ingestion Error",
+									"DataFactoryName": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									},
 									"PipelineName": "Load IDR Shipments",
 									"Activity": "QC Check - Copy IDR To Storage",
-									"ErrorMessage": "Record counts between IDR and storage file didn't match, please take a look."
+									"ErrorMessage": "Record counts between IDR and storage file didn't match, please check the ADF pipeline"
 								}
 							}
 						}
@@ -1877,9 +1883,15 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"Subject": "Azure DF error",
-									"DataFactoryName": "DF",
+									"EmailTo": {
+										"value": "@pipeline().parameters.Email_to",
+										"type": "Expression"
+									},
+									"Subject": "IDR Orders Ingestion Error",
+									"DataFactoryName": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									},
 									"PipelineName": "Load IDR Orders",
 									"Activity": "Load SQLDW Staging",
 									"ErrorMessage": {
@@ -1922,12 +1934,18 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@brdgei2i.com",
-									"Subject": "Azure DF error",
-									"DataFactoryName": "DF",
+									"EmailTo": {
+										"value": "@pipeline().parameters.Email_to",
+										"type": "Expression"
+									},
+									"Subject": "IDR Orders Ingestion Error",
+									"DataFactoryName": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									},
 									"PipelineName": "Load IDR Orders",
 									"Activity": "QC Check - Storage to SQLDW Staging",
-									"ErrorMessage": "Record counts between incremental data file and SQLDW \nstaging did not match, please take a look."
+									"ErrorMessage": "Record counts between incremental data file and SQLDW \nstaging did not match, please check the ADF pipeline"
 								}
 							}
 						}
@@ -1952,9 +1970,15 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"Subject": "Azure DF error",
-									"DataFactoryName": "DF",
+									"EmailTo": {
+										"value": "@pipeline().parameters.Email_to",
+										"type": "Expression"
+									},
+									"Subject": "IDR Orders Ingestion Error",
+									"DataFactoryName": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									},
 									"PipelineName": "Load IDR Orders",
 									"Activity": "Load SQLDW Target",
 									"ErrorMessage": {
@@ -1987,7 +2011,7 @@
 								"source": {
 									"type": "SqlDWSource",
 									"sqlReaderQuery": {
-										"value": "select count(*) as target_record_count\nfrom dbo.base_orders_bkp\nwhere CONVERT(varchar, idr_load_date, 112) > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}",
+										"value": "select count(*) as target_record_count\nfrom dbo.base_orders\nwhere CONVERT(varchar, idr_load_date, 112) > @{activity('Get Last Load Date').output.firstRow.max_idr_load_date}",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
@@ -2012,13 +2036,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"storedProcedureName": "[dbo].[SPRC_Load_IDR_Orders]",
-								"storedProcedureParameters": {
-									"start_date": {
-										"value": null,
-										"type": "Datetime"
-									}
-								}
+								"storedProcedureName": "[dbo].[SPRC_IDR_orders_insert]"
 							},
 							"linkedServiceName": {
 								"referenceName": "AzureSQLDW_onprem",
@@ -2047,9 +2065,15 @@
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"EmailTo": "abhijeet.kumar@bridgei2i.com",
-						"Subject": "Azure DF error",
-						"DataFactoryName": "clxdev-adf-matrix",
+						"EmailTo": {
+							"value": "@pipeline().parameters.Email_to",
+							"type": "Expression"
+						},
+						"Subject": "IDR Orders Ingestion Error",
+						"DataFactoryName": {
+							"value": "@pipeline().DataFactory",
+							"type": "Expression"
+						},
 						"PipelineName": {
 							"value": "Load IDR Orders",
 							"type": "Expression"
@@ -2092,12 +2116,18 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
-									"Subject": "Azure DF error",
-									"DataFactoryName": "DF",
+									"EmailTo": {
+										"value": "@pipeline().parameters.Email_to",
+										"type": "Expression"
+									},
+									"Subject": "IDR Orders Ingestion Error",
+									"DataFactoryName": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									},
 									"PipelineName": "Load IDR Shipments",
 									"Activity": "QC Check - Load Staging to Target",
-									"ErrorMessage": "Record counts between SQLDW staging and Target\ndoesn't match, please take a look."
+									"ErrorMessage": "Record counts between SQLDW staging and Target\ndoesn't match, please check the ADF pipeline"
 								}
 							}
 						}
@@ -2115,9 +2145,15 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"EmailTo": "abhijeet.kumar@bridgei2i.com",
+									"EmailTo": {
+										"value": "@pipeline().parameters.Email_to",
+										"type": "Expression"
+									},
 									"Subject": "ADF pipeline Load IDR Litter Shipments finished successfully",
-									"DataFactoryName": "ADF",
+									"DataFactoryName": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									},
 									"PipelineName": "Load IDR Litter Shipments",
 									"Activity": "Load IDR Litter Shipments",
 									"ErrorMessage": "No errors"
@@ -2128,6 +2164,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"Email_to": {
+				"type": "string",
+				"defaultValue": "Kalyani.Pernapati@clorox.com;abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com"
+			}
+		},
 		"folder": {
 			"name": "Orders"
 		},
