@@ -25,7 +25,7 @@
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "Query_SQLDW_Base_Orders_bkp",
+						"referenceName": "Table_SQLDW_Base_Orders",
 						"type": "DatasetReference"
 					}
 				}
