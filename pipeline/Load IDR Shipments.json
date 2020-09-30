@@ -160,7 +160,7 @@
 										"value": "@pipeline().parameters.Email_to",
 										"type": "Expression"
 									},
-									"Subject": "Shipments Ingestion Error",
+									"Subject": "IDR Shipments Ingestion Error",
 									"DataFactoryName": {
 										"value": "@pipeline().DataFactory",
 										"type": "Expression"
@@ -1970,7 +1970,7 @@
 										"value": "@pipeline().parameters.Email_to",
 										"type": "Expression"
 									},
-									"Subject": "Shipments Ingestion Error",
+									"Subject": "IDR Shipments Ingestion Error",
 									"DataFactoryName": {
 										"value": "@pipeline().DataFactory",
 										"type": "Expression"
@@ -2024,7 +2024,7 @@
 										"value": "@pipeline().parameters.Email_to",
 										"type": "Expression"
 									},
-									"Subject": "Shipments Ingestion Error",
+									"Subject": "IDR Shipments Ingestion Error",
 									"DataFactoryName": {
 										"value": "@pipeline().DataFactory",
 										"type": "Expression"
@@ -2063,7 +2063,7 @@
 										"value": "@pipeline().parameters.Email_to",
 										"type": "Expression"
 									},
-									"Subject": "Shipments Ingestion Error",
+									"Subject": "IDR Shipments Ingestion Error",
 									"DataFactoryName": {
 										"value": "@pipeline().DataFactory",
 										"type": "Expression"
@@ -2161,7 +2161,7 @@
 							"value": "@pipeline().parameters.Email_to",
 							"type": "Expression"
 						},
-						"Subject": "Shipments Ingestion Error",
+						"Subject": "IDR Shipments Ingestion Error",
 						"DataFactoryName": {
 							"value": "@pipeline().DataFactory",
 							"type": "Expression"
@@ -2212,7 +2212,7 @@
 										"value": "@pipeline().parameters.Email_to",
 										"type": "Expression"
 									},
-									"Subject": "Shipments Ingestion Error",
+									"Subject": "IDR Shipments Ingestion Error",
 									"DataFactoryName": {
 										"value": "@pipeline().DataFactory",
 										"type": "Expression"
