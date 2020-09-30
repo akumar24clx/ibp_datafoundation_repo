@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SqlDWSource",
 						"sqlReaderQuery": {
-							"value": "select CONVERT(VARCHAR(10), max(idr_load_date), 112)  as max_idr_load_date from base_shipments_bkp",
+							"value": "select CONVERT(VARCHAR(10), max(idr_load_date), 112)  as max_idr_load_date from base_shipments",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -2092,7 +2092,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"storedProcedureName": "[dbo].[SPRC_Load_IDR_Shipments]",
+								"storedProcedureName": "[dbo].[SPRC_IDR_shipments_insert]",
 								"storedProcedureParameters": {
 									"start_date": {
 										"value": null,
