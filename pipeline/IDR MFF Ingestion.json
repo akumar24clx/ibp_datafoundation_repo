@@ -1,9 +1,9 @@
 {
-	"name": "MFF",
+	"name": "IDR MFF Ingestion",
 	"properties": {
 		"activities": [
 			{
-				"name": "MFF",
+				"name": "Staging_MFF",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -47,6 +47,158 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "SPRC_Material_MFF_Dim",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Staging_MFF",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SPRC_Material_MFF_Dim]",
+					"storedProcedureParameters": {
+						"start_date": {
+							"value": null,
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSQLDW_onprem",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Src_to_Target_Lookup",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "SPRC_Material_MFF_Dim",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Material_MFF_Dim' ) ",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Table_SQLDW_etl_audit_log",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Check for Src to Tgt match",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Src_to_Target_Lookup",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "AT_WEB_IDR_MFF_Load_Error",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Failed",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Customer dim (dbo.customer_dim) table.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Job_Completion_Alert",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json"
+								},
+								"body": {
+									"DataFactoryName": "@{pipeline().DataFactory}",
+									"Status": "Successful",
+									"Env": "Dev",
+									"PipelineName": "@{pipeline().Pipeline}",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
+									"MessageBody1": "Hi All,",
+									"MessageBody2": "This is an email notification generated from Azure Data Factory for IDR MFF ingestion.",
+									"MessageBody3": "Please find below the pipeline execution details:",
+									"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+									"MessageBody5": " - Thanks"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"annotations": []
