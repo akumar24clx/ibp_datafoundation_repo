@@ -9,7 +9,8 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "FtpServerLocation"
+				"type": "FtpServerLocation",
+				"folderPath": "/test/datastaging/bw/in/DPFINC11/"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
