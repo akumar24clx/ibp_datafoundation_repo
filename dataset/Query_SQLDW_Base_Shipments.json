@@ -2,7 +2,7 @@
 	"name": "Query_SQLDW_Base_Shipments",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSQLDW",
+			"referenceName": "AzureSQLDW_onprem",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {

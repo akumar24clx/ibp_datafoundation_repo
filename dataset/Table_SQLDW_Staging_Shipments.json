@@ -2,7 +2,7 @@
 	"name": "Table_SQLDW_Staging_Shipments",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSQLDW",
+			"referenceName": "AzureSQLDW_onprem",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
