@@ -26,7 +26,7 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@concat('New Product Data V2/',dataset().sub_dir)",
+					"value": "@concat('New Product Repository/',dataset().sub_dir)",
 					"type": "Expression"
 				},
 				"container": "matrix-raw"
