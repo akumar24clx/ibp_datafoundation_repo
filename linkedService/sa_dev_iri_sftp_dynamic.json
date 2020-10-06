@@ -1,13 +1,12 @@
 {
 	"name": "sa_dev_iri_sftp_dynamic",
 	"properties": {
-		"type": "FtpServer",
+		"type": "Sftp",
 		"annotations": [],
 		"typeProperties": {
 			"host": "@{linkedService().hostname}",
 			"port": 22,
-			"enableSsl": false,
-			"enableServerCertificateValidation": false,
+			"skipHostKeyValidation": true,
 			"authenticationType": "Basic",
 			"userName": "@{linkedService().username}",
 			"password": {
