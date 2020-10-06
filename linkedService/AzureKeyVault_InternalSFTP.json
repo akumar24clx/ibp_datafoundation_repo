@@ -1,0 +1,10 @@
+{
+	"name": "AzureKeyVault_InternalSFTP",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://ClxIRISFTPKeyVault.vault.azure.net/"
+		}
+	}
+}
