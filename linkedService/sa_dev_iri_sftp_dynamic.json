@@ -1,15 +1,23 @@
 {
 	"name": "sa_dev_iri_sftp_dynamic",
 	"properties": {
-		"type": "Sftp",
+		"type": "FtpServer",
 		"annotations": [],
 		"typeProperties": {
 			"host": "@{linkedService().hostname}",
 			"port": 22,
-			"skipHostKeyValidation": true,
+			"enableSsl": false,
+			"enableServerCertificateValidation": false,
 			"authenticationType": "Basic",
 			"userName": "@{linkedService().username}",
-			"encryptedCredential": "@{linkedService().password}"
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "SFTP-password"
+			}
 		},
 		"connectVia": {
 			"referenceName": "clxdev-onprem-ir-linked",
