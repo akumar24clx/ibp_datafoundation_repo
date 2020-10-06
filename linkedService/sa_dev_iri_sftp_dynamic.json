@@ -13,7 +13,7 @@
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "AzureKeyVault1",
+					"referenceName": "AzureKeyVault_clx_Internal",
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "SFTP-password"
@@ -28,9 +28,6 @@
 				"type": "String"
 			},
 			"username": {
-				"type": "String"
-			},
-			"password": {
 				"type": "String"
 			}
 		}
