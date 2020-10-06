@@ -4,10 +4,10 @@
 		"type": "AzureKeyVault",
 		"annotations": [],
 		"typeProperties": {
-			"baseUrl": "@{linkedService().baseURL}"
+			"baseUrl": "@{linkedService().baseUrl}"
 		},
 		"parameters": {
-			"baseURL": {
+			"baseUrl": {
 				"type": "String"
 			}
 		}
