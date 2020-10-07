@@ -12,7 +12,7 @@
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "AzureKeyVault_clx_InternalSFTP",
+					"referenceName": "AzureKeyVault_InternalSFTP",
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "SFTP-password"
@@ -30,5 +30,6 @@
 				"type": "String"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
