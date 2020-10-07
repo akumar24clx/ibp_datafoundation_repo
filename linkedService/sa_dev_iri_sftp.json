@@ -1,20 +1,27 @@
 {
 	"name": "sa_dev_iri_sftp",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "Sftp",
 		"typeProperties": {
-			"host": "asftppl1.clorox.com",
+			"host": "aftpppl0.clorox.com",
 			"port": 22,
 			"skipHostKeyValidation": true,
 			"authenticationType": "Basic",
 			"userName": "clx-iri-sftp-user",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyZjdhZTllMi1iZWUxLTQzNmUtYTExNi1jODkzN2NlYmRkZjYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault_InternalSFTP",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "SFTP-password"
+			}
 		},
 		"connectVia": {
 			"referenceName": "clxdev-onprem-ir-linked",
 			"type": "IntegrationRuntimeReference"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
