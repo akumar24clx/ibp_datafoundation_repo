@@ -895,7 +895,8 @@
 					"source": {
 						"type": "SqlDWSource",
 						"sqlReaderQuery": "select filteredfiles from dbo.Audit_file_check where Audit_id =\n(select max(Audit_id) from dbo.Audit_file_check ) and \n( adls_push_flag = 0 or file_size_match_flag = 0 ) order by 1\n",
-						"queryTimeout": "02:00:00"
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"dataset": {
 						"referenceName": "Table_SQLDW_audit_filecheck",
@@ -1077,7 +1078,7 @@
 		"parameters": {
 			"GetFileName": {
 				"type": "string",
-				"defaultValue": "clx_product_master"
+				"defaultValue": "Food_Clx.UPC_Comp.Brand_2020-09-25-19-02-19_FINAL"
 			},
 			"Src_DirectoryPath": {
 				"type": "string",
@@ -1085,7 +1086,7 @@
 			},
 			"Param_id": {
 				"type": "string",
-				"defaultValue": "100"
+				"defaultValue": "150"
 			},
 			"Target_DirectoryPath": {
 				"type": "string",
@@ -1093,7 +1094,7 @@
 			},
 			"sFTP_hostname": {
 				"type": "string",
-				"defaultValue": "asftppl1.clorox.com"
+				"defaultValue": "aftpppl0.clorox.com"
 			},
 			"sFTP_username": {
 				"type": "string",
