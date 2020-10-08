@@ -9,7 +9,7 @@
 			"systemNumber": "00",
 			"clientId": "300",
 			"userName": "akumar24",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxODU2NWM5MS0xNWEwLTQ0NzItYjRjMC04OGJkNmIxZjY4MDIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwMmJkNWJjMy1mMjFmLTQ3ZmUtODYxYi1jMzM1YTc2OWQ3NWUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "clxdev-onprem-ir-linked",
