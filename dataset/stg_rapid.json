@@ -1,0 +1,19 @@
+{
+	"name": "stg_rapid",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW_onprem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Rapid Response Sets"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stg_rapid_finance"
+		}
+	}
+}

@@ -1,0 +1,108 @@
+{
+	"name": "rrdp_adls_file",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_OnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Rapid Response Sets"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "rrdp_c11_finance_feed.csv",
+				"folderPath": "Rapid Finance Feed/File Example",
+				"container": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ShipTo",
+				"type": "String"
+			},
+			{
+				"name": "CustomerGroup",
+				"type": "String"
+			},
+			{
+				"name": "TradeSector",
+				"type": "String"
+			},
+			{
+				"name": "SalesOrganization",
+				"type": "String"
+			},
+			{
+				"name": "ProductDivision",
+				"type": "String"
+			},
+			{
+				"name": "GlobalCategory",
+				"type": "String"
+			},
+			{
+				"name": "Brand",
+				"type": "String"
+			},
+			{
+				"name": "Purpose",
+				"type": "String"
+			},
+			{
+				"name": "Type",
+				"type": "String"
+			},
+			{
+				"name": "Size",
+				"type": "String"
+			},
+			{
+				"name": "Material",
+				"type": "String"
+			},
+			{
+				"name": "APOPlanningVersion",
+				"type": "String"
+			},
+			{
+				"name": "CalYearWeek",
+				"type": "String"
+			},
+			{
+				"name": "UnitOfMeasure",
+				"type": "String"
+			},
+			{
+				"name": "CustomerDivision",
+				"type": "String"
+			},
+			{
+				"name": "ZUPC",
+				"type": "String"
+			},
+			{
+				"name": "CalYearMonth",
+				"type": "String"
+			},
+			{
+				"name": "ConsensusForecast",
+				"type": "String"
+			},
+			{
+				"name": "Commitment",
+				"type": "String"
+			},
+			{
+				"name": "ConsensusDOS",
+				"type": "String"
+			}
+		]
+	}
+}

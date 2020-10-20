@@ -1,0 +1,303 @@
+{
+	"name": "rrdp_loading_to_staging",
+	"properties": {
+		"activities": [
+			{
+				"name": "load_to_staging",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ShipTo",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ShipTo",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CustomerGroup",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CustomerGroup",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TradeSector",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "TradeSector",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "SalesOrganization",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "SalesOrganization",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductDivision",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ProductDivision",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "GlobalCategory",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "GlobalCategory",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Brand",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Brand",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Purpose",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Purpose",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Type",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Type",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Size",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Size",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Material",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Material",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "APOPlanningVersion",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "APOPlanningVersion",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CalYearWeek",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CalYearWeek",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UnitOfMeasure",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "UnitOfMeasure",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CustomerDivision",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CustomerDivision",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ZUPC",
+									"type": "Int64",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ZUPC",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CalYearMonth",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "CalYearMonth",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ConsensusForecast",
+									"type": "Decimal",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ConsensusForecast",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Commitment",
+									"type": "Decimal",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Commitment",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ConsensusDOS",
+									"type": "Decimal",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "ConsensusDOS",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "rrdp_adls_file",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "stg_rapid",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Rapid Response"
+		},
+		"annotations": []
+	}
+}
