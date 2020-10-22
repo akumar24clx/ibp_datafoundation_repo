@@ -1,0 +1,27 @@
+{
+	"name": "rrdp_finance_feed_srcfile_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Rapid Response Sets"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "rrdp_c11_finance_feed.csv",
+				"folderPath": "Rapid_Response_Data_Feed",
+				"fileSystem": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
