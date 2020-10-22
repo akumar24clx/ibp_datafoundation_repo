@@ -1,0 +1,58 @@
+{
+	"name": "corp_calendar_table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQLDW_onprem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Rapid Response Sets"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "Fiscal_Year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Event",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rapid_Financial_Field",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Calendar_Event",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Feed_Date_Push_To_BW",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Date_Match_Flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "REC_CREATED",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "REC_MODIFIED",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "corp_calendar_event"
+		}
+	}
+}

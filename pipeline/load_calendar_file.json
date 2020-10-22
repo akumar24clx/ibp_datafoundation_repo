@@ -1,0 +1,190 @@
+{
+	"name": "load_calendar_file",
+	"properties": {
+		"activities": [
+			{
+				"name": "Load Corp calendar table",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Fiscal_Year",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Fiscal_Year",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Event",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Event",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Rapid_Financial_Field",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Rapid_Financial_Field",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Calendar_Event",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Calendar_Event",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Feed_Date_Push_To_BW",
+									"type": "DateTime",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Feed_Date_Push_To_BW",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "Date_Match_Flag",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Date_Match_Flag",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "rec_created",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "REC_CREATED",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"source": {
+									"name": "rec_modified",
+									"type": "DateTime",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "REC_MODIFIED",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false,
+							"dateTimeFormat": "dd-MM-yyyy"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "corp_calendar_manual_datafile",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "corp_calendar_table",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "getdate",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Load Corp calendar table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlDWSource",
+						"sqlReaderQuery": "SELECT CONVERT(datetime, GETDATE(),20) as at_start_time",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Audit_table5",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Rapid Response"
+		},
+		"annotations": []
+	}
+}

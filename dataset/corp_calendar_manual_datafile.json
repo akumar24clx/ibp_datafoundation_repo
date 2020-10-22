@@ -1,0 +1,48 @@
+{
+	"name": "corp_calendar_manual_datafile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Rapid Response Sets"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "corp_cal_manual_data.csv",
+				"folderPath": "Rapid_Response_Data_Feed",
+				"fileSystem": "matrix-raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Fiscal_Year",
+				"type": "String"
+			},
+			{
+				"name": "Event",
+				"type": "String"
+			},
+			{
+				"name": "Rapid_Financial_Field",
+				"type": "String"
+			},
+			{
+				"name": "Calendar_Event",
+				"type": "String"
+			},
+			{
+				"name": "Feed_Date_Push_To_BW",
+				"type": "String"
+			}
+		]
+	}
+}
