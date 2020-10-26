@@ -310,14 +310,14 @@
 													"storedProcedureParameters": {
 														"fisacal_year": {
 															"value": {
-																"value": "pipeline().parameters.fiscal_year",
+																"value": "@pipeline().parameters.fiscal_year\n",
 																"type": "Expression"
 															},
 															"type": "String"
 														},
 														"event_name": {
 															"value": {
-																"value": "pipeline().parameters.calendar_event",
+																"value": "@pipeline().parameters.calendar_event",
 																"type": "Expression"
 															},
 															"type": "String"
@@ -351,14 +351,14 @@
 													"storedProcedureParameters": {
 														"fisacal_year": {
 															"value": {
-																"value": "pipeline().parameters.fiscal_year\n\n",
+																"value": "@pipeline().parameters.fiscal_year\n\n",
 																"type": "Expression"
 															},
 															"type": "String"
 														},
 														"event_name": {
 															"value": {
-																"value": "pipeline().parameters.calendar_event",
+																"value": "@pipeline().parameters.calendar_event",
 																"type": "Expression"
 															},
 															"type": "String"
