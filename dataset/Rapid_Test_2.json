@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FtpServerLocation",
+				"fileName": "rrdp_c11_finance_feed.csv",
 				"folderPath": "/test/datastaging/bw/in/DPFINC11/"
 			},
 			"columnDelimiter": ",",
