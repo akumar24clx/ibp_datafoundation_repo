@@ -19,7 +19,7 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "FtpReadSettings",
-							"recursive": false,
+							"recursive": true,
 							"useBinaryTransfer": true
 						},
 						"formatSettings": {
