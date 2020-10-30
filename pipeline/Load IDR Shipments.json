@@ -2131,7 +2131,7 @@
 								"storedProcedureName": "[dbo].[SPRC_IDR_shipments_insert]"
 							},
 							"linkedServiceName": {
-								"referenceName": "AzureSQLDW",
+								"referenceName": "AzureSQLDW_onprem",
 								"type": "LinkedServiceReference"
 							}
 						}
