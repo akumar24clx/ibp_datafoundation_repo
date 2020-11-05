@@ -1,0 +1,20 @@
+{
+	"name": "rapid_test_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "rapid_msft_test",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
