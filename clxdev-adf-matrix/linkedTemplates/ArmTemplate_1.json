@@ -7,18 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "clxdev-adf-matrix"
 		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
-		"AzureBlobStorage_OnPrem_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage_OnPrem'"
-		},
-		"AzureSQLDW_onprem_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSQLDW_onprem'"
-		},
 		"KP_Oracle_IDR_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'KP_Oracle_IDR'"
@@ -80,57 +68,6 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-az-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage_OnPrem')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage_OnPrem_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSQLDW_onprem')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDW",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSQLDW_onprem_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "clxdev-onprem-ir-linked",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/KP_Oracle_IDR')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -779,9 +716,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CSV_Incremental_IDR_Litter_Orders_AZ')]",
@@ -1000,9 +935,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CSV_Incremental_IDR_Litter_Shipments')]",
@@ -1536,9 +1469,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CSV_Incremental_IDR_Litter_Shipments_AZ')]",
@@ -2073,9 +2004,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CSV_Incremental_IDR_Orders')]",
@@ -2295,9 +2224,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CSV_Incremental_IDR_Orders_AZ')]",
@@ -2305,7 +2232,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage_OnPrem",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -2517,9 +2444,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CSV_Incremental_IDR_Shipments')]",
@@ -2549,9 +2474,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CSV_Incremental_IDR_Shipments_AZ')]",
@@ -3089,9 +3012,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage_OnPrem')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
@@ -3127,9 +3048,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Query_SQLDW_Base_Shipments')]",
@@ -3151,9 +3070,7 @@
 					"table": "base_shipments"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSQLDW_onprem')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Customer')]",
@@ -3173,6 +3090,78 @@
 				"typeProperties": {
 					"schema": "CLXBW",
 					"table": "APO_BW_D_CUSTOMER"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Fiscal_cal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_FISCAL_CAL"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Fiscal_mth')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_FISCAL_MTH"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Oracle_IDR_dynamic')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Table_Oracle_IDR_BW_D_Material')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Oracle_IDR_dynamic",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Oracle - Tables"
+				},
+				"annotations": [],
+				"type": "OracleTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "CLXBW",
+					"table": "APO_BW_D_MATERIAL"
 				}
 			},
 			"dependsOn": [

@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "clxdev-adf-matrix"
 		},
+		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_Email_to": {
+			"type": "string",
+			"defaultValue": "abhijeet.kumar@bridgei2i.com"
+		},
 		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to": {
 			"type": "string",
 			"defaultValue": "Kalyani.Pernapati@clorox.com;abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com"
@@ -16,900 +20,6 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/Calendar_day_dim')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Stg_Calendar_day",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "OracleSource",
-								"partitionOption": "None",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "SqlDWSink",
-								"preCopyScript": "truncate table dbo.stg_calendar_day",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": true,
-							"stagingSettings": {
-								"linkedServiceName": {
-									"referenceName": "AzureBlobStorage_OnPrem",
-									"type": "LinkedServiceReference"
-								},
-								"path": "matrix-stage/staging_area"
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "CAL_DATE",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "CAL_DATE",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_DATE_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_DATE_CODE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY_NO",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DAY_NO",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "MONTH_NO",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MONTH_NO",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK_NO",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WEEK_NO",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "YEAR_NO",
-											"type": "String"
-										},
-										"sink": {
-											"name": "YEAR_NO",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_QTR_NO",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FISCAL_QTR_NO",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_QTR_NO",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_QTR_NO",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "WK_CD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WK_CD",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "WK_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "WK_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "WK_STRT_DT",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "WK_STRT_DT",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "WK_END_DT",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "WK_END_DT",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_MNTH_CD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FISCAL_MNTH_CD",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_MNTH_DESC",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_MNTH_DESC",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "MNTH_STRT_DT",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "MNTH_STRT_DT",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "MNTH_END_DT",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "MNTH_END_DT",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "MNTH_TIMESPN",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "MNTH_TIMESPN",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_QTR_CD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FISCAL_QTR_CD",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "QTR_STRT_DT",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "QTR_STRT_DT",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "QTR_END_DT",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "QTR_END_DT",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_YR_CD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FISCAL_YR_CD",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_DATE_YYYYMMDD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_DATE_YYYYMMDD",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_DATE_MMDDYYYY",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_DATE_MMDDYYYY",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_MNTH_YYYYMM",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_MNTH_YYYYMM",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_MNTH_MMYYYY",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_MNTH_MMYYYY",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "WK_STRT_DT_MMDDYYYY",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WK_STRT_DT_MMDDYYYY",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "WK_END_DT_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WK_END_DT_CODE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_MNTH_NAME",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_MNTH_NAME",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_MNTH_DESC1",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_MNTH_DESC1",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "MNTH_END_DT_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "MNTH_END_DT_CODE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_MONTH",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_MONTH",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_QTR_DESC",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FISCAL_QTR_DESC",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_QTR_DESC_YYYYQQ",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FISCAL_QTR_DESC_YYYYQQ",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "WEEK_DESC",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WEEK_DESC",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_CAL_MONTH",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LYR_CAL_MONTH",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_FISCAL_CD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LYR_FISCAL_CD",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "CAL_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "PREV_DAY_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "PREV_DAY_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "MNTH_STRT_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "MNTH_STRT_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_YR_STRT_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "FISCAL_YR_STRT_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_FISCAL_YR_STRT_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_FISCAL_YR_STRT_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_FISCAL_YR_END_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_FISCAL_YR_END_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_MNTH_STRT_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_MNTH_STRT_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_MNTH_END_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_MNTH_END_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "PRIOR_52WK_BEGIN_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "PRIOR_52WK_BEGIN_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "PRIOR_3MTH_BEGIN_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "PRIOR_3MTH_BEGIN_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "PRIOR_12MTH_BEGIN_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "PRIOR_12MTH_BEGIN_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_PRIOR_52WK_BEGIN_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_PRIOR_52WK_BEGIN_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_PRIOR_3MTH_BEGIN_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_PRIOR_3MTH_BEGIN_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_PRIOR_12MTH_BEGIN_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_PRIOR_12MTH_BEGIN_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "NXTYR_MNTH_END_DT_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "NXTYR_MNTH_END_DT_CODE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_QTR_END_DT_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FISCAL_QTR_END_DT_CODE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "FISCAL_YR_END_DT_CODE",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FISCAL_YR_END_DT_CODE",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CAL_WEEK",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CAL_WEEK",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "QTR_STRT_DT_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "QTR_STRT_DT_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "QTR_END_DT_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "QTR_END_DT_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_QTR_STRT_DT_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_QTR_STRT_DT_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_QTR_END_DT_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_QTR_END_DT_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "DAY_NAME",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DAY_NAME",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PRIOR_WK_END_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "PRIOR_WK_END_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "PRIOR_MNTH_END_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "PRIOR_MNTH_END_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_PRIOR_WK_END_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_PRIOR_WK_END_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "LYR_PRIOR_MNTH_END_DATE_NBR",
-											"type": "Double"
-										},
-										"sink": {
-											"name": "LYR_PRIOR_MNTH_END_DATE_NBR",
-											"type": "Single",
-											"physicalType": "float"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Table_Oracle_IDR_BW_D_Fiscal_cal",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Table_SQLDW_Staging_Calendar_day",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "SPRC_Internal_Dim_Calendar_day",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Stg_Calendar_day",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[SPRC_Internal_Dim_Calendar_day]",
-							"storedProcedureParameters": {
-								"start_date": {
-									"value": null,
-									"type": "Datetime"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSQLDW_onprem",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Src_to_Target_Lookup",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "SPRC_Internal_Dim_Calendar_day",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlDWSource",
-								"sqlReaderQuery": "select Source_count as Source_Count, Target_Count from dbo.etl_audit_log where batch_id = (select max(batch_id)\nfrom dbo.etl_audit_log where Activity_Name = 'SPRC_Internal_Dim_Calendar_day') ",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "Table_SQLDW_etl_audit_log1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Check for Src to Tgt match",
-						"type": "IfCondition",
-						"dependsOn": [
-							{
-								"activity": "Src_to_Target_Lookup",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@equals(activity('Src_to_Target_Lookup').output.firstRow.Source_Count,activity('Src_to_Target_Lookup').output.firstRow.Target_Count)",
-								"type": "Expression"
-							},
-							"ifFalseActivities": [
-								{
-									"name": "AT_WEB_ProfitCenter_Dim_Load_Error",
-									"type": "WebActivity",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
-										"method": "POST",
-										"headers": {
-											"Content-Type": "application/json"
-										},
-										"body": {
-											"DataFactoryName": "@{pipeline().DataFactory}",
-											"Status": "Failed",
-											"Env": "Dev",
-											"PipelineName": "@{pipeline().Pipeline}",
-											"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com;kalyani.Pernapati@clorox.com",
-											"MessageBody1": "Hi All,",
-											"MessageBody2": "This is an email notification generated from Azure Data Factory for data ingestion in Calendar Day dim (dbo.calendar_day_dim) table.",
-											"MessageBody3": "Please find below the pipeline execution details:",
-											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
-											"MessageBody5": " - Thanks"
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"folder": {
-					"name": "Clorox - Dimensions/Clorox Internal Dim"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Calendar_mth_dim')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -2375,34 +1485,95 @@
 							},
 							"ifFalseActivities": [
 								{
-									"name": "QC Check - Failure Alert 1",
-									"type": "ExecutePipeline",
+									"name": "AT_WEB_Orders_Load_Error3",
+									"type": "WebActivity",
 									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
 									"userProperties": [],
 									"typeProperties": {
-										"pipeline": {
-											"referenceName": "Send email on failure2",
-											"type": "PipelineReference"
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
 										},
-										"waitOnCompletion": true,
-										"parameters": {
-											"EmailTo": {
-												"value": "@pipeline().parameters.Email_to",
-												"type": "Expression"
-											},
-											"Subject": "IDR Orders Ingestion Error",
-											"DataFactoryName": {
-												"value": "@pipeline().DataFactory",
-												"type": "Expression"
-											},
-											"PipelineName": "Load IDR Shipments",
-											"Activity": "QC Check - Copy IDR To Storage",
-											"ErrorMessage": "Record counts between IDR and storage file didn't match, please check the ADF pipeline"
+										"body": {
+											"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Orders pipeline.\nThe source to storage count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+											"type": "Expression"
 										}
 									}
 								}
 							],
 							"ifTrueActivities": [
+								{
+									"name": "Get Staging Record Count",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "Load SQLDW Staging",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "SqlDWSource",
+											"sqlReaderQuery": "select count(*) as staging_record_count from stg_orders",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "Table_SQLDW_Staging_Orders",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									}
+								},
+								{
+									"name": "AT_WEB_Orders_Load_Error2",
+									"type": "WebActivity",
+									"dependsOn": [
+										{
+											"activity": "Load SQLDW Staging",
+											"dependencyConditions": [
+												"Failed"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Orders pipeline.\nAn error occurred in the staging table (dbo.stg_orders) in SQL DW.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+											"type": "Expression"
+										}
+									}
+								},
 								{
 									"name": "Load SQLDW Staging",
 									"type": "Copy",
@@ -2438,8 +1609,8 @@
 											"mappings": [
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 1
+														"name": "ORD_CREATED_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_created_date_code",
@@ -2448,8 +1619,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 2
+														"name": "SO_DOC_NBR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "so_doc_nbr",
@@ -2458,8 +1629,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 3
+														"name": "ORD_LINE_ITEM_NBR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_line_item_nbr",
@@ -2468,8 +1639,7 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 4
+														"name": "PROFIT_CENTER_CODE"
 													},
 													"sink": {
 														"name": "profit_center_code",
@@ -2478,8 +1648,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 5
+														"name": "CTRL_AREA_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ctrl_area_code",
@@ -2488,8 +1658,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 6
+														"name": "SHIPPINGPOINT_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "shippingpoint_code",
@@ -2498,8 +1668,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 7
+														"name": "FISCAL_YR_VARIANT_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "fiscal_yr_variant_code",
@@ -2508,8 +1678,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 8
+														"name": "ORD_HDR_CREATED_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_hdr_created_date_code",
@@ -2518,8 +1688,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 9
+														"name": "PLANNED_PGI_DATE_YYYYMM",
+														"type": "String"
 													},
 													"sink": {
 														"name": "planned_pgi_date_yyyymm",
@@ -2528,8 +1698,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 10
+														"name": "BILLTO_CUSTOMER_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "billto_customer_code",
@@ -2538,8 +1708,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 11
+														"name": "SHIPTO_CUSTOMER_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "shipto_customer_code",
@@ -2548,8 +1718,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 12
+														"name": "SOLDTO_CUSTOMER_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "soldto_customer_code",
@@ -2558,8 +1728,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 13
+														"name": "PAYER_CUSTOMER_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "payer_customer_code",
@@ -2568,8 +1738,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 14
+														"name": "BROKER_CUSTOMER_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "broker_customer_code",
@@ -2578,8 +1748,7 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 15
+														"name": "MATERIAL_NUM"
 													},
 													"sink": {
 														"name": "material_num",
@@ -2588,8 +1757,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 16
+														"name": "MILITARY_MATERIAL_NUM",
+														"type": "String"
 													},
 													"sink": {
 														"name": "military_material_num",
@@ -2598,8 +1767,7 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 17
+														"name": "SAP_UPC_NUM"
 													},
 													"sink": {
 														"name": "sap_upc_num",
@@ -2608,8 +1776,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 18
+														"name": "SALES_DIVISION_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "sales_division_code",
@@ -2618,8 +1786,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 19
+														"name": "SALES_DISTRICT_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "sales_district_code",
@@ -2628,8 +1796,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 20
+														"name": "DOC_CLASS_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "doc_class_code",
@@ -2638,8 +1806,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 21
+														"name": "SD_DOC_CATEGORY_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "sd_doc_category_code",
@@ -2648,8 +1816,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 22
+														"name": "SO_DOC_TYPE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "so_doc_type",
@@ -2658,8 +1826,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 23
+														"name": "ITEM_CATEGORY_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "item_category_code",
@@ -2668,8 +1836,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 24
+														"name": "ORD_PLANNED_GI_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_planned_gi_date_code",
@@ -2678,8 +1846,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 25
+														"name": "PLANNED_GI_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "planned_gi_date_code",
@@ -2688,8 +1856,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 26
+														"name": "DELIVERY_PLANNED_GI_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "delivery_planned_gi_date_code",
@@ -2698,8 +1866,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 27
+														"name": "MAT_AVAILABLE_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "mat_available_date_code",
@@ -2708,8 +1876,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 28
+														"name": "ACTUAL_GI_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "actual_gi_date_code",
@@ -2718,8 +1886,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 29
+														"name": "PO_DOC_NBR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "po_doc_nbr",
@@ -2728,8 +1896,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 30
+														"name": "ACCT_ASSIGNMENT_GRP_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "acct_assignment_grp_code",
@@ -2738,8 +1906,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 31
+														"name": "COMPANY_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "company_code",
@@ -2748,8 +1916,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 32
+														"name": "SHIP_FROM_PLANT_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ship_from_plant_code",
@@ -2758,8 +1926,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 33
+														"name": "SALES_GROUP_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "sales_group_code",
@@ -2768,8 +1936,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 34
+														"name": "OMS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "oms",
@@ -2778,8 +1946,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 35
+														"name": "SHIPPING_TYPE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "shipping_type_code",
@@ -2788,8 +1956,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 36
+														"name": "SHIPPING_CONDITION_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "shipping_condition_code",
@@ -2798,8 +1966,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 37
+														"name": "FORWARDING_AGENT",
+														"type": "String"
 													},
 													"sink": {
 														"name": "forwarding_agent",
@@ -2808,8 +1976,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 38
+														"name": "DIVISION_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "division_code",
@@ -2818,8 +1986,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 39
+														"name": "DISTRIB_CHANNEL_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "distrib_channel_code",
@@ -2828,8 +1996,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 40
+														"name": "BILLING_BLOCK_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "billing_block_code",
@@ -2838,8 +2006,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 41
+														"name": "DELIVERY_BLOCK_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "delivery_block_code",
@@ -2848,8 +2016,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 42
+														"name": "CLX_PO_TYPE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "clx_po_type",
@@ -2858,8 +2026,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 43
+														"name": "SHIP_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ship_date_code",
@@ -2868,8 +2036,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 44
+														"name": "CUSTOMER_REQUESTED_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "customer_requested_date_code",
@@ -2878,8 +2046,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 45
+														"name": "BRACKET_PRICE_OVERRIDE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "bracket_price_override_code",
@@ -2888,8 +2056,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 46
+														"name": "EXPECTED_PRICE_STATUS_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "expected_price_status_code",
@@ -2898,8 +2066,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 47
+														"name": "STATS_UPDATE_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "stats_update_date_code",
@@ -2908,8 +2076,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 48
+														"name": "MULTIPLE_ORDER",
+														"type": "String"
 													},
 													"sink": {
 														"name": "multiple_order",
@@ -2918,8 +2086,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 49
+														"name": "DELIVERY_NBR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "delivery_nbr",
@@ -2928,8 +2096,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 50
+														"name": "ORD_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_qty",
@@ -2938,8 +2106,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 51
+														"name": "NUMBER_OF_DOC_ITEMS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "number_of_doc_items",
@@ -2948,8 +2116,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 52
+														"name": "ACTUAL_DELIVERY_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "actual_delivery_qty",
@@ -2958,8 +2126,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 53
+														"name": "DELIVERY_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "delivery_qty",
@@ -2968,8 +2136,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 54
+														"name": "ORD_QTY_PURCHASE_UOM",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_qty_purchase_uom",
@@ -2978,8 +2146,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 55
+														"name": "BW_ORD_QTY_NG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "bw_ord_qty_ng",
@@ -2988,8 +2156,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 56
+														"name": "BW_ORD_QTY_LIQUIDATION",
+														"type": "String"
 													},
 													"sink": {
 														"name": "bw_ord_qty_liquidation",
@@ -2998,8 +2166,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 57
+														"name": "BW_DOS_ORD_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "bw_dos_ord_qty",
@@ -3008,8 +2176,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 58
+														"name": "BW_ORD_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "bw_ord_qty",
@@ -3018,8 +2186,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 59
+														"name": "BW_ORD_AC_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "bw_ord_ac_qty",
@@ -3028,8 +2196,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 60
+														"name": "CML_CF_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cml_cf_qty",
@@ -3038,8 +2206,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 61
+														"name": "CML_CD_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cml_cd_qty",
@@ -3048,8 +2216,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 62
+														"name": "CML_ORDER_QTY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cml_order_qty",
@@ -3058,8 +2226,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 63
+														"name": "NETPRC_EXOFFINVDISC_AMT_STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "netprc_exoffinvdisc_amt_stcurr",
@@ -3068,8 +2236,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 64
+														"name": "OFFINVDISC_AMT_STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "offinvdisc_amt_stcurr",
@@ -3078,8 +2246,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 65
+														"name": "NETVAL_DISCSURCHRG_AMT_STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "netval_discsurchrg_amt_stcurr",
@@ -3088,8 +2256,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 66
+														"name": "UNSALEABLE_AMT_STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "unsaleable_amt_stcurr",
@@ -3098,8 +2266,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 67
+														"name": "CUSTOMER_EXPECTED_PRICE_STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "customer_expected_price_stcurr",
@@ -3108,8 +2276,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 68
+														"name": "BROKER_COMM_AMT_STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "broker_comm_amt_stcurr",
@@ -3118,8 +2286,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 69
+														"name": "NET_ORD_AMT_STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "net_ord_amt_stcurr",
@@ -3128,8 +2296,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 70
+														"name": "COST_AMT_STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cost_amt_stcurr",
@@ -3138,8 +2306,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 71
+														"name": "GROSS_WEIGHT_KG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "gross_weight_kg",
@@ -3148,8 +2316,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 72
+														"name": "NET_WEIGHT_KG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "net_weight_kg",
@@ -3158,8 +2326,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 73
+														"name": "VOLUME_CUBIC_DECS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "volume_cubic_decs",
@@ -3168,8 +2336,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 74
+														"name": "ORD_QTY_EACHES",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_qty_eaches",
@@ -3178,8 +2346,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 75
+														"name": "ORD_QTY_SC",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_qty_sc",
@@ -3188,8 +2356,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 76
+														"name": "ORD_QTY_CS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_qty_cs",
@@ -3198,8 +2366,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 77
+														"name": "GI_DATE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "gi_date",
@@ -3208,8 +2376,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 78
+														"name": "ACTUAL_GI_DATE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "actual_gi_date",
@@ -3218,8 +2386,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 79
+														"name": "DOS_PGI_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "dos_pgi_date_code",
@@ -3228,8 +2396,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 80
+														"name": "UOM_BASE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "uom_base",
@@ -3238,8 +2406,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 81
+														"name": "UOM_SALES",
+														"type": "String"
 													},
 													"sink": {
 														"name": "uom_sales",
@@ -3248,8 +2416,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 82
+														"name": "UOM",
+														"type": "String"
 													},
 													"sink": {
 														"name": "uom",
@@ -3258,8 +2426,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 83
+														"name": "UOM_SCS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "uom_scs",
@@ -3268,8 +2436,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 84
+														"name": "UOM_PAL",
+														"type": "String"
 													},
 													"sink": {
 														"name": "uom_pal",
@@ -3278,8 +2446,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 85
+														"name": "UOM_LAY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "uom_lay",
@@ -3288,8 +2456,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 86
+														"name": "NO_OF_EMPLOYEES",
+														"type": "String"
 													},
 													"sink": {
 														"name": "no_of_employees",
@@ -3298,8 +2466,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 87
+														"name": "STCURR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "stcurr",
@@ -3308,8 +2476,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 88
+														"name": "SUBSTITUTION_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "substitution_reason",
@@ -3318,8 +2486,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 89
+														"name": "REJECTION_STATUS_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "rejection_status_code",
@@ -3328,8 +2496,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 90
+														"name": "EXCEPTION_RESPONSIBLE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "exception_responsible_code",
@@ -3338,8 +2506,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 91
+														"name": "EQUIP_TYPE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "equip_type_code",
@@ -3348,8 +2516,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 92
+														"name": "EDI_CUSTOMER_NBR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "edi_customer_nbr",
@@ -3358,8 +2526,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 93
+														"name": "CREATED_BY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "created_by",
@@ -3368,8 +2536,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 94
+														"name": "SALES_DEAL_NBR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "sales_deal_nbr",
@@ -3378,8 +2546,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 95
+														"name": "ACKNOWLEDGED_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "acknowledged_date_code",
@@ -3388,8 +2556,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 96
+														"name": "CANCEL_BY_RQST_ARR_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cancel_by_rqst_arr_date_code",
@@ -3398,8 +2566,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 97
+														"name": "CANCEL_BY_RQST_SHIP_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cancel_by_rqst_ship_date_code",
@@ -3408,8 +2576,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 98
+														"name": "CONVERSION_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "conversion_date_code",
@@ -3418,8 +2586,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 99
+														"name": "DECLINED_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "declined_date_code",
@@ -3428,8 +2596,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 100
+														"name": "PRICING_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "pricing_date_code",
@@ -3438,8 +2606,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 101
+														"name": "SERVICE_RENDERED_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "service_rendered_date_code",
@@ -3448,8 +2616,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 102
+														"name": "QUOTE_VALID_TO_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "quote_valid_to_date_code",
@@ -3458,8 +2626,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 103
+														"name": "LAST_ACTION_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "last_action_date_code",
@@ -3468,8 +2636,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 104
+														"name": "NOT_BEFORE_RQST_ARR_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "not_before_rqst_arr_date_code",
@@ -3478,8 +2646,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 105
+														"name": "NOT_BEFORE_RQST_SHIP_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "not_before_rqst_ship_date_code",
@@ -3488,8 +2656,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 106
+														"name": "QUOTE_VALID_FROM_DATE_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "quote_valid_from_date_code",
@@ -3498,8 +2666,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 107
+														"name": "CREATED_TIME",
+														"type": "String"
 													},
 													"sink": {
 														"name": "created_time",
@@ -3508,8 +2676,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 108
+														"name": "UOM_WEIGHT",
+														"type": "String"
 													},
 													"sink": {
 														"name": "uom_weight",
@@ -3518,8 +2686,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 109
+														"name": "POOLING_ELIGIBILITY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "pooling_eligibility",
@@ -3528,8 +2696,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 110
+														"name": "PICK_METHOD_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "pick_method_code",
@@ -3538,8 +2706,7 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 111
+														"name": "GROSS_WEIGHT"
 													},
 													"sink": {
 														"name": "gross_weight",
@@ -3548,8 +2715,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 112
+														"name": "NO_OF_CASES_PER_PALLET",
+														"type": "String"
 													},
 													"sink": {
 														"name": "no_of_cases_per_pallet",
@@ -3558,8 +2725,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 113
+														"name": "NO_OF_CASES_PER_LAYER",
+														"type": "String"
 													},
 													"sink": {
 														"name": "no_of_cases_per_layer",
@@ -3568,8 +2735,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 114
+														"name": "CUSTOMER_LEAD_TIME",
+														"type": "String"
 													},
 													"sink": {
 														"name": "customer_lead_time",
@@ -3578,8 +2745,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 115
+														"name": "NO_OF_LAYERS_PER_PALLET",
+														"type": "String"
 													},
 													"sink": {
 														"name": "no_of_layers_per_pallet",
@@ -3588,8 +2755,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 116
+														"name": "LOOSE_PICK_RATE_CS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "loose_pick_rate_cs",
@@ -3598,8 +2765,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 117
+														"name": "LOOSE_PICK_QTY_CS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "loose_pick_qty_cs",
@@ -3608,8 +2775,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 118
+														"name": "LOOSE_PICK_COST_CS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "loose_pick_cost_cs",
@@ -3618,8 +2785,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 119
+														"name": "LOOSE_PICK_RATE_LAY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "loose_pick_rate_lay",
@@ -3628,8 +2795,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 120
+														"name": "PICK_QTY_LAY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "pick_qty_lay",
@@ -3638,8 +2805,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 121
+														"name": "BROKER_LAYERS_PICKED",
+														"type": "String"
 													},
 													"sink": {
 														"name": "broker_layers_picked",
@@ -3648,8 +2815,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 122
+														"name": "LOOSE_PICK_COST_LAY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "loose_pick_cost_lay",
@@ -3658,8 +2825,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 123
+														"name": "LOOSE_LAY_PICK_QTY_CS",
+														"type": "String"
 													},
 													"sink": {
 														"name": "loose_lay_pick_qty_cs",
@@ -3668,8 +2835,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 124
+														"name": "CURRENCY_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "currency_code",
@@ -3678,8 +2845,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 125
+														"name": "REF_DOC_NBR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ref_doc_nbr",
@@ -3688,8 +2855,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 126
+														"name": "REF_ITEM_NBR",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ref_item_nbr",
@@ -3698,8 +2865,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 127
+														"name": "DIVISION_HEADER_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "division_header_code",
@@ -3708,8 +2875,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 128
+														"name": "SD_REF_DOC_CATEGORY",
+														"type": "String"
 													},
 													"sink": {
 														"name": "sd_ref_doc_category",
@@ -3718,8 +2885,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 129
+														"name": "ORG_LEAD_TIME_ERROR_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "org_lead_time_error_code",
@@ -3728,8 +2895,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 130
+														"name": "EXPECTED_PRICE_ERROR_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "expected_price_error_code",
@@ -3738,8 +2905,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 131
+														"name": "MULTIPLE_ORDER_ERROR_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "multiple_order_error_code",
@@ -3748,8 +2915,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 132
+														"name": "MATERIAL_REASON_ERROR_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "material_reason_error_code",
@@ -3758,8 +2925,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 133
+														"name": "LEAD_TIME_ERROR_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "lead_time_error_code",
@@ -3768,8 +2935,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 134
+														"name": "SALES_OFFICE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "sales_office",
@@ -3778,8 +2945,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 135
+														"name": "SALES_EMPLOYEE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "sales_employee",
@@ -3788,8 +2955,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 136
+														"name": "IO_STATUS_CODE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "io_status_code",
@@ -3798,8 +2965,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 137
+														"name": "CREDIT_DEBIT_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "credit_debit_flg",
@@ -3808,8 +2975,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 138
+														"name": "CPU_ERROR_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cpu_error_flg",
@@ -3818,8 +2985,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 139
+														"name": "DATE_ERROR_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "date_error_flg",
@@ -3828,8 +2995,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 140
+														"name": "DUPLICATE_PO_ERROR_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "duplicate_po_error_flg",
@@ -3838,8 +3005,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 141
+														"name": "PLOAD_ERROR_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "pload_error_flg",
@@ -3848,8 +3015,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 142
+														"name": "SRC_ERROR_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "src_error_flg",
@@ -3858,8 +3025,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 143
+														"name": "MANUAL_PRICE_DATE_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "manual_price_date_flg",
@@ -3868,8 +3035,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 144
+														"name": "ROUNDING_OCCURRED_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "rounding_occurred_flg",
@@ -3878,8 +3045,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 145
+														"name": "MAT_ERROR_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "mat_error_flg",
@@ -3888,8 +3055,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 146
+														"name": "MULTIPLE_ORD_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "multiple_ord_flg",
@@ -3898,8 +3065,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 147
+														"name": "CPU_RATE_ERROR_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cpu_rate_error_flg",
@@ -3908,8 +3075,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 148
+														"name": "CTS_HEADER_INDICATOR_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cts_header_indicator_flg",
@@ -3918,8 +3085,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 149
+														"name": "LEAD_TIME_COMPLIANCE_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "lead_time_compliance_flg",
@@ -3928,8 +3095,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 150
+														"name": "LT_COMPLY_NO_SO_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "lt_comply_no_so_flg",
@@ -3938,8 +3105,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 151
+														"name": "ORD_ITEMS_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_items_flg",
@@ -3948,8 +3115,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 152
+														"name": "ORD_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "ord_reason",
@@ -3958,8 +3125,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 153
+														"name": "REJECTION_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "rejection_reason",
@@ -3968,8 +3135,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 154
+														"name": "MATERIAL_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "material_reason",
@@ -3978,8 +3145,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 155
+														"name": "EXCEPTION_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "exception_reason",
@@ -3988,8 +3155,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 156
+														"name": "CPU_ERROR_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "cpu_error_reason",
@@ -3998,8 +3165,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 157
+														"name": "DATE_ERROR_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "date_error_reason",
@@ -4008,8 +3175,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 158
+														"name": "PLOAD_ERROR_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "pload_error_reason",
@@ -4018,8 +3185,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 159
+														"name": "SOURCE_ERROR_REASON",
+														"type": "String"
 													},
 													"sink": {
 														"name": "source_error_reason",
@@ -4028,8 +3195,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 160
+														"name": "BW_RECORD_CHANGE_FLG",
+														"type": "String"
 													},
 													"sink": {
 														"name": "bw_record_change_flg",
@@ -4038,8 +3205,8 @@
 												},
 												{
 													"source": {
-														"type": "String",
-														"ordinal": 161
+														"name": "LOAD_DATE",
+														"type": "String"
 													},
 													"sink": {
 														"name": "load_date",
@@ -4063,76 +3230,6 @@
 											"parameters": {}
 										}
 									]
-								},
-								{
-									"name": "Get Staging Record Count",
-									"type": "Lookup",
-									"dependsOn": [
-										{
-											"activity": "Load SQLDW Staging",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "SqlDWSource",
-											"sqlReaderQuery": "select count(*) as staging_record_count from stg_orders",
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"dataset": {
-											"referenceName": "Table_SQLDW_Staging_Orders",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									}
-								},
-								{
-									"name": "Failure Alert - 2",
-									"type": "ExecutePipeline",
-									"dependsOn": [
-										{
-											"activity": "Load SQLDW Staging",
-											"dependencyConditions": [
-												"Failed"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "Send email on failure2",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {
-											"EmailTo": {
-												"value": "@pipeline().parameters.Email_to",
-												"type": "Expression"
-											},
-											"Subject": "IDR Orders Ingestion Error",
-											"DataFactoryName": {
-												"value": "@pipeline().DataFactory",
-												"type": "Expression"
-											},
-											"PipelineName": "Load IDR Orders",
-											"Activity": "Load SQLDW Staging",
-											"ErrorMessage": {
-												"value": "@activity('Load SQLDW Staging').Error.Message",
-												"type": "Expression"
-											}
-										}
-									}
 								}
 							]
 						}
@@ -4156,71 +3253,31 @@
 							},
 							"ifFalseActivities": [
 								{
-									"name": "QC Check - Failure Alert 2",
-									"type": "ExecutePipeline",
+									"name": "AT_WEB_Orders_Load_Error5",
+									"type": "WebActivity",
 									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
 									"userProperties": [],
 									"typeProperties": {
-										"pipeline": {
-											"referenceName": "Send email on failure2",
-											"type": "PipelineReference"
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
 										},
-										"waitOnCompletion": true,
-										"parameters": {
-											"EmailTo": {
-												"value": "@pipeline().parameters.Email_to",
-												"type": "Expression"
-											},
-											"Subject": "IDR Orders Ingestion Error",
-											"DataFactoryName": {
-												"value": "@pipeline().DataFactory",
-												"type": "Expression"
-											},
-											"PipelineName": "Load IDR Orders",
-											"Activity": "QC Check - Storage to SQLDW Staging",
-											"ErrorMessage": "Record counts between incremental data file and SQLDW \nstaging did not match, please check the ADF pipeline"
+										"body": {
+											"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Orders pipeline.\nThe storage to staging count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+											"type": "Expression"
 										}
 									}
 								}
 							],
 							"ifTrueActivities": [
-								{
-									"name": "Failure Alert - 3",
-									"type": "ExecutePipeline",
-									"dependsOn": [
-										{
-											"activity": "Load Orders Target Table",
-											"dependencyConditions": [
-												"Failed"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "Send email on failure2",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {
-											"EmailTo": {
-												"value": "@pipeline().parameters.Email_to",
-												"type": "Expression"
-											},
-											"Subject": "IDR Orders Ingestion Error",
-											"DataFactoryName": {
-												"value": "@pipeline().DataFactory",
-												"type": "Expression"
-											},
-											"PipelineName": "Load IDR Orders",
-											"Activity": "Load SQLDW Target",
-											"ErrorMessage": {
-												"value": "@activity('Load Orders Target Table').Error.Message",
-												"type": "Expression"
-											}
-										}
-									}
-								},
 								{
 									"name": "Get Target Record Count",
 									"type": "Lookup",
@@ -4276,48 +3333,39 @@
 										"referenceName": "AzureSQLDW_onprem",
 										"type": "LinkedServiceReference"
 									}
+								},
+								{
+									"name": "AT_WEB_Orders_Load_Error4",
+									"type": "WebActivity",
+									"dependsOn": [
+										{
+											"activity": "Load Orders Target Table",
+											"dependencyConditions": [
+												"Failed"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
+										},
+										"body": {
+											"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Orders pipeline.\nAn error occurred in the target table (dbo.base_orders) in SQL DW.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+											"type": "Expression"
+										}
+									}
 								}
 							]
-						}
-					},
-					{
-						"name": "Failure Alert - 1",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Copy IDR To Storage",
-								"dependencyConditions": [
-									"Failed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Send email on failure2",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"EmailTo": {
-									"value": "@pipeline().parameters.Email_to",
-									"type": "Expression"
-								},
-								"Subject": "IDR Orders Ingestion Error",
-								"DataFactoryName": {
-									"value": "@pipeline().DataFactory",
-									"type": "Expression"
-								},
-								"PipelineName": {
-									"value": "Load IDR Orders",
-									"type": "Expression"
-								},
-								"Activity": "Copy IDR to Storage",
-								"ErrorMessage": {
-									"value": "@activity('Copy IDR To Storage').Error.Message",
-									"type": "Expression"
-								}
-							}
 						}
 					},
 					{
@@ -4339,62 +3387,95 @@
 							},
 							"ifFalseActivities": [
 								{
-									"name": "QC Check - Failure Alert 3",
-									"type": "ExecutePipeline",
+									"name": "AT_WEB_Orders_Load_Error6",
+									"type": "WebActivity",
 									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
 									"userProperties": [],
 									"typeProperties": {
-										"pipeline": {
-											"referenceName": "Send email on failure2",
-											"type": "PipelineReference"
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
 										},
-										"waitOnCompletion": true,
-										"parameters": {
-											"EmailTo": {
-												"value": "@pipeline().parameters.Email_to",
-												"type": "Expression"
-											},
-											"Subject": "IDR Orders Ingestion Error",
-											"DataFactoryName": {
-												"value": "@pipeline().DataFactory",
-												"type": "Expression"
-											},
-											"PipelineName": "Load IDR Shipments",
-											"Activity": "QC Check - Load Staging to Target",
-											"ErrorMessage": "Record counts between SQLDW staging and Target\ndoesn't match, please check the ADF pipeline"
+										"body": {
+											"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Orders pipeline.\nThe staging to target count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+											"type": "Expression"
 										}
 									}
 								}
 							],
 							"ifTrueActivities": [
 								{
-									"name": "Pipeline Success Notification",
-									"type": "ExecutePipeline",
+									"name": "Job_Completion_Alert",
+									"type": "WebActivity",
 									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
 									"userProperties": [],
 									"typeProperties": {
-										"pipeline": {
-											"referenceName": "Send email on success2",
-											"type": "PipelineReference"
+										"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+										"method": "POST",
+										"headers": {
+											"Content-Type": "application/json"
 										},
-										"waitOnCompletion": true,
-										"parameters": {
-											"EmailTo": {
-												"value": "@pipeline().parameters.Email_to",
-												"type": "Expression"
-											},
-											"Subject": "ADF pipeline Load IDR Litter Shipments finished successfully",
-											"DataFactoryName": {
-												"value": "@pipeline().DataFactory",
-												"type": "Expression"
-											},
-											"PipelineName": "Load IDR Litter Shipments",
-											"Activity": "Load IDR Litter Shipments",
-											"ErrorMessage": "No errors"
+										"body": {
+											"DataFactoryName": "@{pipeline().DataFactory}",
+											"Status": "Successful",
+											"Env": "Dev",
+											"PipelineName": "@{pipeline().Pipeline}",
+											"EmailTo": "abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com",
+											"MessageBody1": "Hi All,",
+											"MessageBody2": "This is an email notification generated from Azure Data Factory for IDR Orders ingestion.",
+											"MessageBody3": "Please find below the pipeline execution details:",
+											"MessageBody4": "Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.",
+											"MessageBody5": " - Thanks"
 										}
 									}
 								}
 							]
+						}
+					},
+					{
+						"name": "AT_WEB_Orders_Load_Error1",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Copy IDR To Storage",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-74.eastus.logic.azure.com:443/workflows/fcdadf6c1fd24df49ca9c84e067a3de9/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=lPUHEE7BF3jMUorm7pk5jSUxYCGZun5GwDA9oNLOwNc",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Orders pipeline.\nAn error occurred in the incremental file in ADLS .\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -9434,7 +8515,14 @@
 					{
 						"name": "Load SQLDW Staging",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Copy IDR To Storage_copy1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -11166,6 +10254,1720 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Copy IDR To Storage_copy1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Load SQLDW Staging_copy1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "OracleSource",
+								"oracleReaderQuery": {
+									"value": "select * \nfrom clxbw.apo_bw_b_order fact join clxbw.apo_bw_d_material mat on fact.material_num=mat.material_num\nwhere to_char(fact.load_date,'yyyymmdd') > 20201114",
+									"type": "Expression"
+								},
+								"partitionOption": "None",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Table_Oracle_IDR_Orders1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CSV_Incremental_IDR_Orders",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Load SQLDW Staging_copy1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"preCopyScript": "truncate table dbo.stg_orders",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ORD_CREATED_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_created_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SO_DOC_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "so_doc_nbr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_LINE_ITEM_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_line_item_nbr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PROFIT_CENTER_CODE"
+										},
+										"sink": {
+											"name": "profit_center_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CTRL_AREA_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ctrl_area_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPPINGPOINT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "shippingpoint_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FISCAL_YR_VARIANT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fiscal_yr_variant_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_HDR_CREATED_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_hdr_created_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PLANNED_PGI_DATE_YYYYMM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "planned_pgi_date_yyyymm",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "BILLTO_CUSTOMER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "billto_customer_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPTO_CUSTOMER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "shipto_customer_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SOLDTO_CUSTOMER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "soldto_customer_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PAYER_CUSTOMER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "payer_customer_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "BROKER_CUSTOMER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "broker_customer_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MATERIAL_NUM"
+										},
+										"sink": {
+											"name": "material_num",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MILITARY_MATERIAL_NUM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "military_material_num",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SAP_UPC_NUM"
+										},
+										"sink": {
+											"name": "sap_upc_num",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_DIVISION_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sales_division_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_DISTRICT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sales_district_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DOC_CLASS_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "doc_class_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SD_DOC_CATEGORY_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sd_doc_category_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SO_DOC_TYPE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "so_doc_type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ITEM_CATEGORY_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "item_category_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_PLANNED_GI_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_planned_gi_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PLANNED_GI_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "planned_gi_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DELIVERY_PLANNED_GI_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "delivery_planned_gi_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MAT_AVAILABLE_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "mat_available_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ACTUAL_GI_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "actual_gi_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PO_DOC_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "po_doc_nbr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ACCT_ASSIGNMENT_GRP_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "acct_assignment_grp_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "COMPANY_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "company_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIP_FROM_PLANT_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ship_from_plant_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_GROUP_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sales_group_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "OMS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "oms",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPPING_TYPE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "shipping_type_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIPPING_CONDITION_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "shipping_condition_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "FORWARDING_AGENT",
+											"type": "String"
+										},
+										"sink": {
+											"name": "forwarding_agent",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DIVISION_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "division_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DISTRIB_CHANNEL_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "distrib_channel_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "BILLING_BLOCK_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "billing_block_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DELIVERY_BLOCK_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "delivery_block_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CLX_PO_TYPE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "clx_po_type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SHIP_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ship_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_REQUESTED_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "customer_requested_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "BRACKET_PRICE_OVERRIDE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "bracket_price_override_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EXPECTED_PRICE_STATUS_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "expected_price_status_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "STATS_UPDATE_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "stats_update_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MULTIPLE_ORDER",
+											"type": "String"
+										},
+										"sink": {
+											"name": "multiple_order",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DELIVERY_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "delivery_nbr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "NUMBER_OF_DOC_ITEMS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "number_of_doc_items",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "ACTUAL_DELIVERY_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "actual_delivery_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "DELIVERY_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "delivery_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_QTY_PURCHASE_UOM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_qty_purchase_uom",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "BW_ORD_QTY_NG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "bw_ord_qty_ng",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "BW_ORD_QTY_LIQUIDATION",
+											"type": "String"
+										},
+										"sink": {
+											"name": "bw_ord_qty_liquidation",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "BW_DOS_ORD_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "bw_dos_ord_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "BW_ORD_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "bw_ord_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "BW_ORD_AC_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "bw_ord_ac_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "CML_CF_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cml_cf_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "CML_CD_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cml_cd_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "CML_ORDER_QTY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cml_order_qty",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "NETPRC_EXOFFINVDISC_AMT_STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "netprc_exoffinvdisc_amt_stcurr",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "OFFINVDISC_AMT_STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "offinvdisc_amt_stcurr",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "NETVAL_DISCSURCHRG_AMT_STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "netval_discsurchrg_amt_stcurr",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "UNSALEABLE_AMT_STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "unsaleable_amt_stcurr",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_EXPECTED_PRICE_STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "customer_expected_price_stcurr",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "BROKER_COMM_AMT_STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "broker_comm_amt_stcurr",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "NET_ORD_AMT_STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "net_ord_amt_stcurr",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "COST_AMT_STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cost_amt_stcurr",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "GROSS_WEIGHT_KG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "gross_weight_kg",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "NET_WEIGHT_KG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "net_weight_kg",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "VOLUME_CUBIC_DECS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "volume_cubic_decs",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_QTY_EACHES",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_qty_eaches",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_QTY_SC",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_qty_sc",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_QTY_CS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_qty_cs",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "GI_DATE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "gi_date",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "ACTUAL_GI_DATE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "actual_gi_date",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "DOS_PGI_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "dos_pgi_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM_BASE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "uom_base",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM_SALES",
+											"type": "String"
+										},
+										"sink": {
+											"name": "uom_sales",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM",
+											"type": "String"
+										},
+										"sink": {
+											"name": "uom",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM_SCS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "uom_scs",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM_PAL",
+											"type": "String"
+										},
+										"sink": {
+											"name": "uom_pal",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM_LAY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "uom_lay",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NO_OF_EMPLOYEES",
+											"type": "String"
+										},
+										"sink": {
+											"name": "no_of_employees",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "STCURR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "stcurr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SUBSTITUTION_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "substitution_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "REJECTION_STATUS_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "rejection_status_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EXCEPTION_RESPONSIBLE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "exception_responsible_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EQUIP_TYPE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "equip_type_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EDI_CUSTOMER_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "edi_customer_nbr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CREATED_BY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "created_by",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_DEAL_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sales_deal_nbr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ACKNOWLEDGED_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "acknowledged_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CANCEL_BY_RQST_ARR_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cancel_by_rqst_arr_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CANCEL_BY_RQST_SHIP_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cancel_by_rqst_ship_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CONVERSION_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "conversion_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DECLINED_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "declined_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PRICING_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pricing_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SERVICE_RENDERED_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "service_rendered_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "QUOTE_VALID_TO_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "quote_valid_to_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LAST_ACTION_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "last_action_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NOT_BEFORE_RQST_ARR_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "not_before_rqst_arr_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "NOT_BEFORE_RQST_SHIP_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "not_before_rqst_ship_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "QUOTE_VALID_FROM_DATE_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "quote_valid_from_date_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CREATED_TIME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "created_time",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "UOM_WEIGHT",
+											"type": "String"
+										},
+										"sink": {
+											"name": "uom_weight",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "POOLING_ELIGIBILITY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pooling_eligibility",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PICK_METHOD_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pick_method_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "GROSS_WEIGHT"
+										},
+										"sink": {
+											"name": "gross_weight",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "NO_OF_CASES_PER_PALLET",
+											"type": "String"
+										},
+										"sink": {
+											"name": "no_of_cases_per_pallet",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "NO_OF_CASES_PER_LAYER",
+											"type": "String"
+										},
+										"sink": {
+											"name": "no_of_cases_per_layer",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "CUSTOMER_LEAD_TIME",
+											"type": "String"
+										},
+										"sink": {
+											"name": "customer_lead_time",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "NO_OF_LAYERS_PER_PALLET",
+											"type": "String"
+										},
+										"sink": {
+											"name": "no_of_layers_per_pallet",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "LOOSE_PICK_RATE_CS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "loose_pick_rate_cs",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "LOOSE_PICK_QTY_CS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "loose_pick_qty_cs",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "LOOSE_PICK_COST_CS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "loose_pick_cost_cs",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "LOOSE_PICK_RATE_LAY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "loose_pick_rate_lay",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "PICK_QTY_LAY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pick_qty_lay",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "BROKER_LAYERS_PICKED",
+											"type": "String"
+										},
+										"sink": {
+											"name": "broker_layers_picked",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "LOOSE_PICK_COST_LAY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "loose_pick_cost_lay",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "LOOSE_LAY_PICK_QTY_CS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "loose_lay_pick_qty_cs",
+											"type": "Single"
+										}
+									},
+									{
+										"source": {
+											"name": "CURRENCY_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "currency_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "REF_DOC_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ref_doc_nbr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "REF_ITEM_NBR",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ref_item_nbr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DIVISION_HEADER_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "division_header_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SD_REF_DOC_CATEGORY",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sd_ref_doc_category",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ORG_LEAD_TIME_ERROR_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "org_lead_time_error_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EXPECTED_PRICE_ERROR_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "expected_price_error_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MULTIPLE_ORDER_ERROR_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "multiple_order_error_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MATERIAL_REASON_ERROR_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "material_reason_error_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LEAD_TIME_ERROR_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lead_time_error_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_OFFICE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sales_office",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SALES_EMPLOYEE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "sales_employee",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "IO_STATUS_CODE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "io_status_code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CREDIT_DEBIT_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "credit_debit_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CPU_ERROR_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cpu_error_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DATE_ERROR_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "date_error_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DUPLICATE_PO_ERROR_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "duplicate_po_error_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PLOAD_ERROR_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pload_error_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SRC_ERROR_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "src_error_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MANUAL_PRICE_DATE_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "manual_price_date_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ROUNDING_OCCURRED_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "rounding_occurred_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MAT_ERROR_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "mat_error_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MULTIPLE_ORD_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "multiple_ord_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CPU_RATE_ERROR_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cpu_rate_error_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CTS_HEADER_INDICATOR_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cts_header_indicator_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LEAD_TIME_COMPLIANCE_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lead_time_compliance_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LT_COMPLY_NO_SO_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "lt_comply_no_so_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_ITEMS_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_items_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ORD_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ord_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "REJECTION_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "rejection_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "MATERIAL_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "material_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EXCEPTION_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "exception_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CPU_ERROR_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "cpu_error_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "DATE_ERROR_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "date_error_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "PLOAD_ERROR_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pload_error_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "SOURCE_ERROR_REASON",
+											"type": "String"
+										},
+										"sink": {
+											"name": "source_error_reason",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "BW_RECORD_CHANGE_FLG",
+											"type": "String"
+										},
+										"sink": {
+											"name": "bw_record_change_flg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "LOAD_DATE",
+											"type": "String"
+										},
+										"sink": {
+											"name": "load_date",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_Incremental_IDR_Orders_AZ",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Table_SQLDW_Staging_Orders",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"annotations": []
@@ -11416,8 +12218,50 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Calendar_day_dim')]",
 				"[concat(variables('factoryId'), '/pipelines/Calendar_mth_dim')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Load_IDR_Orders_Weekly_Schedule')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Load IDR Orders",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Email_to": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_Email_to')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2020-04-08T19:00:00Z",
+						"timeZone": "UTC",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								7
+							],
+							"weekDays": [
+								"Wednesday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Load IDR Orders')]"
 			]
 		},
 		{
@@ -11426,7 +12270,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
