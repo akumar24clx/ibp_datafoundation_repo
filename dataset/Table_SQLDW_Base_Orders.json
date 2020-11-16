@@ -2,7 +2,7 @@
 	"name": "Table_SQLDW_Base_Orders",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSQLDW",
+			"referenceName": "AzureSQLDW_onprem",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
