@@ -103,10 +103,6 @@
 			"type": "string",
 			"defaultValue": "kpernapa"
 		},
-		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
-			"type": "string",
-			"defaultValue": "20200404"
-		},
 		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to": {
 			"type": "string",
 			"defaultValue": "Kalyani.Pernapati@clorox.com;abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com"
@@ -155,15 +151,6 @@
 					"RestService1_password": {
 						"value": "[parameters('RestService1_password')]"
 					},
-					"AzureBlobStorage1_connectionString": {
-						"value": "[parameters('AzureBlobStorage1_connectionString')]"
-					},
-					"AzureBlobStorage_OnPrem_connectionString": {
-						"value": "[parameters('AzureBlobStorage_OnPrem_connectionString')]"
-					},
-					"AzureSQLDW_onprem_connectionString": {
-						"value": "[parameters('AzureSQLDW_onprem_connectionString')]"
-					},
 					"HttpServer1_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					},
@@ -199,6 +186,15 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureBlobStorage_OnPrem_connectionString": {
+						"value": "[parameters('AzureBlobStorage_OnPrem_connectionString')]"
+					},
+					"AzureSQLDW_onprem_connectionString": {
+						"value": "[parameters('AzureSQLDW_onprem_connectionString')]"
 					},
 					"KP_Oracle_IDR_connectionString": {
 						"value": "[parameters('KP_Oracle_IDR_connectionString')]"
@@ -281,9 +277,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
-						"value": "[parameters('Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date')]"
 					},
 					"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to": {
 						"value": "[parameters('Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to')]"

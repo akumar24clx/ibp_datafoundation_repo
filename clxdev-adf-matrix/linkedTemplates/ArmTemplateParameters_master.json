@@ -77,9 +77,6 @@
 		"SAPBW_MDX_QA_properties_typeProperties_userName": {
 			"value": "kpernapa"
 		},
-		"Load_IDR_Orders_Weekly_Schedule_properties_Load IDR Orders_parameters_IDR_Load_Date": {
-			"value": "20200404"
-		},
 		"Load_IDR_Shipments_Weekly_Schedule_properties_Load IDR Shipments_parameters_Email_to": {
 			"value": "Kalyani.Pernapati@clorox.com;abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com"
 		},
