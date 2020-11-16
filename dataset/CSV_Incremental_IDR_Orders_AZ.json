@@ -2,7 +2,7 @@
 	"name": "CSV_Incremental_IDR_Orders_AZ",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage1",
+			"referenceName": "AzureBlobStorage_OnPrem",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
