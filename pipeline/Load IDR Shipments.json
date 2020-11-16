@@ -162,7 +162,10 @@
 								"headers": {
 									"Content-Type": "application/json"
 								},
-								"body": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in Shipments pipeline.\nThe source to storage count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}"
+								"body": {
+									"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Shipments pipeline.\nThe source to storage count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+									"type": "Expression"
+								}
 							}
 						}
 					],
@@ -224,7 +227,10 @@
 								"headers": {
 									"Content-Type": "application/json"
 								},
-								"body": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in Shipments pipeline.\nAn error occurred in the staging table (dbo.stg_shipments) in SQL DW.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}"
+								"body": {
+									"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Shipments pipeline.\nAn error occurred in the staging table (dbo.stg_shipments) in SQL DW.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+									"type": "Expression"
+								}
 							}
 						},
 						{
@@ -2000,7 +2006,10 @@
 								"headers": {
 									"Content-Type": "application/json"
 								},
-								"body": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in Shipments pipeline.\nThe storage to staging count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}"
+								"body": {
+									"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Shipments pipeline.\nThe storage to staging count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+									"type": "Expression"
+								}
 							}
 						}
 					],
@@ -2085,7 +2094,10 @@
 								"headers": {
 									"Content-Type": "application/json"
 								},
-								"body": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in Shipments pipeline.\nAn error occurred in the target table (dbo.base_shipments) in SQL DW.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}"
+								"body": {
+									"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Shipments pipeline.\nAn error occurred in the target table (dbo.base_shipments) in SQL DW.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+									"type": "Expression"
+								}
 							}
 						}
 					]
@@ -2127,7 +2139,10 @@
 								"headers": {
 									"Content-Type": "application/json"
 								},
-								"body": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in Shipments pipeline.\nThe staging to target count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}"
+								"body": {
+									"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Shipments pipeline.\nThe staging to target count is not matching.\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+									"type": "Expression"
+								}
 							}
 						}
 					],
@@ -2155,7 +2170,7 @@
 									"Status": "Successful",
 									"Env": "Dev",
 									"PipelineName": "@{pipeline().Pipeline}",
-									"EmailTo": "abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com",
+									"EmailTo": "abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com",
 									"MessageBody1": "Hi All,",
 									"MessageBody2": "This is an email notification generated from Azure Data Factory for IDR Shipments ingestion.",
 									"MessageBody3": "Please find below the pipeline execution details:",
@@ -2192,7 +2207,10 @@
 					"headers": {
 						"Content-Type": "application/json"
 					},
-					"body": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in Shipments pipeline.\nAn error occurred in the incremental file in ADLS .\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}"
+					"body": {
+						"value": "{\"DataFactoryName\":\"@{pipeline().DataFactory}\",\"Status\":\"Failed\",\"Env\":\"Dev\",\"PipelineName\":\"@{pipeline().Pipeline}\",\"EmailTo\":\"abhijeet.kumar@bridgei2i.com;kalyani.Pernapati@clorox.com;ravishankar.m@bridgei2i.com\",\"MessageBody1\":\"Hi All,\",\"MessageBody2\":\"This is an email notification generated from Azure Data Factory for data ingestion in IDR Shipments pipeline.\nAn error occurred in the incremental file in ADLS .\",\"MessageBody3\":\"Please find below the pipeline execution details:\",\"MessageBody4\":\"Please login to Azure Portal (https://portal.azure.com) to view the pipeline run.\",\"MessageBody5\":\" - Thanks\"}",
+						"type": "Expression"
+					}
 				}
 			}
 		],
